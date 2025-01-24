@@ -19,6 +19,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Fade from '@mui/material/Fade'
 import { CHAINS } from 'components/Web3Provider/constants'
 import { useLocalization } from 'i18n'
+import dayjs from 'dayjs'
 
 interface Props {
   close: () => void
@@ -29,7 +30,8 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
   const { chainId, account } = useActiveWeb3React()
   const { config } = useWhitelabelState()
   const [cookies] = useCookies(['annoucementsSeen'])
-  const { t } = useLocalization();
+  const year = dayjs().format('YYYY')
+  const { t } = useLocalization()
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
@@ -331,18 +333,18 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
         </MenuList>
       </Container>
       <StyledFooter>
-        <span>Copyright © IX Swap 2024</span>
+        <span>{t('footer.copyright', { year })}</span>
         <div>
           <a
             href={config?.termsAndConditionsUrl || 'https://ixswap.io/terms-and-conditions/'}
             target="_blank"
             rel="noreferrer"
           >
-            Terms & Conditions
+            {t('footer.termsAndConditions')}
           </a>
 
           <a href={config?.privacyPolicyUrl || 'https://ixswap.io/privacy-policy/'} target="_blank" rel="noreferrer">
-            Privacy Policy
+            {t('footer.privacyPolicy')}
           </a>
         </div>
       </StyledFooter>

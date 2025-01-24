@@ -2,60 +2,122 @@
   "navbar": {
     "charts": "チャート",
     "bridge": "ブリッジ",
+    "launchpad": "ローンチパッド",
     "rwas": "RWAs",
     "liquidityPools": "流動性プール",
-    "swapTrade": "スワップ/トレード",
+    "swapTrade": "スワップ/取引",
     "kyc": "KYC",
     "staking": "ステーキング"
   },
-  "footer": {
-    "copyright": "著作権 © IX Swap 2024",
-    "termsAndConditions": "利用規約",
-    "privacyPolicy": "プライバシーポリシー",
-    "cookieSetting": "クッキー設定"
+  "labels": {
+    "emailAddress": "メールアドレス",
+    "verifyTitle": "アカウントを確認してください",
+    "verifyDesc": "アカウント所有者を確認するためにウォレットでメッセージに署名してください",
+    "referFriend": "友達を紹介"
+  },
+  "buttons": {
+    "submit": "送信",
+    "connectWallet": "ウォレットを接続",
+    "cancel": "キャンセル",
+    "signMessage": "メッセージに署名"
   },
   "landing": {
-    "welcome": "IXSwapへようこそ",
-    "pleaseConnectWallet": "IX Swapを使用するにはウォレットを接続してください",
-    "connectWallet": "ウォレットを接続",
-    "whileWalletIsNotConnected": "ウォレットが接続されていない間は、最新情報を見ることができます"
+    "welcome": "ようこそ",
+    "whileWaiting": "ウォレットが接続されていない間は、新しい{{stakingProgramLink}}、{{liquidityMiningPolygonLink}}、{{liquidityMiningEthereumLink}}を見ることができます。",
+    "stakingProgram": "ステーキングプログラム",
+    "liquidityMiningPolygon": "Polygonでの流動性マイニング",
+    "liquidityMiningEthereum": "Ethereumでの流動性マイニング",
+    "subscribe": "購読",
+    "updates": "更新情報",
+    "subscribeSubtitle": "IX Swapの最新ニュースを、スパムなしでお届けします。",
+    "pleaseConnectWallet": "アプリケーションを使用するにはウォレットを接続してください",
+    "whileWalletIsNotConnected": "ウォレットが接続されていない間は、新しい"
   },
   "kyc": {
-    "section1Title": "IX Swapにサインアップするには、KYCを通過する必要があります",
-    "referFriend": "友人を紹介する",
-    "kycAsIndividual": "個人としてKYCを通過する",
-    "kycAsCorporate": "法人としてKYCを通過する",
+    "kycAsIndividual": "個人としてKYCを通過",
+    "kycAsCorporate": "法人としてKYCを通過",
+    "kycAsIndividualContinue": "個人としてKYCを続行",
+    "kycAsCorporateContinue": "法人としてKYCを続行",
     "startNow": "今すぐ開始",
     "individual": {
       "title": "個人KYC",
       "section1Title": "個人情報",
-      "firstName": "名",
+      "firstName": "名前",
       "middleName": "ミドルネーム",
-      "lastName": "姓",
+      "lastName": "苗字",
       "emailAddress": "メールアドレス",
       "invalidEmailAddress": "有効なアドレスを入力してください",
       "enterOtpCode": "コードを入力",
-      "otpCodeInfo": "6桁の認証コードがメールアドレスに送信されました。以下にコードを入力してメールを確認してください",
+      "otpCodeInfo": "6桁の確認コードがメールアドレスに送信されました。以下にコードを入力してメールを確認してください",
       "sendOtpCode": "コードを送信",
       "resendOtpCode": "コードを再送信",
-      "invalidOtpCode": "無効な認証コードです",
-      "verificationCodeSuccess": "認証コードが正常に確認されました。",
-      "section2Title": "セカンダリ連絡先情報"
+      "invalidOtpCode": "無効な確認コード",
+      "verificationCodeSuccess": "確認コードが正常に確認されました。",
+      "section2Title": "二次連絡先"
     },
     "corporate": {
       "corporateName": "法人名"
     }
   },
   "launchpad": {
-    "section1Title": "スタートアップや他のユニコーンのような機会に投資する",
-    "totalRaised": "合計調達額",
+    "section1Title": "スタートアップやユニコーンのような機会に投資",
+    "totalRaised": "総額調達",
     "investments": "投資"
   },
   "maintenance": {
-    "title": "メンテナンス中です",
-    "info": "このページはメンテナンス中で、まもなく復旧します"
+    "title": "メンテナンス中",
+    "info": "このページはメンテナンス中で、まもなく再開されます"
   },
   "general": {
     "confirmed": "確認済み"
+  },
+  "footer": {
+    "subscribe": "{{offerId ? \"取引の\" : ''}} 更新を購読",
+    "subscribeSubtitle": "最新の更新情報とニュースを直接あなたのメールボックスにお届けします。",
+    "emailPlaceholder": "メールアドレスを入力",
+    "socialLinks": {
+      "telegram": "Telegramでフォロー",
+      "x": "Xでフォロー",
+      "m": "CoinMarketCapで見る",
+      "discord": "Discordで参加",
+      "youtube": "YouTubeチャンネルを購読",
+      "linkedin": "LinkedInで接続"
+    },
+    "about": {
+      "description": "IX Swapは、セキュリティトークンおよびトークン化された株式の取引の次世代を提供するために、グローバルなキャピタルマーケット、法務およびブロックチェーンの専門家によって構築されました。"
+    },
+    "copyright": "著作権 © IX Swap {{year}}",
+    "termsAndConditions": "利用規約",
+    "privacyPolicy": "プライバシーポリシー",
+    "cookieSetting": "クッキー設定",
+    "products": {
+      "header": "製品",
+      "whatIsIXSwap": "IX Swapとは?",
+      "ixsToken": "IXSトークン",
+      "ixsLaunchpad": "IXSローンチパッド",
+      "exchange": "取引所",
+      "staking": "ステーキングと流動性マイニング",
+      "borrowing": "借り入れと貸し出し",
+      "ixsCustody": "IXSカストディ"
+    },
+    "company": {
+      "header": "会社",
+      "ecosystem": "エコシステム",
+      "documents": "書類",
+      "team": "チーム",
+      "community": "コミュニティ",
+      "ambassadorProgram": "アンバサダー・プログラム",
+      "contactUs": "お問い合わせ"
+    },
+    "explore": {
+      "header": "探索",
+      "blog": "ブログ",
+      "courses": "コース",
+      "articles": "記事",
+      "videos": "ビデオ",
+      "glossary": "用語集",
+      "tutorials": "チュートリアル",
+      "faq": "FAQ"
+    }
   }
 }

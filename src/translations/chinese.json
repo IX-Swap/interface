@@ -1,61 +1,123 @@
 {
   "navbar": {
     "charts": "图表",
-    "bridge": "桥",
+    "bridge": "桥梁",
+    "launchpad": "启动板",
     "rwas": "RWAs",
-    "liquidityPools": "Liquidity Pools",
-    "swapTrade": "Swap/Trade",
+    "liquidityPools": "流动性池",
+    "swapTrade": "兑换/交易",
     "kyc": "KYC",
-    "staking": "Staking"
+    "staking": "质押"
   },
-  "footer": {
-    "copyright": "Copyright © IX Swap 2024",
-    "termsAndConditions": "Terms and Condition",
-    "privacyPolicy": "Privacy Policy",
-    "cookieSetting": "Cookie Setting"
+  "labels": {
+    "emailAddress": "电子邮件地址",
+    "verifyTitle": "验证您的账户",
+    "verifyDesc": "请在您的钱包中签署消息以验证账户所有权",
+    "referFriend": "推荐朋友"
+  },
+  "buttons": {
+    "submit": "提交",
+    "connectWallet": "连接钱包",
+    "cancel": "取消",
+    "signMessage": "签署消息"
   },
   "landing": {
-    "welcome": "Welcome to IXSwap",
-    "pleaseConnectWallet": "Please connect your wallet to use IX Swap",
-    "connectWallet": "Connect Wallet",
-    "whileWalletIsNotConnected": "While your wallet is not connected, you can see our New"
+    "welcome": "欢迎来到",
+    "whileWaiting": "在您的钱包尚未连接时，您可以查看我们的新{{stakingProgramLink}}、{{liquidityMiningPolygonLink}}和{{liquidityMiningEthereumLink}}。",
+    "stakingProgram": "质押计划",
+    "liquidityMiningPolygon": "Polygon上的流动性挖矿",
+    "liquidityMiningEthereum": "Ethereum上的流动性挖矿",
+    "subscribe": "订阅",
+    "updates": "更新",
+    "subscribeSubtitle": "获取IX Swap的最新新闻，绝无垃圾邮件。",
+    "pleaseConnectWallet": "请连接您的钱包以使用应用程序",
+    "whileWalletIsNotConnected": "在您的钱包未连接时，您可以查看我们的新"
   },
   "kyc": {
-    "section1Title": "To sign up to IX Swap, you have to pass KYC",
-    "referFriend": "Refer a Friend",
-    "kycAsIndividual": "Pass KYC as Individual",
-    "kycAsCorporate": "Pass KYC as Corporate",
-    "startNow": "Start Now",
+    "kycAsIndividual": "作为个人通过KYC",
+    "kycAsCorporate": "作为公司通过KYC",
+    "kycAsIndividualContinue": "继续作为个人通过KYC",
+    "kycAsCorporateContinue": "继续作为公司通过KYC",
+    "startNow": "立即开始",
     "individual": {
-      "title": "Idividual KYC",
-      "section1Title": "Personal Information",
-      "firstName": "First Name",
-      "middleName": "Middle Name",
-      "lastName": "Last Name",
-      "emailAddress": "Email Address",
-      "invalidEmailAddress": "Please enter a valid address",
-      "enterOtpCode": "Enter the Code",
-      "otpCodeInfo": "A 6-digit verification code has been sent to your email address. Enter the code below to verify your email",
-      "sendOtpCode": "Send Code",
-      "resendOtpCode": "Resend Code",
-      "invalidOtpCode": "Invalid verification Code",
-      "verificationCodeSuccess": "Verification code has been confirmed successfully.",
-      "section2Title": "Secondary Contact Details"
+      "title": "个人KYC",
+      "section1Title": "个人信息",
+      "firstName": "名",
+      "middleName": "中间名",
+      "lastName": "姓",
+      "emailAddress": "电子邮件地址",
+      "invalidEmailAddress": "请输入有效的地址",
+      "enterOtpCode": "输入验证码",
+      "otpCodeInfo": "一个6位数的验证码已发送到您的电子邮件地址。请输入下面的代码以验证您的电子邮件",
+      "sendOtpCode": "发送代码",
+      "resendOtpCode": "重新发送代码",
+      "invalidOtpCode": "无效的验证码",
+      "verificationCodeSuccess": "验证码已成功确认。",
+      "section2Title": "备用联系方式"
     },
     "corporate": {
-      "corporateName": "Corporate Name"
+      "corporateName": "公司名称"
     }
   },
   "launchpad": {
-    "section1Title": "Invest in Startups and Other Unicorn Like Opportunities",
-    "totalRaised": "Total Raised",
-    "investments": "Investments"
+    "section1Title": "投资初创公司及类似独角兽的机会",
+    "totalRaised": "总筹集金额",
+    "investments": "投资"
   },
   "maintenance": {
-    "title": "We're down for Maintenance",
-    "info": "This page is undergoing maintenance and will be back soon"
+    "title": "正在维护",
+    "info": "此页面正在维护，很快将恢复"
   },
   "general": {
-    "confirmed": "Confirmed"
+    "confirmed": "已确认"
+  },
+  "footer": {
+    "subscribe": "订阅{{offerId ? \"该交易的\" : ''}}更新",
+    "subscribeSubtitle": "最新的更新和新闻将直接发送到您的收件箱。",
+    "emailPlaceholder": "请输入您的电子邮件地址",
+    "socialLinks": {
+      "telegram": "在Telegram上关注我们",
+      "x": "在X上关注我们",
+      "m": "在CoinMarketCap上查看我们",
+      "discord": "在Discord上加入我们",
+      "youtube": "订阅我们的YouTube频道",
+      "linkedin": "在LinkedIn上连接我们"
+    },
+    "about": {
+      "description": "IX Swap由一支全球资本市场、法律和区块链专家团队构建，为您带来安全代币和代币化股票交易的下一代体验。"
+    },
+    "copyright": "版权 © IX Swap {{year}}",
+    "termsAndConditions": "条款和条件",
+    "privacyPolicy": "隐私政策",
+    "cookieSetting": "Cookie设置",
+    "products": {
+      "header": "产品",
+      "whatIsIXSwap": "什么是IX Swap?",
+      "ixsToken": "IXS代币",
+      "ixsLaunchpad": "IXS启动板",
+      "exchange": "交易所",
+      "staking": "质押和流动性挖矿",
+      "borrowing": "借贷",
+      "ixsCustody": "IXS托管"
+    },
+    "company": {
+      "header": "公司",
+      "ecosystem": "生态系统",
+      "documents": "文件",
+      "team": "团队",
+      "community": "社区",
+      "ambassadorProgram": "大使计划",
+      "contactUs": "联系我们"
+    },
+    "explore": {
+      "header": "探索",
+      "blog": "博客",
+      "courses": "课程",
+      "articles": "文章",
+      "videos": "视频",
+      "glossary": "术语表",
+      "tutorials": "教程",
+      "faq": "常见问题"
+    }
   }
 }

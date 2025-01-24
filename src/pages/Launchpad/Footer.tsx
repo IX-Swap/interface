@@ -6,7 +6,6 @@ import { Formik } from 'formik'
 import { object, string } from 'yup'
 
 import { ReactComponent as DotSeparator } from 'assets/launchpad/svg/investment-meta-separator.svg'
-// import { ReactComponent as Logo } from 'assets/images/FooterlogoNew.svg'
 import Logo from 'assets/images/logo/logo-full-dark.svg'
 import { ReactComponent as TelegramLogo } from 'assets/launchpad/svg/social/telegram.svg'
 import { ReactComponent as XLogo } from 'assets/launchpad/svg/social/twitter.svg'
@@ -19,6 +18,7 @@ import { useAddPopup } from 'state/application/hooks'
 import { DiscreteExternalLink } from 'theme'
 import { text1, text12, text23, text24, text25, text26, text8 } from 'components/LaunchpadMisc/typography'
 import { useLocalization } from 'i18n'
+import dayjs from 'dayjs'
 
 type ValueSetter = (field: string, value: any, shouldValidate?: boolean | undefined) => void
 
@@ -37,7 +37,8 @@ interface Props {
 export const Footer: React.FC<Props> = (props) => {
   const subscribe = useSubscribeToOffer()
   const addPopup = useAddPopup()
-  const { t } = useLocalization();
+  const { t } = useLocalization()
+  const year = dayjs().format('YYYY')
 
   const [active, setActive] = React.useState(false)
 
@@ -59,7 +60,9 @@ export const Footer: React.FC<Props> = (props) => {
   return (
     <FooterContainer>
       <SubscriptionFormContainer>
-        <SubscriptionFormTitle>{t('landing.subscribe')} {props.offerId ? "the Deal's" : ''} {t('landing.updates')}</SubscriptionFormTitle>
+        <SubscriptionFormTitle>
+          {t('landing.subscribe')} {props.offerId ? "the Deal's" : ''} {t('landing.updates')}
+        </SubscriptionFormTitle>
 
         <SubscriptionFormSubtitle>{t('landing.subscribeSubtitle')}</SubscriptionFormSubtitle>
 
@@ -69,7 +72,9 @@ export const Footer: React.FC<Props> = (props) => {
               <SubscriptionFormEmailField>
                 <SubscriptionFormEmailFieldInput onChange={(e) => handleEmailInput(e.target.value, setFieldValue)} />
 
-                <SubscriptionFormEmailFieldLabel active={active}>{t('labels.emailAddress')}</SubscriptionFormEmailFieldLabel>
+                <SubscriptionFormEmailFieldLabel active={active}>
+                  {t('labels.emailAddress')}
+                </SubscriptionFormEmailFieldLabel>
 
                 {errors.email && <ErrorText>{errors.email}</ErrorText>}
               </SubscriptionFormEmailField>
@@ -115,62 +120,62 @@ export const Footer: React.FC<Props> = (props) => {
             </Box>
           </div>
 
-          <main>
-            IX Swap is built by a global team of capital markets, legal and blockchain experts, bringing you the next
-            generation of trading for Security tokens and tokenized stocks
-          </main>
+          <main>{t('footer.about.description')}</main>
         </About>
         <Copyright>
-          Copyright © IX Swap 2024
+          {t('footer.copyright', { year })}
           <br />
           <div>
             <DiscreteExternalLink
               style={{ display: 'flex', alignItems: 'center' }}
               href="https://ixswap.io/terms-and-conditions/"
             >
-              <UpdatedBox>Updated</UpdatedBox> Terms & Conditions
+              <UpdatedBox>Updated</UpdatedBox> {t('footer.termsAndConditions')}
             </DiscreteExternalLink>
             <DotSeparator />
-            <DiscreteExternalLink href="https://ixswap.io/privacy-policy/">Privacy Policy</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/privacy-policy/">Cookie Settings</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://ixswap.io/privacy-policy/">
+              {t('footer.privacyPolicy')}
+            </DiscreteExternalLink>
+            <DiscreteExternalLink href="https://ixswap.io/privacy-policy/">
+              {t('footer.cookieSetting')}
+            </DiscreteExternalLink>
           </div>
         </Copyright>
         <Links>
           <div>
-            <header style={{ marginTop: '0px' }}>Products</header>
-            <DiscreteExternalLink href="https://ixswap.io/blog/">What is IX Swap?</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/community/">IXS Token</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/blog/">IXS Launchpad </DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/community/">Exchange</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/community/">
-              Staking and Liquidity Mining
-            </DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/blog/">Borrowing and Lending</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/community/">IXS Custody</DiscreteExternalLink>
+            <header style={{ marginTop: '0px' }}>{t('footer.products.header')}</header>
+            {Object.keys(t('footer.products')).map(
+              (key) =>
+                key !== 'header' && (
+                  <DiscreteExternalLink key={key} href={`https://ixswap.io/${key.toLowerCase().replace(' ', '-')}/`}>
+                    {t(`footer.products.${key}`)}
+                  </DiscreteExternalLink>
+                )
+            )}
           </div>
 
           <div>
-            <header>Company</header>
-            {/* hide for now */}
-            {/* <DiscreteExternalLink href="https://ixswap.io/roadmap/">Roadmap</DiscreteExternalLink> */}
-            <DiscreteExternalLink href="https://ixswap.io/ecosystem/">Ecosystem</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/documentation/">Documents</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/team/">Team</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/community/">Community</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/ambassador-program/">Ambassador program</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/contact-us/">Contact Us</DiscreteExternalLink>
+            <header>{t('footer.company.header')}</header>
+            {Object.keys(t('footer.company')).map(
+              (key) =>
+                key !== 'header' && (
+                  <DiscreteExternalLink key={key} href={`https://ixswap.io/${key.toLowerCase().replace(' ', '-')}/`}>
+                    {t(`footer.company.${key}`)}
+                  </DiscreteExternalLink>
+                )
+            )}
           </div>
 
           <div>
-            <header>Explore</header>
-
-            <DiscreteExternalLink href="https://ixswap.io/contact-us/">Blog</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://www.ixswap.io/academy/tutorials">Courses</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/contact-us/"> Articles</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://www.ixswap.io/faq/"> Videos</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://www.ixswap.io/academy/tutorials"> Glossary</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://www.ixswap.io/academy/tutorials">Tutorials</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://www.ixswap.io/faq/">FAQ</DiscreteExternalLink>
+            <header>{t('footer.explore.header')}</header>
+            {Object.keys(t('footer.explore')).map(
+              (key) =>
+                key !== 'header' && (
+                  <DiscreteExternalLink key={key} href={`https://ixswap.io/${key.toLowerCase().replace(' ', '-')}/`}>
+                    {t(`footer.explore.${key}`)}
+                  </DiscreteExternalLink>
+                )
+            )}
           </div>
         </Links>
       </FooterInfoContainer>

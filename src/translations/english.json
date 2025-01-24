@@ -21,15 +21,12 @@
     "cancel": "Cancel",
     "signMessage": "Sign Message"
   },
-  "footer": {
-    "copyright": "Copyright © IX Swap 2024",
-    "termsAndConditions": "Terms and Condition",
-    "privacyPolicy": "Privacy Policy",
-    "cookieSetting": "Cookie Setting"
-  },
   "landing": {
     "welcome": "Welcome to",
-    "whileWaiting": "While your wallet is not connected, you can see our New",
+    "whileWaiting": "While your wallet is not connected, you can see our New {{stakingProgramLink}}, {{liquidityMiningPolygonLink}} and {{liquidityMiningEthereumLink}}.",
+    "stakingProgram": "Staking Program",
+    "liquidityMiningPolygon": "Liquidity Mining on Polygon",
+    "liquidityMiningEthereum": "Liquidity Mining on Ethereum",
     "subscribe": "Subscribe for",
     "updates": "Updates",
     "subscribeSubtitle": "Get the latest IX Swap news, all spam-free.",
@@ -73,5 +70,54 @@
   },
   "general": {
     "confirmed": "Confirmed"
+  },
+  "footer": {
+    "subscribe": "Subscribe to {{offerId ? \"the Deal's\" : ''}} Updates",
+    "subscribeSubtitle": "Get the latest updates and news delivered directly to your inbox.",
+    "emailPlaceholder": "Enter your email address",
+    "socialLinks": {
+      "telegram": "Follow us on Telegram",
+      "x": "Follow us on X",
+      "m": "View us on CoinMarketCap",
+      "discord": "Join us on Discord",
+      "youtube": "Subscribe to our YouTube channel",
+      "linkedin": "Connect with us on LinkedIn"
+    },
+    "about": {
+      "description": "IX Swap is built by a global team of capital markets, legal and blockchain experts, bringing you the next generation of trading for Security tokens and tokenized stocks."
+    },
+    "copyright": "Copyright © IX Swap {{year}}",
+    "termsAndConditions": "Terms and Condition",
+    "privacyPolicy": "Privacy Policy",
+    "cookieSetting": "Cookie Setting",
+    "products": {
+      "header": "Products",
+      "whatIsIXSwap": "What is IX Swap?",
+      "ixsToken": "IXS Token",
+      "ixsLaunchpad": "IXS Launchpad",
+      "exchange": "Exchange",
+      "staking": "Staking and Liquidity Mining",
+      "borrowing": "Borrowing and Lending",
+      "ixsCustody": "IXS Custody"
+    },
+    "company": {
+      "header": "Company",
+      "ecosystem": "Ecosystem",
+      "documents": "Documents",
+      "team": "Team",
+      "community": "Community",
+      "ambassadorProgram": "Ambassador Program",
+      "contactUs": "Contact Us"
+    },
+    "explore": {
+      "header": "Explore",
+      "blog": "Blog",
+      "courses": "Courses",
+      "articles": "Articles",
+      "videos": "Videos",
+      "glossary": "Glossary",
+      "tutorials": "Tutorials",
+      "faq": "FAQ"
+    }
   }
 }

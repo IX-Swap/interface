@@ -68,59 +68,64 @@ export const LOCALES = [
 ]
 
 interface LocalizationContextProps {
-  t: (key: string, params?: Record<string, string>) => string;
-  switchLanguage: (lang: string) => void;
-  language: string;
+  t: (key: string, params?: Record<string, string>) => string
+  switchLanguage: (lang: string) => void
+  language: string
 }
 
 const LocalizationContext = createContext<LocalizationContextProps>({
   t: (key) => key,
   switchLanguage: () => {},
   language: 'en',
-});
+})
 
 interface LocalizationProviderProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 export const LocalizationProvider: React.FC<LocalizationProviderProps> = ({ children }) => {
-  const [language, setLanguage] = useState<string>('en'); // Default language is 'en'
+  const [language, setLanguage] = useState<string>('en') // Default language is 'en'
 
-  const t = (key: string, params: Record<string, string> = {}): string => {
-    const currentLocale = LOCALES.find((locale) => locale.code === language)?.translations || en;
-    const keys = key.split('.');
-    let translation: any = currentLocale;
+  const t = (key: string, params: Record<string, ReactNode> = {}): ReactNode => {
+    const currentLocale = LOCALES.find((locale) => locale.code === language)?.translations || en
+    const keys = key.split('.')
+    let translation: any = currentLocale
 
+    // Traverse the translation JSON to get the specific translation
     for (const k of keys) {
-      translation = translation?.[k];
-      if (!translation) break;
+      translation = translation?.[k]
+      if (!translation) break
     }
 
-    if (!translation) return key; // Fallback to the key if not found
+    // Fallback to the key if the translation is not found
+    if (!translation) return key
 
-    // Replace placeholders with dynamic values
-    Object.keys(params).forEach((param) => {
-      translation = translation.replace(`{{${param}}}`, params[param]);
-    });
+    // If the translation is a string, process placeholders
+    if (typeof translation === 'string') {
+      // Split translation text at placeholder positions and inject JSX elements
+      const parts = translation.split(/{{(.*?)}}/g)
+      return parts.map((part, index) => {
+        if (params[part]) {
+          return <React.Fragment key={index}>{params[part]}</React.Fragment>
+        }
+        return part
+      })
+    }
 
-    return translation;
-  };
+    // If translation is not a string, return it directly (fallback)
+    return translation
+  }
 
   const switchLanguage = (lang: string): void => {
-    const localeExists = LOCALES.some((locale) => locale.code === lang);
+    const localeExists = LOCALES.some((locale) => locale.code === lang)
     if (localeExists) {
-      setLanguage(lang);
+      setLanguage(lang)
     } else {
-      console.warn(`Language "${lang}" is not supported.`);
+      console.warn(`Language "${lang}" is not supported.`)
     }
-  };
+  }
 
-  return (
-    <LocalizationContext.Provider value={{ t, switchLanguage, language }}>
-      {children}
-    </LocalizationContext.Provider>
-  );
-};
+  return <LocalizationContext.Provider value={{ t, switchLanguage, language }}>{children}</LocalizationContext.Provider>
+}
 
-export const useLocalization = (): LocalizationContextProps =>
-  useContext(LocalizationContext);
+export const useLocalization = (): LocalizationContextProps => useContext(LocalizationContext)

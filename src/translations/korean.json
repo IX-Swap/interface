@@ -1,61 +1,123 @@
 {
   "navbar": {
-    "charts": "Charts",
-    "bridge": "Bridge",
+    "charts": "차트",
+    "bridge": "브리지",
+    "launchpad": "런치패드",
     "rwas": "RWAs",
-    "liquidityPools": "Liquidity Pools",
-    "swapTrade": "Swap/Trade",
+    "liquidityPools": "유동성 풀",
+    "swapTrade": "스왑/거래",
     "kyc": "KYC",
-    "staking": "Staking"
+    "staking": "스테이킹"
   },
-  "footer": {
-    "copyright": "Copyright © IX Swap 2024",
-    "termsAndConditions": "Terms and Condition",
-    "privacyPolicy": "Privacy Policy",
-    "cookieSetting": "Cookie Setting"
+  "labels": {
+    "emailAddress": "이메일 주소",
+    "verifyTitle": "계정 확인",
+    "verifyDesc": "계정 소유자를 확인하기 위해 지갑에서 메시지를 서명해주세요.",
+    "referFriend": "친구 추천"
+  },
+  "buttons": {
+    "submit": "제출",
+    "connectWallet": "지갑 연결",
+    "cancel": "취소",
+    "signMessage": "메시지 서명"
   },
   "landing": {
-    "welcome": "Welcome to IXSwap",
-    "pleaseConnectWallet": "Please connect your wallet to use IX Swap",
-    "connectWallet": "Connect Wallet",
-    "whileWalletIsNotConnected": "While your wallet is not connected, you can see our New"
+    "welcome": "환영합니다",
+    "whileWaiting": "지갑이 연결되지 않은 동안 새{{stakingProgramLink}}, {{liquidityMiningPolygonLink}} 및 {{liquidityMiningEthereumLink}}를 확인할 수 있습니다.",
+    "stakingProgram": "스테이킹 프로그램",
+    "liquidityMiningPolygon": "Polygon에서 유동성 채굴",
+    "liquidityMiningEthereum": "Ethereum에서 유동성 채굴",
+    "subscribe": "구독",
+    "updates": "업데이트",
+    "subscribeSubtitle": "IX Swap의 최신 소식을 스팸 없이 받아보세요.",
+    "pleaseConnectWallet": "애플리케이션을 사용하려면 지갑을 연결해주세요.",
+    "whileWalletIsNotConnected": "지갑이 연결되지 않은 동안 새"
   },
   "kyc": {
-    "section1Title": "To sign up to IX Swap, you have to pass KYC",
-    "referFriend": "Refer a Friend",
-    "kycAsIndividual": "Pass KYC as Individual",
-    "kycAsCorporate": "Pass KYC as Corporate",
-    "startNow": "Start Now",
+    "kycAsIndividual": "개인으로 KYC 통과",
+    "kycAsCorporate": "법인으로 KYC 통과",
+    "kycAsIndividualContinue": "개인으로 KYC 계속",
+    "kycAsCorporateContinue": "법인으로 KYC 계속",
+    "startNow": "지금 시작",
     "individual": {
-      "title": "Idividual KYC",
-      "section1Title": "Personal Information",
-      "firstName": "First Name",
-      "middleName": "Middle Name",
-      "lastName": "Last Name",
-      "emailAddress": "Email Address",
-      "invalidEmailAddress": "Please enter a valid address",
-      "enterOtpCode": "Enter the Code",
-      "otpCodeInfo": "A 6-digit verification code has been sent to your email address. Enter the code below to verify your email",
-      "sendOtpCode": "Send Code",
-      "resendOtpCode": "Resend Code",
-      "invalidOtpCode": "Invalid verification Code",
-      "verificationCodeSuccess": "Verification code has been confirmed successfully.",
-      "section2Title": "Secondary Contact Details"
+      "title": "개인 KYC",
+      "section1Title": "개인 정보",
+      "firstName": "이름",
+      "middleName": "중간 이름",
+      "lastName": "성",
+      "emailAddress": "이메일 주소",
+      "invalidEmailAddress": "유효한 주소를 입력하세요.",
+      "enterOtpCode": "코드 입력",
+      "otpCodeInfo": "6자리 확인 코드가 이메일로 전송되었습니다. 아래 코드를 입력하여 이메일을 확인하세요.",
+      "sendOtpCode": "코드 보내기",
+      "resendOtpCode": "코드 다시 보내기",
+      "invalidOtpCode": "유효하지 않은 확인 코드",
+      "verificationCodeSuccess": "확인 코드가 성공적으로 확인되었습니다.",
+      "section2Title": "비상 연락처"
     },
     "corporate": {
-      "corporateName": "Corporate Name"
+      "corporateName": "법인명"
     }
   },
   "launchpad": {
-    "section1Title": "Invest in Startups and Other Unicorn Like Opportunities",
-    "totalRaised": "Total Raised",
-    "investments": "Investments"
+    "section1Title": "스타트업 및 유니콘 기회에 투자",
+    "totalRaised": "총 모금액",
+    "investments": "투자"
   },
   "maintenance": {
-    "title": "We're down for Maintenance",
-    "info": "This page is undergoing maintenance and will be back soon"
+    "title": "유지보수 중",
+    "info": "이 페이지는 유지보수 중이며 곧 다시 열릴 예정입니다."
   },
   "general": {
-    "confirmed": "Confirmed"
+    "confirmed": "확인됨"
+  },
+  "footer": {
+    "subscribe": "{{offerId ? \"이 거래의\" : ''}} 업데이트 구독",
+    "subscribeSubtitle": "최신 업데이트와 소식을 이메일로 직접 받아보세요.",
+    "emailPlaceholder": "이메일 주소 입력",
+    "socialLinks": {
+      "telegram": "Telegram에서 팔로우",
+      "x": "X에서 팔로우",
+      "m": "CoinMarketCap에서 보기",
+      "discord": "Discord에서 참여",
+      "youtube": "YouTube 채널 구독",
+      "linkedin": "LinkedIn에서 연결"
+    },
+    "about": {
+      "description": "IX Swap은 안전한 토큰화된 주식 거래와 증권 토큰화를 제공하기 위해 글로벌 자본 시장, 법률 및 블록체인 전문가들에 의해 구축되었습니다."
+    },
+    "copyright": "저작권 © IX Swap {{year}}",
+    "termsAndConditions": "이용 약관",
+    "privacyPolicy": "개인정보 보호정책",
+    "cookieSetting": "쿠키 설정",
+    "products": {
+      "header": "제품",
+      "whatIsIXSwap": "IX Swap은 무엇인가요?",
+      "ixsToken": "IXS 토큰",
+      "ixsLaunchpad": "IXS 런치패드",
+      "exchange": "거래소",
+      "staking": "스테이킹 및 유동성 채굴",
+      "borrowing": "대출 및 대여",
+      "ixsCustody": "IXS 관리"
+    },
+    "company": {
+      "header": "회사",
+      "ecosystem": "생태계",
+      "documents": "문서",
+      "team": "팀",
+      "community": "커뮤니티",
+      "ambassadorProgram": "앰배서더 프로그램",
+      "contactUs": "연락처"
+    },
+    "explore": {
+      "header": "탐색",
+      "blog": "블로그",
+      "courses": "코스",
+      "articles": "기사",
+      "videos": "비디오",
+      "glossary": "용어집",
+      "tutorials": "튜토리얼",
+      "faq": "FAQ"
+    }
   }
 }

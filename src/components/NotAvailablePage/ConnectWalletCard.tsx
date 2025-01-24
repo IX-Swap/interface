@@ -11,12 +11,14 @@ import { useLocalization } from 'i18n'
 const ConnectWalletCard = () => {
   const { config } = useWhitelabelState()
   const { openConnectModal } = useConnectModal()
-  const { t } = useLocalization();
+  const { t } = useLocalization()
 
   return (
     <ConnectWalletContainer>
       <Text>
-        <Trans>{t('landing.welcome')} {config?.name || 'IX Swap'}</Trans>
+        <Trans>
+          {t('landing.welcome')} {config?.name || 'IX Swap'}
+        </Trans>
       </Text>
       <div>
         {t('landing.pleaseConnectWallet')}
@@ -32,38 +34,48 @@ const ConnectWalletCard = () => {
 
       {config?.isIxSwap ? (
         <span>
-          {t('landing.whileWaiting')} <br />
-          <a
-            style={{ color: '#6666FF', textDecoration: 'none' }}
-            href="https://staking.ixswap.io/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Staking Program
-          </a>
-          ,&nbsp;
-          <a
-            style={{ color: '#6666FF', textDecoration: 'none' }}
-            href="https://ixswap.defiterm.io/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Liquidity Mining on Polygon
-          </a>
-          &nbsp;and&nbsp; <br />
-          <a
-            style={{ color: '#6666FF', textDecoration: 'none' }}
-            href="https://app.uniswap.org/#/add/v2/ETH/0x73d7c860998CA3c01Ce8c808F5577d94d545d1b4?chain=polygon"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Liquidity Mining on Ethereum
-          </a>
-          .
+          {t('landing.whileWaiting', {
+            stakingProgramLink: (
+              <>
+                <br />
+                <a
+                  style={{ color: '#6666FF', textDecoration: 'none' }}
+                  href="https://staking.ixswap.io/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {t('landing.stakingProgram')}
+                </a>
+              </>
+            ),
+            liquidityMiningPolygonLink: (
+              <a
+                style={{ color: '#6666FF', textDecoration: 'none' }}
+                href="https://ixswap.defiterm.io/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                {t('landing.liquidityMiningPolygon')}
+              </a>
+            ),
+            liquidityMiningEthereumLink: (
+              <>
+                <br />
+                <a
+                  style={{ color: '#6666FF', textDecoration: 'none' }}
+                  href="https://app.uniswap.org/#/add/v2/ETH/0x73d7c860998CA3c01Ce8c808F5577d94d545d1b4?chain=polygon"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {t('landing.liquidityMiningEthereum')}
+                </a>
+              </>
+            ),
+          })}
         </span>
       ) : null}
     </ConnectWalletContainer>
   )
 }
 
-export default ConnectWalletCard;
+export default ConnectWalletCard

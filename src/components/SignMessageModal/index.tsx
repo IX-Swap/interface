@@ -7,7 +7,6 @@ import { LoaderThin } from 'components/Loader/LoaderThin'
 import { useLogout } from 'state/auth/hooks'
 import { useWalletState } from 'state/wallet/hooks'
 import { useLocalization } from 'i18n'
-import { buttons } from 'polished'
 
 interface SignMessageModalProps {
   loading?: boolean

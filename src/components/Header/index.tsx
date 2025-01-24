@@ -11,7 +11,6 @@ import { isMobile } from 'react-device-detect'
 
 import { useKYCState } from 'state/kyc/hooks'
 import { routes } from 'utils/routes'
-import { useActiveWeb3React } from '../../hooks/web3'
 import { MobileMenu } from '../Mobile-Menu'
 import { RowFixed } from '../Row'
 import Web3Status from '../Web3Status'
@@ -28,6 +27,7 @@ import AdministrationMenu from './AdministrationMenu'
 import { DEFAULT_CHAIN_ID } from 'config'
 import { CHAINS } from 'components/Web3Provider/constants'
 import { LocaleDropdown } from './LocaleDropdown'
+import { useLocalization } from 'i18n'
 
 export default function Header() {
   const [cookies] = useCookies(['annoucementsSeen'])
@@ -37,6 +37,7 @@ export default function Header() {
   const { isUser } = useRole()
   const { openConnectModal } = useConnectModal()
   const { switchChain } = useSwitchChain()
+  const { t } = useLocalization()
 
   const [openPreviewModal, setPreviewModal] = useState(false)
 
@@ -150,7 +151,7 @@ export default function Header() {
                     onClick={openConnectModal}
                   >
                     <Text className="connect-wallet-button">
-                      <Trans>Connect Wallet</Trans>
+                      <Trans>{t('buttons.connectWallet')}</Trans>
                     </Text>
                   </PinnedContentButton>
                 ) : null}

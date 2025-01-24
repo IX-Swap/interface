@@ -5,15 +5,17 @@ import styled from 'styled-components'
 import { Flex } from 'rebass'
 
 import { useWhitelabelState } from 'state/whitelabel/hooks'
+import { useLocalization } from 'i18n'
 
 export const CopyrightBlock = () => {
   const year = dayjs().format('YYYY')
   const { config } = useWhitelabelState()
+  const { t } = useLocalization()
 
   return (
     <Flex flexDirection="column" mb={120} mt={16}>
       <CopyrightText>
-        <Trans>{`Copyright © IX Swap ${year}`}</Trans>
+        <Trans>{t('footer.copyright', { year })}</Trans>
       </CopyrightText>
       <Flex alignItems="center">
         <TermText
@@ -21,7 +23,7 @@ export const CopyrightBlock = () => {
           target="_blank"
           rel="noreferrer"
         >
-          <Trans>Terms & Conditions</Trans>
+          <Trans>{t('footer.termsAndConditions')}</Trans>
         </TermText>
         <Dot />
         <TermText
@@ -29,7 +31,7 @@ export const CopyrightBlock = () => {
           target="_blank"
           rel="noreferrer"
         >
-          <Trans>Privacy Policy</Trans>
+          <Trans>{t('footer.privacyPolicy')}</Trans>
         </TermText>
       </Flex>
     </Flex>
