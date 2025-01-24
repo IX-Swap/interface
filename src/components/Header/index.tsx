@@ -325,7 +325,7 @@ const HeaderWrapper = styled.div`
   z-index: 2;
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
-  position: relative;
+  position: sticky;
   `};
 
   ${({ theme }) =>
