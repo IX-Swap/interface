@@ -10,7 +10,7 @@ import { InvestmentStatusBadge } from 'components/Launchpad/InvestmentCard/Inves
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import { InvestmentTypeInfo } from '../InvestmentCard/InvestmentTypeInfo'
-import { text12, text54, text59 } from 'components/LaunchpadMisc/typography'
+import { text1, text12, text54, text59 } from 'components/LaunchpadMisc/typography'
 import { MEDIA_WIDTHS } from 'theme'
 import { isMobile } from 'react-device-detect'
 import { useWeb3React } from 'hooks/useWeb3React'
@@ -32,6 +32,10 @@ export const Pinned: React.FC = () => {
   const [loading, setLoading] = React.useState(true)
   const [showKYCModal, setShowKYCModal] = React.useState(false)
 
+  const isClosed = React.useMemo(
+    () => !!offer?.status && [OfferStatus.closed, OfferStatus.claim].includes(offer?.status),
+    [offer?.status]
+  )
   const toggleKYCModal = React.useCallback(() => setShowKYCModal((state) => !state), [])
 
   React.useEffect(() => {
@@ -103,9 +107,13 @@ export const Pinned: React.FC = () => {
 
           <PinnedContentTitle>{offer.title}</PinnedContentTitle>
           <PinnedContentBody>{offer.shortDescription}</PinnedContentBody>
-          <PinnedContentButton type="button" onClick={onClick}>
-            Invest
-          </PinnedContentButton>
+
+          {isClosed ? <LearnMoreButton onClick={onClick}>Learn more</LearnMoreButton> : null}
+          {!isClosed ? (
+            <PinnedContentButton type="button" onClick={onClick}>
+              Invest
+            </PinnedContentButton>
+          ) : null}
         </PinnedContent>
       </PinnedContainer>
 
@@ -223,4 +231,21 @@ const PinnedTags = styled.header`
   justify-content: flex-start;
   align-items: center;
   gap: 0.5rem;
+`
+const LearnMoreButton = styled.button`
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  background: ${(props) => props.theme.launchpad.colors.background};
+  color: ${(props) => props.theme.launchpad.colors.primary};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.primary};
+  border-radius: 6px;
+  padding: 0.75rem 3rem;
+  cursor: pointer;
+  width: fix-content;
+  text-align: center;
+  font-family: ${(props) => props.theme.launchpad.font};
+  ${text1}
 `

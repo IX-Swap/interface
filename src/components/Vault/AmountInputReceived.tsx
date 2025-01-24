@@ -1,8 +1,6 @@
-import React, { ReactNode, useEffect, useState } from 'react'
+import React, { ReactNode } from 'react'
 import styled from 'styled-components'
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
-import numeral from 'numeral'
-import _get from 'lodash/get'
 
 import { RowFixed } from 'components/Row'
 import { TokenLogo } from 'components/TokenLogo'
@@ -27,71 +25,38 @@ interface Props {
   disabled?: boolean
 }
 
-const displayNumeralNoDecimal = (amount: any) => numeral(amount).format('0,0')
-
-export const AmountInput = ({
+export const AmountInputReceived = ({
   balance,
   currency,
-  onUserInput,
   rightItem,
   showMax = false,
   token,
   symbol,
-  disabled = false,
+  value,
   ...rest
 }: Props) => {
   const isShowMaxButton = showMax && balance && Number(balance) > 0
-  const [displayValue, setDisplayValue] = useState<string>('')
-
-  const decimals = _get(currency, 'decimals', 18)
-
-  const handleMax = () => {
-    if (balance) {
-      onChange(balance)
-    }
-  }
-
-  const onChange = (val: string) => {
-    const regex = /^-?\d*[.,]?\d*$/
-    const value = val.split(',').join('')
-
-    if (regex.test(value)) {
-      // @ts-ignore
-      onUserInput(numeral(value).value())
-
-      if (val.length >= 2 && val.charAt(0) === '0' && val.charAt(1) === '0') {
-        return setDisplayValue('0')
-      }
-
-      if (value.indexOf('.') > -1) {
-        const decimal = value.substring(value.indexOf('.') + 1, value.indexOf('.') + decimals + 1)
-        const int = value.substring(0, value.indexOf('.'))
-        const data = displayNumeralNoDecimal(int) + '.' + decimal
-        return setDisplayValue(data)
-      }
-
-      setDisplayValue(value ? numeral(value).format('0,0') : '')
-    }
-  }
 
   return (
     <InputPanel id={'amount-input'} {...rest}>
-      <Container disabled={disabled}>
+      <Container disabled={true}>
         <InputRow style={{}}>
           <Aligner>
             <>
               <StyledNumericalInput
-                value={displayValue}
-                onChange={(e) => onChange(e.target.value)}
+                value={Number(value).toLocaleString('en-US', {
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 2,
+                })}
                 placeholder={'0.0'}
                 inputMode="decimal"
                 autoComplete="off"
                 autoCorrect="off"
                 type="text"
                 spellCheck="false"
+                disabled={true}
               />
             </>
-            {isShowMaxButton ? <StyledBalanceMax onClick={handleMax}>MAX</StyledBalanceMax> : null}
             {rightItem || (
               <RowFixed>
                 {token?.logo ? (
