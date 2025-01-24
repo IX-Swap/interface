@@ -19,6 +19,7 @@ export function tryParseAmount<T extends Currency>(value?: string, currency?: T 
       return CurrencyAmount.fromRawAmount(currency, JSBI.BigInt(typedValueParsed))
     }
   } catch (error) {
+    console.error(error)
     // should fail if the user specifies too many decimal places of precision (or maybe exceed max uint?)
   }
   // necessary for all paths to return a value

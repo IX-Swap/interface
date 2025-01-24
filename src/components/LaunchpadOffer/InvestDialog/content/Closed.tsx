@@ -77,9 +77,9 @@ export const ClosedStage: React.FC<Props> = (props) => {
   const [approval, approveCallback] = useApproveCallback(
     tokenCurrency
       ? CurrencyAmount.fromRawAmount(
-        tokenCurrency,
+          tokenCurrency,
           ethers.utils.parseUnits(amount?.toString(), investingTokenDecimals) as any
-      )
+        )
       : undefined,
     contractAddress || IXSALE_ADDRESS[chainId]
   )
@@ -171,8 +171,8 @@ export const ClosedStage: React.FC<Props> = (props) => {
               ? `Upon the commencement of the token claim deal stage, the issuer will initiate a batch claim process for the
             tokens. The tokens will be automatically distributed to the investor&apos;s wallets.`
               : `You cannot claim any tokens yet. Please come back on the claim date, ${
-                claimTime ? `${dayjs(claimTime).format('DD/MM/YYYY')}.` : ''
-              }`}
+                  claimTime ? `${dayjs(claimTime).format('DD/MM/YYYY')}.` : ''
+                }`}
           </CantClaimNotice>
         </Row>
       )}
@@ -223,17 +223,19 @@ const Title = styled.div`
   ${text59}
   text-align: center;
   color: ${(props) => props.theme.launchpad.colors.text.title};
+
+  @media (max-width: 480px) {
+    display: none;
+  }
 `
 const CanClaimNotice = styled.div`
   ${text10}
   color: ${(props) => props.theme.launchpad.colors.text.title};
   opacity: 0.8;
-  max-width: 85%;
 `
 const CantClaimNotice = styled.div`
   ${text10}
   color: ${(props) => props.theme.launchpad.colors.text.title + 'cc'};
-  max-width: 70%;
 
   b {
     font-weight: 700;
@@ -267,6 +269,7 @@ const HelpButton = styled.div`
 const MyInvestmentLabel = styled.div`
   ${text10}
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
+  margin-bottom: 8px;
 `
 
 const MyInvestmentAmount = styled.div`
@@ -296,6 +299,11 @@ const ContactFormWrapper = styled.div`
   background: ${(props) => props.theme.launchpad.colors.background};
   border-radius: 8px;
   padding: 2rem;
+
+  @media (max-width: 480px) {
+    width: 100%;
+    min-width: 350px;
+  }
 `
 
 const ClaimedFilledButton = styled(FilledButton)`

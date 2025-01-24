@@ -76,14 +76,23 @@ export const InvestDialog: React.FC<Props> = (props) => {
               <DialogHeader>
                 {isMobile ? (
                   <>
-                    <DialogHeaderExit style={{position: 'absolute', right: '10px', top: '24px'}} onClick={props.onClose}>
+                    <DialogHeaderExit
+                      style={{ position: 'absolute', right: '10px', top: '24px' }}
+                      onClick={props.onClose}
+                    >
                       <X size="18" stroke={theme.launchpad.colors.text.bodyAlt} />
                     </DialogHeaderExit>
                     <DialogHeaderTitle style={{ marginBottom: '20px' }}>
                       <DialogHeaderTitle> Dashboard</DialogHeaderTitle>
 
                       <div
-                        style={{ margin: '10px', border: '1px solid #E6E6FF', padding: '3px 20px', borderRadius: '8px', width: 'fit-content' }}
+                        style={{
+                          margin: '10px',
+                          border: '1px solid #E6E6FF',
+                          padding: '3px 20px',
+                          borderRadius: '8px',
+                          width: 'fit-content',
+                        }}
                       >
                         {labelToShow || props.offer.status}
                       </div>
@@ -167,7 +176,6 @@ const ModalWrapper = styled.div`
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     overflow-y: scroll;
     max-height: 100vh;
-    background: white;
   }
 `
 
@@ -186,7 +194,11 @@ const DialogContainer = styled.article`
   min-height: 500px;
 
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    grid-template-columns: 0px 400px;
+    grid-template-columns: 0px 350px;
+    border-radius: 0px 0px 16px 16px;
+    padding-top: 20px;
+    min-height: 350px;
+    height: fit-content;
   }
 
   > header {
@@ -213,9 +225,15 @@ const DialogContainer = styled.article`
 
 const DialogHeader = styled.div`
   display: flex;
-  // flex-flow: row nowrap;
-  // justify-content: flex-around;
   align-items: center;
+  position: relative;
+  height: 65px;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    background: white;
+    border-radius: 16px 16px 0 0;
+    height: auto;
+  }
 `
 
 const DialogHeaderTitle = styled.div`
@@ -236,6 +254,8 @@ const DialogHeaderExit = styled.button`
   max-height: fit-content;
   padding: 0px 20px;
   margin: 0;
+  position: absolute;
+  right: 1rem;
 
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     // float: right;
