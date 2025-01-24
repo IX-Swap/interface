@@ -34,7 +34,7 @@ interface Props {
 }
 
 const transactionHash: any = {
-  '40e1ce66-1532-4794-86c4-af465bf22a57': '',
+  '40e1ce66-1532-4794-86c4-af465bf22a57': 'https://polygonscan.com/tx/0x067fd00b4cb1b4816cdbd148d546a8e26a0cd6e4774b4ac7be6744c5208563ec',
   '16e9891c-0092-4879-b11e-05a7ec84336b': 'https://polygonscan.com/tx/0x600090b79291fb303618ce98ec1568fd88f2dc5c68da32079e77e698b8242167',
 }
 
