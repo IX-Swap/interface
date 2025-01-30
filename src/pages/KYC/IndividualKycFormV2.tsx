@@ -30,6 +30,7 @@ import { EmailType, SecondaryContactTypeV2, SuccessType } from './enum'
 import SecondaryContactOption from './SecondaryContactOption'
 import CountriesBlockAlert from './CountriesBlockAlert'
 import useQuery from 'hooks/useQuery'
+import { useLocalization } from 'i18n'
 
 export const FormRow = styled(Row)`
   align-items: flex-start;
@@ -156,6 +157,7 @@ export default function IndividualKycFormV2() {
   const [initialValues, setInitialValues] = useState(individualFormV2InitialValues)
   const getMyKyc = useGetMyKyc()
   const query = useQuery()
+  const { t } = useLocalization()
 
   const getInitialValues = () => {
     if (kyc?.individual) {
@@ -389,7 +391,7 @@ export default function IndividualKycFormV2() {
                       <FormCard style={{ marginTop: isMobile ? '90px' : '0px' }} id="personal">
                         <HeaderContainer>
                           <Title>
-                            <Trans>Individual KYC</Trans>
+                            <Trans>{t('kyc.individual.title')}</Trans>
                           </Title>
                           {referralCode && (
                             <ReferralCode>
@@ -403,7 +405,7 @@ export default function IndividualKycFormV2() {
 
                         <RowStart marginBottom="32px" marginTop="32px">
                           <TYPE.title7>
-                            <Trans>Personal Information</Trans>
+                            <Trans>{t('kyc.individual.personalInformation')}</Trans>
                           </TYPE.title7>
                         </RowStart>
 
@@ -413,8 +415,8 @@ export default function IndividualKycFormV2() {
                               disabled={disabled}
                               kycVersion={'v2'}
                               id="firstNameInput"
-                              label="First Name *"
-                              placeholder="First Name"
+                              label={`${t('kyc.individual.firstName')} *`}
+                              placeholder={t('kyc.individual.firstName')}
                               value={values.firstName || (disabled ? kyc?.individual?.firstName : '')}
                               error={touched.firstName && errors.firstName}
                               onChange={(e: any) =>
@@ -425,8 +427,8 @@ export default function IndividualKycFormV2() {
                               disabled={disabled}
                               id="middleNameInput"
                               kycVersion={'v2'}
-                              label="Middle Name"
-                              placeholder="Middle Name"
+                              label={t('kyc.individual.middleName')}
+                              placeholder={t('kyc.individual.middleName')}
                               value={values.middleName || (disabled ? kyc?.individual?.middleName : '')}
                               error={touched.middleName && errors.middleName}
                               onChange={(e: any) =>
@@ -437,8 +439,8 @@ export default function IndividualKycFormV2() {
                               disabled={disabled}
                               id="lastNameInput"
                               kycVersion={'v2'}
-                              label="Last Name *"
-                              placeholder="Last Name"
+                              label={`${t('kyc.individual.lastName')} *`}
+                              placeholder={t('kyc.individual.lastName')}
                               value={values.lastName || (disabled ? kyc?.individual?.lastName : '')}
                               error={touched.lastName && errors.lastName}
                               onChange={(e: any) =>
@@ -448,10 +450,10 @@ export default function IndividualKycFormV2() {
                           </FormGrid>
                           <TextInput
                             disabled={disabled}
-                            placeholder="Email address"
+                            label={`${t('kyc.individual.emailAddress')} *`}
+                            placeholder={t('kyc.individual.emailAddress')}
                             kycVersion={'v2'}
                             id="emailAddressField"
-                            label="Email address *"
                             value={values.email || (disabled ? kyc?.individual?.email : '')}
                             error={touched.email && errors.email}
                             onChange={(e: any) => onChangeInput('email', e.currentTarget.value, values, setFieldValue)}
@@ -489,7 +491,7 @@ export default function IndividualKycFormV2() {
                         <div>
                           <RowStart>
                             <TYPE.title7>
-                              <Trans>Secondary Contact Details</Trans>
+                              <Trans>{t('kyc.individual.secondaryContactDetails.title')}</Trans>
                             </TYPE.title7>
                           </RowStart>
                           <RowStart style={{ justifyContent: isMobile ? 'center' : '' }}>
@@ -504,7 +506,9 @@ export default function IndividualKycFormV2() {
                               >
                                 <BoxWrapper>
                                   <TelegramIcon style={{ marginTop: '3px' }} />
-                                  <TYPE.subHeader1> {SecondaryContactTypeV2.TELEGRAM}</TYPE.subHeader1>
+                                  <TYPE.subHeader1>
+                                    {t('kyc.individual.secondaryContactDetails.telegram.title')}
+                                  </TYPE.subHeader1>
                                 </BoxWrapper>
 
                                 <CheckboxInput
@@ -530,7 +534,9 @@ export default function IndividualKycFormV2() {
                               >
                                 <BoxWrapper>
                                   <KYCEmailIcon />
-                                  <TYPE.subHeader1>Business Email</TYPE.subHeader1>
+                                  <TYPE.subHeader1>
+                                    {t('kyc.individual.secondaryContactDetails.businessEmail')}
+                                  </TYPE.subHeader1>
                                 </BoxWrapper>
 
                                 <CheckboxInput
@@ -555,7 +561,10 @@ export default function IndividualKycFormV2() {
                               >
                                 <BoxWrapper>
                                   <AddressIcon />
-                                  <TYPE.subHeader1> Proof of Address</TYPE.subHeader1>
+                                  <TYPE.subHeader1>
+                                    {' '}
+                                    {t('kyc.individual.secondaryContactDetails.proofOfAddress')}
+                                  </TYPE.subHeader1>
                                 </BoxWrapper>
 
                                 <CheckboxInput
@@ -578,9 +587,9 @@ export default function IndividualKycFormV2() {
                               <Column>
                                 <TextInput
                                   kycVersion={'v2'}
-                                  placeholder="Business Email"
+                                  placeholder={t('kyc.individual.secondaryContactDetails.businessEmail')}
                                   id="businessEmailAddressField"
-                                  label="Business Email *"
+                                  label={`${t('kyc.individual.secondaryContactDetails.businessEmail')} *`}
                                   disabled={businessEmailDisabled}
                                   value={
                                     values.businessEmail ||
@@ -645,7 +654,7 @@ export default function IndividualKycFormV2() {
                       >
                         <RowCenter marginBottom="10px" marginTop="20px">
                           <TYPE.title7>
-                            <Trans>Verify Documents</Trans>
+                            <Trans>{t('kyc.individual.verifyDocuments.title')}</Trans>
                           </TYPE.title7>
                         </RowCenter>
 
@@ -653,16 +662,15 @@ export default function IndividualKycFormV2() {
                           <TYPE.description3
                             style={{ margin: isMobile ? '10px' : '0px 190px 30px 190px', textAlign: 'center' }}
                           >
-                            Please note that your documents will be verified through the ComplyCube service. This
-                            process may take some time, and you will be notified within 10-15 minutes.
+                            {t('kyc.individual.verifyDocuments.description')}
                           </TYPE.description3>
                         </RowCenter>
 
                         <EligibilityAndDocumentsContainer>
-                          <div className="title">Eligibility & Document Requirements:</div>
+                          <div className="title">{t('kyc.individual.verifyDocuments.eligibility')}</div>
                           <ul className="description">
-                            <li>Document Authenticity: No copied or expired documents allowed</li>
-                            <li>Liveliness Test: A mandatory selfie is required to verify your identity</li>
+                            <li>{t('kyc.individual.verifyDocuments.authenticity')}</li>
+                            <li>{t('kyc.individual.verifyDocuments.liveliness')}</li>
                           </ul>
 
                           <div className="checkbox-container">
@@ -674,13 +682,15 @@ export default function IndividualKycFormV2() {
                               onChange={handleCheckboxVerifyDocument}
                             />
                             <label htmlFor="eligibility-confirmation" className="label">
-                              I confirm that I have read and understood the Eligibility and Document Requirements.
+                              {t('kyc.individual.verifyDocuments.confirmation')}
                             </label>
                           </div>
                         </EligibilityAndDocumentsContainer>
 
                         <PinnedContentButton onClick={handleVerifyDocuments} disabled={!isCheckboxChecked || loading}>
-                          {loading ? 'Verifying...' : 'Verify Documents'}
+                          {loading
+                            ? t('kyc.individual.verifyDocuments.verifying')
+                            : t('kyc.individual.verifyDocuments.verify')}
                         </PinnedContentButton>
                       </FormCard>
                     </Column>
@@ -691,15 +701,15 @@ export default function IndividualKycFormV2() {
                         isKycV2={true}
                         topics={[
                           {
-                            title: 'Personal Information',
+                            title: t('kyc.individual.personalInformation'),
                             href: 'personal',
                           },
                           {
-                            title: 'Secondary Contact Details',
+                            title: t('kyc.individual.secondaryContactDetails.title'),
                             href: 'secondary-contact',
                           },
                           {
-                            title: 'Verify Documents',
+                            title: t('kyc.individual.verifyDocuments.title'),
                             href: 'verify-documents',
                           },
                         ]}

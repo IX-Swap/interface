@@ -12,112 +12,71 @@
   "labels": {
     "emailAddress": "이메일 주소",
     "verifyTitle": "계정 확인",
-    "verifyDesc": "계정 소유자를 확인하기 위해 지갑에서 메시지를 서명해주세요.",
+    "verifyDesc": "지갑에서 메시지에 서명하여 계정 소유권을 확인하세요",
     "referFriend": "친구 추천"
   },
   "buttons": {
     "submit": "제출",
     "connectWallet": "지갑 연결",
-    "cancel": "취소",
-    "signMessage": "메시지 서명"
+    "cancel": "취소"
   },
   "landing": {
     "welcome": "환영합니다",
-    "whileWaiting": "지갑이 연결되지 않은 동안 새{{stakingProgramLink}}, {{liquidityMiningPolygonLink}} 및 {{liquidityMiningEthereumLink}}를 확인할 수 있습니다.",
+    "whileWaiting": "지갑이 연결되지 않은 동안, 새로운 {{stakingProgramLink}}, {{liquidityMiningPolygonLink}}, {{liquidityMiningEthereumLink}}를 확인할 수 있습니다.",
     "stakingProgram": "스테이킹 프로그램",
-    "liquidityMiningPolygon": "Polygon에서 유동성 채굴",
-    "liquidityMiningEthereum": "Ethereum에서 유동성 채굴",
+    "liquidityMiningPolygon": "Polygon에서의 유동성 마이닝",
+    "liquidityMiningEthereum": "이더리움에서의 유동성 마이닝",
     "subscribe": "구독",
     "updates": "업데이트",
-    "subscribeSubtitle": "IX Swap의 최신 소식을 스팸 없이 받아보세요.",
-    "pleaseConnectWallet": "애플리케이션을 사용하려면 지갑을 연결해주세요.",
-    "whileWalletIsNotConnected": "지갑이 연결되지 않은 동안 새"
+    "subscribeSubtitle": "스팸 없는 최신 IX Swap 소식을 받아보세요.",
+    "pleaseConnectWallet": "애플리케이션을 사용하려면 지갑을 연결하세요",
+    "whileWalletIsNotConnected": "지갑이 연결되지 않은 동안, 새로운"
   },
   "kyc": {
-    "kycAsIndividual": "개인으로 KYC 통과",
-    "kycAsCorporate": "법인으로 KYC 통과",
-    "kycAsIndividualContinue": "개인으로 KYC 계속",
-    "kycAsCorporateContinue": "법인으로 KYC 계속",
+    "kycAsIndividual": "개인 KYC 완료",
+    "kycAsCorporate": "기업 KYC 완료",
+    "kycAsIndividualContinue": "개인 KYC 계속",
+    "kycAsCorporateContinue": "기업 KYC 계속",
     "startNow": "지금 시작",
+    "progress": "진행 상황",
     "individual": {
       "title": "개인 KYC",
-      "section1Title": "개인 정보",
+      "personalInformation": "개인 정보",
+      "blockedCountriesAlert": "현재 미국 또는 북한 시민에게는 서비스를 제공하지 않습니다.",
       "firstName": "이름",
       "middleName": "중간 이름",
       "lastName": "성",
       "emailAddress": "이메일 주소",
-      "invalidEmailAddress": "유효한 주소를 입력하세요.",
-      "enterOtpCode": "코드 입력",
-      "otpCodeInfo": "6자리 확인 코드가 이메일로 전송되었습니다. 아래 코드를 입력하여 이메일을 확인하세요.",
-      "sendOtpCode": "코드 보내기",
-      "resendOtpCode": "코드 다시 보내기",
-      "invalidOtpCode": "유효하지 않은 확인 코드",
-      "verificationCodeSuccess": "확인 코드가 성공적으로 확인되었습니다.",
-      "section2Title": "비상 연락처"
-    },
-    "corporate": {
-      "corporateName": "법인명"
-    }
-  },
-  "launchpad": {
-    "section1Title": "스타트업 및 유니콘 기회에 투자",
-    "totalRaised": "총 모금액",
-    "investments": "투자"
-  },
-  "maintenance": {
-    "title": "유지보수 중",
-    "info": "이 페이지는 유지보수 중이며 곧 다시 열릴 예정입니다."
-  },
-  "general": {
-    "confirmed": "확인됨"
-  },
-  "footer": {
-    "subscribe": "{{offerId ? \"이 거래의\" : ''}} 업데이트 구독",
-    "subscribeSubtitle": "최신 업데이트와 소식을 이메일로 직접 받아보세요.",
-    "emailPlaceholder": "이메일 주소 입력",
-    "socialLinks": {
-      "telegram": "Telegram에서 팔로우",
-      "x": "X에서 팔로우",
-      "m": "CoinMarketCap에서 보기",
-      "discord": "Discord에서 참여",
-      "youtube": "YouTube 채널 구독",
-      "linkedin": "LinkedIn에서 연결"
-    },
-    "about": {
-      "description": "IX Swap은 안전한 토큰화된 주식 거래와 증권 토큰화를 제공하기 위해 글로벌 자본 시장, 법률 및 블록체인 전문가들에 의해 구축되었습니다."
-    },
-    "copyright": "저작권 © IX Swap {{year}}",
-    "termsAndConditions": "이용 약관",
-    "privacyPolicy": "개인정보 보호정책",
-    "cookieSetting": "쿠키 설정",
-    "products": {
-      "header": "제품",
-      "whatIsIXSwap": "IX Swap은 무엇인가요?",
-      "ixsToken": "IXS 토큰",
-      "ixsLaunchpad": "IXS 런치패드",
-      "exchange": "거래소",
-      "staking": "스테이킹 및 유동성 채굴",
-      "borrowing": "대출 및 대여",
-      "ixsCustody": "IXS 관리"
-    },
-    "company": {
-      "header": "회사",
-      "ecosystem": "생태계",
-      "documents": "문서",
-      "team": "팀",
-      "community": "커뮤니티",
-      "ambassadorProgram": "앰배서더 프로그램",
-      "contactUs": "연락처"
-    },
-    "explore": {
-      "header": "탐색",
-      "blog": "블로그",
-      "courses": "코스",
-      "articles": "기사",
-      "videos": "비디오",
-      "glossary": "용어집",
-      "tutorials": "튜토리얼",
-      "faq": "FAQ"
-    }
-  }
-}
+      "emailVerification": {
+        "verifyCode": {
+          "title": "코드 입력",
+          "subTitle": "6자리 확인 코드가 이메일로 전송되었습니다. 아래 코드를 입력하여 이메일을 확인하세요."
+        },
+        "verifyEmail": {
+          "title": "이메일 확인",
+          "subTitle": "이메일 주소로 확인 코드를 보내 로봇이 아님을 확인합니다."
+        },
+        "getNewCodeTimer": "새 코드 받기 ({{timer}}초)",
+        "confirmation": {
+          "title": "확인 코드가 성공적으로 확인되었습니다.",
+          "status": "확인됨"
+        }
+      },
+      "secondaryContactDetails": {
+        "title": "보조 연락처 정보",
+        "telegram": {
+          "title": "Telegram",
+          "instruction": "설명",
+          "steps": {
+            "1": "1. Telegram 앱 열기",
+            "2": "2. 채팅 시작",
+            "3": "3. 확인 코드 받기",
+            "4": "4. 코드를 봇에게 보내기"
+          }
+        },
+        "businessEmail": "비즈니스 이메일",
+        "proofOfAddress": "주소 증명"
+      },
+      "verifyDocuments": {
+        "title": "서류 확인",
+        "description": "서류는 ComplyCube 서비스를 통해 확인됩니다. 이 과정에는 시간이 소요될 수 있으며, 

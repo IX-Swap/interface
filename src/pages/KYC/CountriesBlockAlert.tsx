@@ -3,6 +3,7 @@ import { Flex } from 'rebass'
 import styled from 'styled-components'
 
 import { ReactComponent as AlertIcon } from 'assets/images/icons/alert.svg'
+import { useLocalization } from 'i18n'
 
 const countries = {
   us: {
@@ -17,12 +18,13 @@ const countries = {
 
 const CountriesBlockAlert: React.FC = () => {
   const flags = Object.values(countries).map((country) => country.flag)
+  const { t } = useLocalization()
 
   return (
     <Container>
-      <Flex flexDirection={['column', 'row']} alignItems={'center'} style={{ gap: 8 }} >
+      <Flex flexDirection={['column', 'row']} alignItems={'center'} style={{ gap: 8 }}>
         <AlertIcon />
-        <div>Our service is currently unavailable to citizens of the United States or North Korea.</div>
+        <div>{t('kyc.individual.blockedCountriesAlert')}</div>
       </Flex>
 
       <Flex alignItems="center">

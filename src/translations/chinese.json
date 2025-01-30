@@ -1,8 +1,8 @@
 {
   "navbar": {
     "charts": "图表",
-    "bridge": "桥梁",
-    "launchpad": "启动板",
+    "bridge": "跨链桥",
+    "launchpad": "Launchpad",
     "rwas": "RWAs",
     "liquidityPools": "流动性池",
     "swapTrade": "兑换/交易",
@@ -18,83 +18,116 @@
   "buttons": {
     "submit": "提交",
     "connectWallet": "连接钱包",
-    "cancel": "取消",
-    "signMessage": "签署消息"
+    "cancel": "取消"
   },
   "landing": {
     "welcome": "欢迎来到",
-    "whileWaiting": "在您的钱包尚未连接时，您可以查看我们的新{{stakingProgramLink}}、{{liquidityMiningPolygonLink}}和{{liquidityMiningEthereumLink}}。",
+    "whileWaiting": "在您的钱包未连接时，您可以查看我们的新{{stakingProgramLink}}、{{liquidityMiningPolygonLink}}和{{liquidityMiningEthereumLink}}。",
     "stakingProgram": "质押计划",
     "liquidityMiningPolygon": "Polygon上的流动性挖矿",
-    "liquidityMiningEthereum": "Ethereum上的流动性挖矿",
+    "liquidityMiningEthereum": "以太坊上的流动性挖矿",
     "subscribe": "订阅",
     "updates": "更新",
-    "subscribeSubtitle": "获取IX Swap的最新新闻，绝无垃圾邮件。",
+    "subscribeSubtitle": "获取最新的IX Swap新闻，无垃圾邮件。",
     "pleaseConnectWallet": "请连接您的钱包以使用应用程序",
     "whileWalletIsNotConnected": "在您的钱包未连接时，您可以查看我们的新"
   },
   "kyc": {
-    "kycAsIndividual": "作为个人通过KYC",
-    "kycAsCorporate": "作为公司通过KYC",
-    "kycAsIndividualContinue": "继续作为个人通过KYC",
-    "kycAsCorporateContinue": "继续作为公司通过KYC",
+    "kycAsIndividual": "个人KYC",
+    "kycAsCorporate": "企业KYC",
+    "kycAsIndividualContinue": "继续个人KYC",
+    "kycAsCorporateContinue": "继续企业KYC",
     "startNow": "立即开始",
+    "progress": "进度",
     "individual": {
       "title": "个人KYC",
-      "section1Title": "个人信息",
-      "firstName": "名",
+      "personalInformation": "个人信息",
+      "blockedCountriesAlert": "我们的服务目前不适用于美国或朝鲜的公民。",
+      "firstName": "名字",
       "middleName": "中间名",
-      "lastName": "姓",
+      "lastName": "姓氏",
       "emailAddress": "电子邮件地址",
-      "invalidEmailAddress": "请输入有效的地址",
-      "enterOtpCode": "输入验证码",
-      "otpCodeInfo": "一个6位数的验证码已发送到您的电子邮件地址。请输入下面的代码以验证您的电子邮件",
-      "sendOtpCode": "发送代码",
-      "resendOtpCode": "重新发送代码",
-      "invalidOtpCode": "无效的验证码",
-      "verificationCodeSuccess": "验证码已成功确认。",
-      "section2Title": "备用联系方式"
+      "emailVerification": {
+        "verifyCode": {
+          "title": "输入验证码",
+          "subTitle": "已向您的电子邮件发送6位验证码。请输入以下代码以验证您的电子邮件。"
+        },
+        "verifyEmail": {
+          "title": "验证您的电子邮件",
+          "subTitle": "获取发送到您电子邮件地址的验证码，以确认您不是机器人。"
+        },
+        "getNewCodeTimer": "获取新验证码（{{timer}}秒）",
+        "confirmation": {
+          "title": "验证码已成功确认。",
+          "status": "已确认"
+        }
+      },
+      "secondaryContactDetails": {
+        "title": "次要联系信息",
+        "telegram": {
+          "title": "Telegram",
+          "instruction": "说明",
+          "steps": {
+            "1": "1. 打开Telegram应用",
+            "2": "2. 开始与",
+            "3": "3. 获取验证码",
+            "4": "4. 将验证码发送给机器人"
+          }
+        },
+        "businessEmail": "企业邮箱",
+        "proofOfAddress": "地址证明"
+      },
+      "verifyDocuments": {
+        "title": "验证文件",
+        "description": "请注意，您的文件将通过ComplyCube服务进行验证。此过程可能需要一些时间，您将在10-15分钟内收到通知。",
+        "eligibility": "资格和文件要求：",
+        "authenticity": "文件真实性：不允许使用复制或过期的文件",
+        "liveliness": "活体检测：需要自拍以验证您的身份",
+        "confirmation": "我确认我已阅读并理解资格和文件要求。",
+        "verifying": "正在验证...",
+        "verify": "验证文件"
+      }
     },
     "corporate": {
-      "corporateName": "公司名称"
+      "corporateName": "企业名称"
     }
   },
   "launchpad": {
-    "section1Title": "投资初创公司及类似独角兽的机会",
+    "section1Title": "投资初创公司和其他独角兽机会",
     "totalRaised": "总筹集金额",
     "investments": "投资"
   },
   "maintenance": {
-    "title": "正在维护",
-    "info": "此页面正在维护，很快将恢复"
+    "title": "我们正在维护",
+    "info": "此页面正在维护中，很快就会恢复"
   },
   "general": {
     "confirmed": "已确认"
   },
   "footer": {
     "subscribe": "订阅{{offerId ? \"该交易的\" : ''}}更新",
-    "subscribeSubtitle": "最新的更新和新闻将直接发送到您的收件箱。",
-    "emailPlaceholder": "请输入您的电子邮件地址",
+    "subscribeSubtitle": "获取最新更新和新闻，直接发送到您的收件箱。",
+    "emailPlaceholder": "输入您的电子邮件地址",
     "socialLinks": {
       "telegram": "在Telegram上关注我们",
       "x": "在X上关注我们",
       "m": "在CoinMarketCap上查看我们",
-      "discord": "在Discord上加入我们",
+      "discord": "加入我们的Discord",
       "youtube": "订阅我们的YouTube频道",
-      "linkedin": "在LinkedIn上连接我们"
+      "linkedin": "在LinkedIn上联系我们"
     },
     "about": {
-      "description": "IX Swap由一支全球资本市场、法律和区块链专家团队构建，为您带来安全代币和代币化股票交易的下一代体验。"
+      "description": "IX Swap由全球资本市场、法律和区块链专家团队打造，为您带来下一代安全代币和代币化股票交易。"
     },
-    "copyright": "版权 © IX Swap {{year}}",
+    "copyright": "版权所有 © IX Swap {{year}}",
     "termsAndConditions": "条款和条件",
     "privacyPolicy": "隐私政策",
     "cookieSetting": "Cookie设置",
     "products": {
       "header": "产品",
-      "whatIsIXSwap": "什么是IX Swap?",
+      "whatIsIXSwap": "什么是IX Swap？",
       "ixsToken": "IXS代币",
-      "ixsLaunchpad": "IXS启动板",
+      "ixsLaunchpad": "IXS Launchpad",
       "exchange": "交易所",
       "staking": "质押和流动性挖矿",
       "borrowing": "借贷",

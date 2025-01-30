@@ -185,7 +185,7 @@ export const ResendEmailModal = ({ isModalOpen, closeModal, kycType, referralCod
           )}
 
           {step === 1 && <IXSSubTitle>Change your email</IXSSubTitle>}
-          {step === 2 && <IXSSubTitle> Enter the code</IXSSubTitle>}
+          {step === 2 && <IXSSubTitle>Enter the code</IXSSubTitle>}
           {step === 1 && (
             <IXSSubTitleSub>
               {isMobile ? (

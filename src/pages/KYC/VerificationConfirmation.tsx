@@ -3,18 +3,21 @@ import styled from 'styled-components'
 import { ReactComponent as CheckIcon } from 'assets/images/newRoundCheck.svg'
 import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { PinnedContentButton } from 'components/Button'
+import { useLocalization } from 'i18n'
 
 const VerificationConfirmation = () => {
+  const { t } = useLocalization()
+
   return (
     <Container>
       <CenteredDiv>
-        <TYPE.title9 lineHeight={'30px'} fontSize={'20px'}>
-          Verification code has been <br /> confirmed successfully.
+        <TYPE.title9 lineHeight={'30px'} fontSize={'20px'} maxWidth={'300px'} margin={'auto'}>
+          {t('kyc.individual.emailVerification.confirmation.title')}
         </TYPE.title9>
         <StyledButton>
           <FlexDiv>
             <CheckIcon />
-            <TYPE.black fontSize={'14px'}>Confirmed</TYPE.black>
+            <TYPE.black fontSize={'14px'}>{t('kyc.individual.emailVerification.confirmation.status')}</TYPE.black>
           </FlexDiv>
         </StyledButton>
       </CenteredDiv>

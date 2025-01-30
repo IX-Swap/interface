@@ -187,7 +187,7 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType, referralCo
           )}
 
           {step === 1 && <IXSSubTitle>Verify your email</IXSSubTitle>}
-          {step === 2 && <IXSSubTitle> Enter the code</IXSSubTitle>}
+          {step === 2 && <IXSSubTitle>Enter the code</IXSSubTitle>}
           {step === 1 && (
             <IXSSubTitleSub>
               {isMobile ? (

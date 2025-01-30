@@ -7,6 +7,7 @@ import { TYPE } from 'theme'
 
 import { FormCard, PageLink, KYCStatusIcons } from './styleds'
 import { Box } from 'rebass'
+import { useLocalization } from 'i18n'
 
 interface KYCProgressTopic {
   title: string
@@ -34,6 +35,7 @@ export const KYCProgressBar: FC<Props> = ({
   isKycV2,
 }: Props) => {
   const [activeTopic, setActiveTopic] = useState<number>(0)
+  const { t } = useLocalization()
 
   const handleScrollToDiv = useCallback(
     (href: string, index: number) => {
@@ -73,7 +75,7 @@ export const KYCProgressBar: FC<Props> = ({
 
       <FormCard style={{ padding: '24px 0px' }}>
         <TYPE.title6 fontSize={'18px'} fontWeight={'700'} marginBottom="16px" paddingX="24px">
-          Progress
+          {t('kyc.progress')}
         </TYPE.title6>
 
         <Column>

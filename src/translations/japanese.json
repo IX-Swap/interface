@@ -11,93 +11,126 @@
   },
   "labels": {
     "emailAddress": "メールアドレス",
-    "verifyTitle": "アカウントを確認してください",
-    "verifyDesc": "アカウント所有者を確認するためにウォレットでメッセージに署名してください",
+    "verifyTitle": "アカウントを確認",
+    "verifyDesc": "ウォレットでメッセージに署名してアカウントの所有権を確認してください",
     "referFriend": "友達を紹介"
   },
   "buttons": {
     "submit": "送信",
     "connectWallet": "ウォレットを接続",
-    "cancel": "キャンセル",
-    "signMessage": "メッセージに署名"
+    "cancel": "キャンセル"
   },
   "landing": {
     "welcome": "ようこそ",
-    "whileWaiting": "ウォレットが接続されていない間は、新しい{{stakingProgramLink}}、{{liquidityMiningPolygonLink}}、{{liquidityMiningEthereumLink}}を見ることができます。",
+    "whileWaiting": "ウォレットが接続されていない間、新しい{{stakingProgramLink}}、{{liquidityMiningPolygonLink}}、{{liquidityMiningEthereumLink}}をご覧いただけます。",
     "stakingProgram": "ステーキングプログラム",
     "liquidityMiningPolygon": "Polygonでの流動性マイニング",
-    "liquidityMiningEthereum": "Ethereumでの流動性マイニング",
+    "liquidityMiningEthereum": "イーサリアムでの流動性マイニング",
     "subscribe": "購読",
-    "updates": "更新情報",
-    "subscribeSubtitle": "IX Swapの最新ニュースを、スパムなしでお届けします。",
+    "updates": "更新",
+    "subscribeSubtitle": "最新のIX Swapニュースをスパムなしでお届けします。",
     "pleaseConnectWallet": "アプリケーションを使用するにはウォレットを接続してください",
-    "whileWalletIsNotConnected": "ウォレットが接続されていない間は、新しい"
+    "whileWalletIsNotConnected": "ウォレットが接続されていない間、新しい"
   },
   "kyc": {
-    "kycAsIndividual": "個人としてKYCを通過",
-    "kycAsCorporate": "法人としてKYCを通過",
-    "kycAsIndividualContinue": "個人としてKYCを続行",
-    "kycAsCorporateContinue": "法人としてKYCを続行",
+    "kycAsIndividual": "個人としてKYCを完了",
+    "kycAsCorporate": "企業としてKYCを完了",
+    "kycAsIndividualContinue": "個人KYCを続行",
+    "kycAsCorporateContinue": "企業KYCを続行",
     "startNow": "今すぐ開始",
+    "progress": "進捗",
     "individual": {
       "title": "個人KYC",
-      "section1Title": "個人情報",
-      "firstName": "名前",
+      "personalInformation": "個人情報",
+      "blockedCountriesAlert": "現在、アメリカ合衆国または北朝鮮の市民にはサービスを提供しておりません。",
+      "firstName": "名",
       "middleName": "ミドルネーム",
-      "lastName": "苗字",
+      "lastName": "姓",
       "emailAddress": "メールアドレス",
-      "invalidEmailAddress": "有効なアドレスを入力してください",
-      "enterOtpCode": "コードを入力",
-      "otpCodeInfo": "6桁の確認コードがメールアドレスに送信されました。以下にコードを入力してメールを確認してください",
-      "sendOtpCode": "コードを送信",
-      "resendOtpCode": "コードを再送信",
-      "invalidOtpCode": "無効な確認コード",
-      "verificationCodeSuccess": "確認コードが正常に確認されました。",
-      "section2Title": "二次連絡先"
+      "emailVerification": {
+        "verifyCode": {
+          "title": "コードを入力",
+          "subTitle": "6桁の確認コードがメールに送信されました。以下のコードを入力してメールを確認してください。"
+        },
+        "verifyEmail": {
+          "title": "メールを確認",
+          "subTitle": "メールアドレスに確認コードを送信し、ロボットでないことを確認します。"
+        },
+        "getNewCodeTimer": "新しいコードを取得（{{timer}}秒）",
+        "confirmation": {
+          "title": "確認コードが正常に確認されました。",
+          "status": "確認済み"
+        }
+      },
+      "secondaryContactDetails": {
+        "title": "二次連絡先情報",
+        "telegram": {
+          "title": "Telegram",
+          "instruction": "説明",
+          "steps": {
+            "1": "1. Telegramアプリを開く",
+            "2": "2. チャットを開始",
+            "3": "3. 確認コードを取得",
+            "4": "4. コードをボットに送信"
+          }
+        },
+        "businessEmail": "ビジネスメール",
+        "proofOfAddress": "住所証明"
+      },
+      "verifyDocuments": {
+        "title": "書類を確認",
+        "description": "書類はComplyCubeサービスを通じて確認されます。このプロセスには時間がかかる場合があり、10〜15分以内に通知されます。",
+        "eligibility": "資格と書類要件：",
+        "authenticity": "書類の真正性：コピーまたは期限切れの書類は使用できません",
+        "liveliness": "ライブネステスト：本人確認のために自撮りが必要です",
+        "confirmation": "資格と書類要件を読み、理解したことを確認します。",
+        "verifying": "確認中...",
+        "verify": "書類を確認"
+      }
     },
     "corporate": {
-      "corporateName": "法人名"
+      "corporateName": "企業名"
     }
   },
   "launchpad": {
     "section1Title": "スタートアップやユニコーンのような機会に投資",
-    "totalRaised": "総額調達",
+    "totalRaised": "総調達額",
     "investments": "投資"
   },
   "maintenance": {
     "title": "メンテナンス中",
-    "info": "このページはメンテナンス中で、まもなく再開されます"
+    "info": "このページはメンテナンス中です。すぐに戻ります"
   },
   "general": {
     "confirmed": "確認済み"
   },
   "footer": {
-    "subscribe": "{{offerId ? \"取引の\" : ''}} 更新を購読",
-    "subscribeSubtitle": "最新の更新情報とニュースを直接あなたのメールボックスにお届けします。",
+    "subscribe": "{{offerId ? \"この取引の\" : ''}}更新を購読",
+    "subscribeSubtitle": "最新の更新とニュースを直接お届けします。",
     "emailPlaceholder": "メールアドレスを入力",
     "socialLinks": {
       "telegram": "Telegramでフォロー",
       "x": "Xでフォロー",
-      "m": "CoinMarketCapで見る",
-      "discord": "Discordで参加",
-      "youtube": "YouTubeチャンネルを購読",
+      "m": "CoinMarketCapで確認",
+      "discord": "Discordに参加",
+      "youtube": "YouTubeチャンネルを登録",
       "linkedin": "LinkedInで接続"
     },
     "about": {
-      "description": "IX Swapは、セキュリティトークンおよびトークン化された株式の取引の次世代を提供するために、グローバルなキャピタルマーケット、法務およびブロックチェーンの専門家によって構築されました。"
+      "description": "IX Swapは、資本市場、法律、ブロックチェーンの専門家チームによって構築され、セキュリティトークンとトークン化株式の次世代取引を提供します。"
     },
     "copyright": "著作権 © IX Swap {{year}}",
     "termsAndConditions": "利用規約",
     "privacyPolicy": "プライバシーポリシー",
-    "cookieSetting": "クッキー設定",
+    "cookieSetting": "Cookie設定",
     "products": {
       "header": "製品",
-      "whatIsIXSwap": "IX Swapとは?",
+      "whatIsIXSwap": "IX Swapとは？",
       "ixsToken": "IXSトークン",
       "ixsLaunchpad": "IXSローンチパッド",
       "exchange": "取引所",
       "staking": "ステーキングと流動性マイニング",
-      "borrowing": "借り入れと貸し出し",
+      "borrowing": "借入と貸出",
       "ixsCustody": "IXSカストディ"
     },
     "company": {
@@ -106,7 +139,7 @@
       "documents": "書類",
       "team": "チーム",
       "community": "コミュニティ",
-      "ambassadorProgram": "アンバサダー・プログラム",
+      "ambassadorProgram": "アンバサダープログラム",
       "contactUs": "お問い合わせ"
     },
     "explore": {
@@ -114,10 +147,10 @@
       "blog": "ブログ",
       "courses": "コース",
       "articles": "記事",
-      "videos": "ビデオ",
+      "videos": "動画",
       "glossary": "用語集",
       "tutorials": "チュートリアル",
-      "faq": "FAQ"
+      "faq": "よくある質問"
     }
   }
 }

@@ -99,7 +99,7 @@ const KYC = () => {
   const [modalProps, setModalProps] = useState<ModalProps>({ isModalOpen: false, referralCode: '' })
   const status = useMemo(() => kyc?.status || KYCStatuses.NOT_SUBMITTED, [kyc])
   const description = useMemo(() => kyc?.message || getStatusDescription(status), [kyc, status])
-  const { t } = useLocalization();
+  const { t, language } = useLocalization()
 
   const { me } = useUserState()
   const history = useHistory()
@@ -182,7 +182,7 @@ const KYC = () => {
                       color: '#292933',
                     }}
                   >
-                    <Trans>Pass KYC as Individual</Trans>
+                    <Trans>{t('kyc.kycAsIndividual')}</Trans>
                   </Text>
 
                   <Text sx={{ marginTop: '12px', fontSize: '13px', fontWeight: '600', color: '#6666FF' }}>
@@ -206,13 +206,19 @@ const KYC = () => {
                 <CorporateKYC />
                 <>
                   <Text sx={{ marginTop: '32px', fontSize: '18px', fontWeight: '700', color: '#292933' }}>
-                    <Trans>Pass KYC as Corporate</Trans>
+                    <Trans>{t('kyc.kycAsCorporate')}</Trans>
                   </Text>
                 </>
                 {/* <Link style={{ textDecoration: 'none ' }} to="/kyc/corporate"> */}
 
                 <Text sx={{ marginTop: '12px', fontSize: '13px', fontWeight: '600', color: '#6666FF' }}>
-                  {isWrongNetwork ? <LoaderThin size={24} /> : <Trans>Start Now</Trans>}
+                  {isWrongNetwork ? (
+                    <LoaderThin size={24} />
+                  ) : (
+                    <Trans>
+                      <Trans>{t('kyc.startNow')}</Trans>
+                    </Trans>
+                  )}
                 </Text>
 
                 {/* </Link> */}
@@ -304,7 +310,7 @@ const KYC = () => {
           </>
         )
     }
-  }, [status, description, kyc, chainId])
+  }, [status, description, kyc, chainId, language])
 
   if (!account) {
     return (

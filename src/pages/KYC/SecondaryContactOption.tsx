@@ -14,6 +14,7 @@ import { isMobile } from 'react-device-detect'
 import { EmailType, SuccessType, KYCV2RequestButtonText } from './enum'
 import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { ReactComponent as CopyIcon } from 'assets/images/copy.svg'
+import { useLocalization } from 'i18n'
 
 interface Props {
   verificationSecation?: string
@@ -55,6 +56,7 @@ const SecondaryContactOption: React.FC<Props> = ({
   const [isButtonDisabled, setIsButtonDisabled] = useState(false)
   const [socialAccountOTP, SetsocialAccountOTP] = useState()
   const telegramBotUsername = process.env.REACT_APP_TELEGRAM_VERIFICATION_BOT
+  const { t } = useLocalization()
 
   const telegramUrl = `https://t.me/${telegramBotUsername}`
   const getButtonText = (section: string | undefined) => {
@@ -160,26 +162,33 @@ const SecondaryContactOption: React.FC<Props> = ({
         <ModalContent>
           {emailType === EmailType.SOCIAL_ACCOUNT ? (
             <>
-              <SocialAccountTitle>Instruction</SocialAccountTitle>
-              <SocialAccountSubTitle>1. Open the Telegram App</SocialAccountSubTitle>
+              <SocialAccountTitle>
+                {t('kyc.individual.secondaryContactDetails.telegram.instruction')}
+              </SocialAccountTitle>
               <SocialAccountSubTitle>
-                2. Start a chat with{' '}
+                {t('kyc.individual.secondaryContactDetails.telegram.steps.1')}
+              </SocialAccountSubTitle>
+              <SocialAccountSubTitle>
+                {t('kyc.individual.secondaryContactDetails.telegram.steps.2')}{' '}
                 <span onClick={handleTelegramRedirect} style={{ color: '#6666FF', cursor: 'pointer' }}>
                   @{telegramBotUsername}
                 </span>
               </SocialAccountSubTitle>
-              <SocialAccountSubTitle>3. Get Verification Code</SocialAccountSubTitle>
+              <SocialAccountSubTitle>
+                {t('kyc.individual.secondaryContactDetails.telegram.steps.3')}
+              </SocialAccountSubTitle>
             </>
           ) : (
             <>
               <Title>
-                {' '}
-                {buttonText === KYCV2RequestButtonText.VERIFY_CODE ? 'Enter the code' : 'Verify your Email'}
+                {buttonText === KYCV2RequestButtonText.VERIFY_CODE
+                  ? t('kyc.individual.emailVerification.verifyCode.title')
+                  : t('kyc.individual.emailVerification.verifyEmail.title')}
               </Title>
               <SubTitle>
                 {buttonText === KYCV2RequestButtonText.VERIFY_CODE
-                  ? `A 6-digit verification code has been sent to your email. Enter the code below to verify your email.`
-                  : `Get a verification code sent to your email address so we can confirm that you are not a robot.`}
+                  ? t('kyc.individual.emailVerification.verifyCode.subTitle')
+                  : t('kyc.individual.emailVerification.verifyEmail.subTitle')}
               </SubTitle>
             </>
           )}
@@ -207,7 +216,7 @@ const SecondaryContactOption: React.FC<Props> = ({
           {emailType !== EmailType.SOCIAL_ACCOUNT && (
             <TimerContainer>
               {timer > 0 ? (
-                <TimerText>{`Get new code (${timer} seconds)`}</TimerText>
+                <TimerText>{t('kyc.individual.emailVerification.getNewCodeTimer', { timer: String(timer) })}</TimerText>
               ) : (
                 <span style={{ cursor: 'pointer' }} onClick={handleGetNewCodeClick}>
                   {buttonText === KYCV2RequestButtonText.VERIFY_CODE ? <NewCodeText>Get New Code</NewCodeText> : ''}
@@ -245,6 +254,7 @@ const CodeInput: React.FC<any> = ({
   const verifySocialAccountCode = useSocialAccountVerificationStatus()
   const addPopup = useAddPopup()
   const [verifyError, setVerifyError] = useState(false)
+  const { t } = useLocalization()
 
   useEffect(() => {
     if (reset) {
@@ -389,7 +399,9 @@ const CodeInput: React.FC<any> = ({
         )}
       </CodeInputContainer>
       {emailType === EmailType.SOCIAL_ACCOUNT && (
-        <SocialAccountSubTitle style={{ marginTop: '20px' }}>4. Send the code to the Bot</SocialAccountSubTitle>
+        <SocialAccountSubTitle style={{ marginTop: '20px' }}>
+          {t('kyc.individual.secondaryContactDetails.telegram.steps.4')}
+        </SocialAccountSubTitle>
       )}
     </>
   )
