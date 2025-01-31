@@ -18,12 +18,14 @@ import { text8 } from 'components/LaunchpadMisc/typography'
 import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { isMobile } from 'react-device-detect'
 import { Flex } from 'rebass'
+import { useLocalization } from 'i18n'
 
 interface Props {
   offer: Offer
 }
 
 export const OfferGallery: React.FC<Props> = (props) => {
+  const { t } = useLocalization()
   const [showViewer, setShowViewer] = React.useState(false)
   const [initialViewerFile, setInitialViewerFile] = React.useState<OfferFile>()
 
@@ -112,11 +114,11 @@ export const OfferGallery: React.FC<Props> = (props) => {
       ) : (
         <SocialMediaLinks>
           <SocialMediaLink target="_blank" rel="noopener noreferrer" href={props.offer?.issuerWebsite}>
-            Website
+            {t('launchpad.offersPage.mainInfo.gallery.website')}
           </SocialMediaLink>
           {props.offer?.whitepaperUrl && (
             <SocialMediaLink target="_blank" rel="noopener noreferrer" href={props.offer.whitepaperUrl}>
-              Dataroom
+              {t('launchpad.offersPage.mainInfo.gallery.dataroom')}
             </SocialMediaLink>
           )}
           {socialMedialLinks

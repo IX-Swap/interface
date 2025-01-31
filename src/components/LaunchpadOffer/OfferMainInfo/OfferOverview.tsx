@@ -4,15 +4,17 @@ import styled from 'styled-components'
 import { Offer } from 'state/launchpad/types'
 import { text33, text53 } from 'components/LaunchpadMisc/typography'
 import { MEDIA_WIDTHS } from 'theme'
+import { useLocalization } from 'i18n'
 
 interface Props {
   offer: Offer
 }
 
 export const OfferOverview: React.FC<Props> = (props) => {
+  const { t } = useLocalization()
   return (
     <OverviewContainer>
-      <OverviewTitle>Overview</OverviewTitle>
+      <OverviewTitle>{t('launchpad.offersPage.mainInfo.overview')}</OverviewTitle>
       <OverviewContent>{props.offer.longDescription}</OverviewContent>
     </OverviewContainer>
   )
@@ -25,7 +27,7 @@ const OverviewContainer = styled.div`
   margin: 2rem 0;
   white-space: pre-line;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-   padding: 0px 20px;
+    padding: 0px 20px;
   }
 `
 

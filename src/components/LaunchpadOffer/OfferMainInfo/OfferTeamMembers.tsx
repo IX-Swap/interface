@@ -4,15 +4,18 @@ import styled from 'styled-components'
 import { OfferTeamMember } from 'state/launchpad/types'
 import { text34, text56, text7 } from 'components/LaunchpadMisc/typography'
 import { MEDIA_WIDTHS } from 'theme'
+import { useLocalization } from 'i18n'
 
 interface Props {
   team: OfferTeamMember[]
 }
 
 export const OfferTeamMembers: React.FC<Props> = (props) => {
+  const { t } = useLocalization()
+
   return (
     <TeamMemberList>
-      <TeamMemberListTitle>Team Members</TeamMemberListTitle>
+      <TeamMemberListTitle>{t('launchpad.offersPage.mainInfo.teamMembers')}</TeamMemberListTitle>
 
       {props.team.map((member, idx) => (
         <TeamMemberCard key={`team-member-${idx}`}>
@@ -35,7 +38,7 @@ const TeamMemberList = styled.div`
   white-space: pre-line;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     padding: 0px 20px;
-   }
+  }
 `
 
 const TeamMemberListTitle = styled.div`
@@ -62,7 +65,7 @@ const TeamMemberCard = styled.div`
   border-radius: 8px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     padding: 1rem 0rem;
-   }
+  }
 `
 
 const TeamMemberPhoto = styled.img`

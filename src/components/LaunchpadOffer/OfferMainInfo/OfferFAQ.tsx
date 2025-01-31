@@ -6,6 +6,7 @@ import { ChevronDown } from 'react-feather'
 import { OfferFAQ } from 'state/launchpad/types'
 import { text34, text56, text7 } from 'components/LaunchpadMisc/typography'
 import { MEDIA_WIDTHS } from 'theme'
+import { useLocalization } from 'i18n'
 
 interface Props {
   faq: OfferFAQ[]
@@ -18,9 +19,11 @@ interface QuestionProps {
 }
 
 export const OfferQuestions: React.FC<Props> = (props) => {
+  const { t } = useLocalization()
+
   return (
     <FAQList>
-      <FAQListTitle>Frequently Asked Questions</FAQListTitle>
+      <FAQListTitle>{t('launchpad.offersPage.mainInfo.faq')}</FAQListTitle>
 
       {props.faq.map((entry, idx) => (
         <OfferQuestion key={`quesion-${idx}`} isOpen={idx === 0} {...entry} />
@@ -55,7 +58,7 @@ const FAQList = styled.div`
   gap: 1rem;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     padding: 0px 20px;
-   }
+  }
 `
 
 const FAQListTitle = styled.div`

@@ -4,8 +4,10 @@ import { BaseButton } from './buttons'
 import { text34 } from './typography'
 import { ChevronUp } from 'react-feather'
 import { MEDIA_WIDTHS } from 'theme'
+import { useLocalization } from 'i18n'
 
 export const BackToTopButton = () => {
+  const { t } = useLocalization()
   const goToTop = () => {
     window.scrollTo({
       top: 0,
@@ -16,7 +18,7 @@ export const BackToTopButton = () => {
   return (
     <Container>
       <BackToTop onClick={goToTop}>
-        Back to top
+        {t('launchpad.offersPage.sideBar.backToTop')}
         <ChevronUp />
       </BackToTop>
     </Container>

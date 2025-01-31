@@ -151,6 +151,100 @@
           "preview": "プレビュー"
         }
       }
+    },
+    "offersPage": {
+      "mainInfo": {
+        "gallery": {
+          "website": "ウェブサイト",
+          "dataroom": "データルーム"
+        },
+        "overview": "概要",
+        "teamMembers": "チームメンバー",
+        "faq": "よくある質問"
+      },
+      "sideBar": {
+        "details": {
+          "raised": "調達額",
+          "indicator": {
+            "softCap": {
+              "title": "ソフトキャップ",
+              "body": "これは、取引が成功するために必要な最低金額です。"
+            }
+          },
+          "participants": {
+            "title": "参加者",
+            "body": "この取引に参加した投資家の数"
+          },
+          "dayCount": {
+            "header": "取引終了まで",
+            "day": "日",
+            "days": "日"
+          },
+          "investButton": {
+            "checkStatus": "ステータスを確認",
+            "notStarted": "投資登録",
+            "active": "投資する",
+            "closed": "ダッシュボードを開く"
+          },
+          "tokenInfo": {
+            "network": "トークンネットワーク: ",
+            "explorer": "エクスプローラー",
+            "addToMetamask": "Metamaskに追加"
+          },
+          "generalInfo": {
+            "issuer": "発行者",
+            "country": "国",
+            "investmentType": "投資タイプ",
+            "tokenPrice": "トークン価格",
+            "maxInvestment": "最大投資額",
+            "minInvestment": "最低投資額"
+          }
+        },
+        "saleAllocation": {
+          "title": "トークンセール割り当て",
+          "softCap": "ソフトキャップ",
+          "hardCap": "ハードキャップ",
+          "preSale": "プレセール用割り当て",
+          "publicSale": "パブリックセール用割り当て"
+        },
+        "investmentStage": {
+          "title": "投資ステージ",
+          "body": "表示されている時間は、{{utcTime}}の現地時間に基づいています。",
+          "whitelist": {
+            "title": "投資登録",
+            "body": "プレセールラウンドに参加するには、投資登録が必要です。このステージはパブリックセールには適用されません。"
+          },
+          "preSale": {
+            "title": "プレセール",
+            "body": "プレセールラウンドには、パブリックセールとは異なる最大および最小投資サイズがあります。プレセールラウンドに参加するには、投資登録が必要です。"
+          },
+          "publicSale": {
+            "title": "パブリックセール",
+            "body": "パブリックセールは誰でも参加可能で、予定された日付または発行者が決定した日付で終了します。"
+          },
+          "closed": {
+            "title": "終了",
+            "body": "この取引は、これ以上の投資を受け付けていません。"
+          },
+          "claim": {
+            "title": "トークン請求",
+            "body": "資金調達目標を達成した成功した取引の場合、購入したトークンを受け取ります。資金調達目標に達しなかった失敗した取引の場合、初期投資を返金請求できます。"
+          }
+        },
+        "offeringTerms": {
+          "investmentStructure": "投資構造",
+          "dividendYield": "配当利回り",
+          "investmentPeriod": "投資期間",
+          "grossIrr": "総内部収益率（%）",
+          "distributionFrequency": "分配頻度"
+        },
+        "additionalDocs": {
+          "title": "追加書類",
+          "placeholder": "表示する書類はありません"
+        },
+        "contactUs": "お問い合わせ",
+        "backToTop": "トップに戻る"
+      }
     }
   },
   "maintenance": {

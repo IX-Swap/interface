@@ -25,6 +25,7 @@ import { InvestSuccessModal } from '../InvestDialog/utils/InvestSuccessModal'
 import { InvestFailedModal } from '../InvestDialog/utils/InvestFailedModal'
 import { INVESTING_TOKEN_SYMBOL } from 'state/launchpad/constants'
 import { isTestnet } from 'utils/isEnvMode'
+import { useLocalization } from 'i18n'
 interface Props {
   offer: Offer
 }
@@ -39,6 +40,7 @@ export enum OfferStageStatus {
 
 export const OfferDetails: React.FC<Props> = (props) => {
   const theme = useTheme()
+  const { t } = useLocalization()
   const investedData = useInvestedData(props.offer.id)
   const { amount: amountToClaim } = investedData
   const { status: whitelistedStatus, isInterested } = useGetWhitelistStatus(props.offer.id)
@@ -133,7 +135,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
 
               <Row alignItems="center" gap="1rem">
                 <OfferFundRaiseIndicator offer={props.offer} size={32} />
-                <OfferFundRaiseLabel>Raised</OfferFundRaiseLabel>
+                <OfferFundRaiseLabel>{t('launchpad.offersPage.sideBar.details.raised')}</OfferFundRaiseLabel>
               </Row>
             </>
           )}
@@ -146,8 +148,11 @@ export const OfferDetails: React.FC<Props> = (props) => {
         <OfferStats>
           <Participants>
             <header>
-              Participants
-              <Tooltip title="Participants" body="Number of investors that has participated in this deal">
+              {t('launchpad.offersPage.sideBar.details.participants.title')}
+              <Tooltip
+                title={t('launchpad.offersPage.sideBar.details.participants.title')}
+                body={t('launchpad.offersPage.sideBar.details.participants.body')}
+              >
                 <Info size="12" />
               </Tooltip>
             </header>
@@ -156,9 +161,12 @@ export const OfferDetails: React.FC<Props> = (props) => {
           </Participants>
 
           <DayCount>
-            <header>The deal closes in</header>
+            <header>{t('launchpad.offersPage.sideBar.details.dayCount.header')}</header>
             <main>
-              {daysTillClosed} {daysTillClosed === 1 ? 'Day' : 'Days'}
+              {daysTillClosed}{' '}
+              {daysTillClosed === 1
+                ? t('launchpad.offersPage.sideBar.details.dayCount.day')
+                : t('launchpad.offersPage.sideBar.details.dayCount.days')}
             </main>
           </DayCount>
         </OfferStats>
@@ -166,10 +174,11 @@ export const OfferDetails: React.FC<Props> = (props) => {
         <InvestButtonContainer>
           {shouldShowInvestButton(stageStatus, props?.offer?.status, isInterested) ? (
             <InvestButton onClick={openInvestDialog}>
-              {stageStatus === OfferStageStatus.checkStatus && 'Check Status'}
-              {stageStatus === OfferStageStatus.notStarted && 'Register To Invest'}
-              {stageStatus === OfferStageStatus.active && 'Invest'}
-              {stageStatus === OfferStageStatus.closed && 'Open Dashboard '}
+              {stageStatus === OfferStageStatus.checkStatus &&
+                t('launchpad.offersPage.sideBar.details.investButton.checkStatus')}
+              {stageStatus === OfferStageStatus.notStarted && t('launchpad.offersPage.sideBar.details.investButton.notStarted')}
+              {stageStatus === OfferStageStatus.active && t('launchpad.offersPage.sideBar.details.investButton.active')}
+              {stageStatus === OfferStageStatus.closed && t('launchpad.offersPage.sideBar.details.investButton.closed')}
             </InvestButton>
           ) : null}
         </InvestButtonContainer>
@@ -192,12 +201,12 @@ export const OfferDetails: React.FC<Props> = (props) => {
 
       <TokenInfo>
         <TokenInfoCard>
-          <span className="label">Token Network: </span>
+          <span className="label">{t('launchpad.offersPage.sideBar.details.tokenInfo.network')}</span>
           {capitalize(props.offer.network)}
         </TokenInfoCard>
         <TokenInfoCard>
           <AdjustedExternalLink href={explorerLink} style={{ fontSize: '14px' }}>
-            Explorer
+            {t('launchpad.offersPage.sideBar.details.tokenInfo.explorer')}
           </AdjustedExternalLink>
         </TokenInfoCard>
         <TokenInfoCard>
@@ -213,7 +222,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
 
         <TokenInfoCard>
           <TokenInfoButton onClick={addToMetamask}>
-            Add to Metamask
+            {t('launchpad.offersPage.sideBar.details.tokenInfo.addToMetamask')}
             <img src={MetamaskIcon} width="20" />
           </TokenInfoButton>
         </TokenInfoCard>
@@ -245,6 +254,7 @@ export function getTokenSymbol(network: any, investingTokenSymbol: any) {
 }
 
 export const OfferGeneralInfo: React.FC<GeneralInfoProps> = (props) => {
+  const { t } = useLocalization()
   const formatedValue = useFormatOfferValue()
 
   const minTokenInvestment = React.useMemo(() => {
@@ -258,26 +268,26 @@ export const OfferGeneralInfo: React.FC<GeneralInfoProps> = (props) => {
   return (
     <InfoList
       entries={[
-        { label: 'Issuer', value: props.issuerName || 'N/A' },
-        { label: 'Country', value: props.country || 'N/A' },
+        { label: t('launchpad.offersPage.sideBar.details.generalInfo.issuer'), value: props.issuerName || 'N/A' },
+        { label: t('launchpad.offersPage.sideBar.details.generalInfo.country'), value: props.country || 'N/A' },
         {
-          label: 'Investment Type',
+          label: t('launchpad.offersPage.sideBar.details.generalInfo.investmentType'),
           value: props.investmentType?.replace(/\b\w/g, (match) => match.toUpperCase()) ?? 'N/A',
         },
         {
-          label: 'Token Price',
+          label: t('launchpad.offersPage.sideBar.details.generalInfo.tokenPrice'),
           value: `${getTokenSymbol(props?.network, props?.investingTokenSymbol)}  ${
             formatedValue(props.tokenPrice) ?? 'N/A'
           } / 1 ${props.tokenSymbol}`,
         },
         {
-          label: 'Max. Investment Size',
+          label: t('launchpad.offersPage.sideBar.details.generalInfo.maxInvestment'),
           value: `${getTokenSymbol(props?.network, props?.investingTokenSymbol)} ${
             formatedValue(props.maxInvestment) ?? 'N/A'
           } / ${maxTokenInvestment} ${props.tokenSymbol}`,
         },
         {
-          label: 'Min. Investment Size',
+          label: t('launchpad.offersPage.sideBar.details.generalInfo.minInvestment'),
           value: `${getTokenSymbol(props?.network, props?.investingTokenSymbol)} ${
             formatedValue(props.minInvestment) ?? 'N/A'
           } / ${minTokenInvestment} ${props.tokenSymbol}`,

@@ -6,6 +6,7 @@ import { ChevronDown, ChevronUp, Info } from 'react-feather'
 import { Offer } from 'state/launchpad/types'
 import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
 import { text32 } from 'components/LaunchpadMisc/typography'
+import { useLocalization } from 'i18n'
 
 interface Props {
   offer: Offer
@@ -14,6 +15,7 @@ interface Props {
 export const OfferInvestmentIndicator: React.FC<Props> = (props) => {
   const { totalInvestment, hardCap, hasPresale, softCap, presaleAlocated } = props.offer
   const theme = useTheme()
+  const { t } = useLocalization()
 
   const investmentPercentage = useMemo(
     () => (Number(totalInvestment) / Number(hardCap)) * 100,
@@ -31,10 +33,10 @@ export const OfferInvestmentIndicator: React.FC<Props> = (props) => {
 
       <SoftcapMarker percentage={softCapPercentage}>
         <div>
-          Soft Cap
+          {t('launchpad.offersPage.sideBar.details.indicator.softCap.title')}
           <Tooltip
-            title="Soft Cap"
-            body="This is the minimum amount that needs to be raised for the deal to be successful."
+            title={t('launchpad.offersPage.sideBar.details.indicator.softCap.title')}
+            body={t('launchpad.offersPage.sideBar.details.indicator.softCap.body')}
           >
             <Info size="10" />
           </Tooltip>
@@ -51,8 +53,8 @@ export const OfferInvestmentIndicator: React.FC<Props> = (props) => {
               title="Pre-Sale Goal"
               body={
                 <div>
-                  Deal issuers can divide the funding round by adding a &quot;pre-sale&quot; round and allocating it as a
-                  part of the total funding.
+                  Deal issuers can divide the funding round by adding a &quot;pre-sale&quot; round and allocating it as
+                  a part of the total funding.
                   <br />
                   <br />
                   The pre-sale round is only available for investors approved in the investment registration stage.

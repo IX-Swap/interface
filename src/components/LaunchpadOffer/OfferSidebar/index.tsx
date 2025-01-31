@@ -12,7 +12,6 @@ import { OfferQuestions } from '../OfferMainInfo/OfferFAQ'
 import { OfferOverview } from '../OfferMainInfo/OfferOverview'
 import { OfferTeamMembers } from '../OfferMainInfo/OfferTeamMembers'
 import { isMobile } from 'react-device-detect'
-import { OfferVesting } from './OfferVesting'
 // import { OfferVesting } from './OfferVesting'
 
 interface Props {
@@ -24,7 +23,6 @@ export const OfferSidebar: React.FC<Props> = (props) => {
     <>
       {isMobile ? (
         <>
-
           <OfferDetails offer={props.offer} />
           <OfferOverview offer={props.offer} />
           <OfferTeamMembers team={props.offer.members} />
@@ -35,7 +33,7 @@ export const OfferSidebar: React.FC<Props> = (props) => {
           <OfferAdditionalDocs files={props.offer.files} />
           <OfferStage frames={props.offer.timeframe} />
           <OfferContact email={props.offer.contactUsEmail} />
-             {/* <OfferVesting offer={props.offer} /> */}
+          {/* <OfferVesting offer={props.offer} /> */}
         </>
       ) : (
         <>

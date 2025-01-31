@@ -10,6 +10,7 @@ import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
 import { text2, text5 } from 'components/LaunchpadMisc/typography'
 import { MEDIA_WIDTHS } from 'theme'
 import { getTokenSymbol } from './OfferDetails'
+import { useLocalization } from 'i18n'
 
 interface Props {
   borderless?: boolean
@@ -20,6 +21,7 @@ type SaleProps = Props &
 
 export const OfferSaleAllocation: React.FC<SaleProps> = (props) => {
   const formatedValue = useFormatOfferValue()
+  const { t } = useLocalization()
 
   const allocatedPublicSale = React.useMemo(
     () => formatedValue(`${Number(props.hardCap) - Number(props.presaleAlocated)}`),
@@ -28,7 +30,7 @@ export const OfferSaleAllocation: React.FC<SaleProps> = (props) => {
 
   return (
     <SaleAllocationContainer borderless={props.borderless}>
-      <SaleAllocationTitle>Token Sale Allocation</SaleAllocationTitle>
+      <SaleAllocationTitle>{t('launchpad.offersPage.sideBar.saleAllocation.title')}</SaleAllocationTitle>
 
       <Separator />
 
@@ -38,12 +40,12 @@ export const OfferSaleAllocation: React.FC<SaleProps> = (props) => {
             {getTokenSymbol(props?.network, props?.investingTokenSymbol)}&nbsp;
             {formatedValue(props.softCap) ?? 'N/A'}
           </span>{' '}
-          Soft Cap /
+          {t('launchpad.offersPage.sideBar.saleAllocation.softCap')} /
           <span className="bold">
             &nbsp;{getTokenSymbol(props?.network, props?.investingTokenSymbol)}&nbsp;
             {formatedValue(props.hardCap) ?? 'N/A'}
           </span>{' '}
-          Hard Cap
+          {t('launchpad.offersPage.sideBar.saleAllocation.hardCap')}
         </div>
       </SaleAllocationEntry>
 
@@ -57,7 +59,7 @@ export const OfferSaleAllocation: React.FC<SaleProps> = (props) => {
                 {getTokenSymbol(props?.network, props?.investingTokenSymbol)}&nbsp;
                 {formatedValue(props.presaleAlocated)}
               </span>{' '}
-              Allocated for Pre-Sale
+              {t('launchpad.offersPage.sideBar.saleAllocation.preSale')}
             </div>
           </SaleAllocationEntry>
 
@@ -71,7 +73,7 @@ export const OfferSaleAllocation: React.FC<SaleProps> = (props) => {
             {getTokenSymbol(props?.network, props?.investingTokenSymbol)}&nbsp;
             {allocatedPublicSale}
           </span>{' '}
-          Allocated for Public Sale
+          {t('launchpad.offersPage.sideBar.saleAllocation.publicSale')}
         </div>
       </SaleAllocationEntry>
     </SaleAllocationContainer>

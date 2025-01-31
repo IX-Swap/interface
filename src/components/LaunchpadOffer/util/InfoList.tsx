@@ -8,6 +8,7 @@ import { Asset } from 'state/launchpad/types'
 import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
 import { Info } from 'react-feather'
 import { MEDIA_WIDTHS } from 'theme'
+import { useLocalization } from 'i18n'
 
 export interface InfoEntry {
   label: React.ReactNode
@@ -37,6 +38,7 @@ export const InfoList: React.FC<Props> = ({
   entries,
   placeholderText = 'There is no information to display',
 }) => {
+  const { t } = useLocalization()
   const getIsLast = useCallback((idx: number) => entries.length === idx + 1, [entries])
   const theme = useTheme()
   const [localTime, setLocalTime] = useState(new Date())
@@ -56,8 +58,8 @@ export const InfoList: React.FC<Props> = ({
         <Title fontWeight={titleFontWeight}>
           <StageLabel>
             <div>{title}</div>
-            {title === 'Investment Stage' && (
-              <Tooltip title={title} body={`The time provided is based on your local time at ${utcTime}`}>
+            {title == 'Investment Stage' && (
+              <Tooltip title={title} body={t('launchpad.offersPage.sideBar.investmentStage.body', { utcTime })}>
                 <Info size="14" color={theme.launchpad.colors.text.caption} />
               </Tooltip>
             )}
@@ -94,8 +96,8 @@ const Container = styled.div`
   align-items: stretch;
   color: ${(props) => props.theme.launchpad.colors.text.body};
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    padding:  0px 20px;
-   }
+    padding: 0px 20px;
+  }
 `
 
 const Title = styled.div<{ fontWeight?: string }>`

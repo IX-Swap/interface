@@ -6,6 +6,7 @@ import { EyeIcon } from 'assets/launchpad/svg/components/EyeIcon'
 import { OfferFile, OfferFileType } from 'state/launchpad/types'
 import { InfoList } from '../util/InfoList'
 import { isDownload, isPreview } from '../util/files'
+import { useLocalization } from 'i18n'
 
 interface Props {
   files: OfferFile[]
@@ -15,6 +16,7 @@ const crop = (value?: string) => ((value?.length ?? 0) > 20 ? value?.substring(0
 
 export const OfferAdditionalDocs: React.FC<Props> = (props) => {
   const theme = useTheme()
+  const { t } = useLocalization()
 
   const entries = React.useMemo(
     () =>
@@ -46,7 +48,13 @@ export const OfferAdditionalDocs: React.FC<Props> = (props) => {
     [props.files, theme]
   )
 
-  return <InfoList title="Additional Documents" entries={entries} placeholderText="There are no Documents to display" />
+  return (
+    <InfoList
+      title={t('launchpad.offersPage.sideBar.additionalDocs.title')}
+      entries={entries}
+      placeholderText={t('launchpad.offersPage.sideBar.additionalDocs.placeholder')}
+    />
+  )
 }
 
 const FileName = styled.div`

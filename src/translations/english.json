@@ -151,6 +151,101 @@
           "preview": "Preview"
         }
       }
+    },
+    "offersPage": {
+      "mainInfo": {
+        "gallery": {
+          "website": "Website",
+          "dataroom": "Dataroom"
+        },
+        "overview": "Overview",
+        "teamMembers": "Team Members",
+        "faq": "Frequently Asked Questions"
+      },
+      "sideBar": {
+        "details": {
+          "raised": "Raised",
+          "indicator": {
+            "softCap": {
+              "title": "Soft Cap",
+              "body": "This is the minimum amount that needs to be raised for the deal to be successful."
+            }
+          },
+          "participants": {
+            "title": "Participants",
+            "body": "Number of investors that has participated in this deal"
+          },
+          "dayCount": {
+            "header": "The deal closes in",
+            "day": "Day",
+            "days": "Days"
+          },
+          "investButton": {
+            "checkStatus": "Check Status",
+            "notStarted": "Register To Invest",
+            "active": "Invest",
+            "closed": "Open Dashboard"
+          },
+          "tokenInfo": {
+            "network": "Token Network: ",
+            "explorer": "Explorer",
+            "addToMetamask": "Add to Metamask"
+          },
+          "generalInfo": {
+            "issuer": "Issuer",
+            "country": "Country",
+            "investmentType": "Investment Type",
+            "tokenPrice": "Token Price",
+            "maxInvestment": "Max. Investment Size",
+            "minInvestment": "Min. Investment Size"
+          }
+        },
+        "saleAllocation": {
+          "title": "Token Sale Allocation",
+          "softCap": "Soft Cap",
+          "hardCap": "Hard Cap",
+          "preSale": "Allocated for Pre-Sale",
+          "publicSale": "Allocated for Public Sale"
+        },
+        "investmentStage": {
+          "title": "Investment Stage",
+          "body": "The time provided is based on your local time at {{utcTime}}",
+
+          "whitelist": {
+            "title": "Register To Invest",
+            "body": "You need to register to invest in order to participate in the pre-sale round. This stage does not apply for the Public Sale."
+          },
+          "preSale": {
+            "title": "Pre-Sale",
+            "body": "The pre-sale round has its own maximum and minimum investment sizes that may differ from the public sale. You need to register to invest in order to participate in the pre-sale round."
+          },
+          "publicSale": {
+            "title": "Public Sale",
+            "body": "Public sale is open to everyone and will close on the date scheduled or as otherwise determined by the issuer."
+          },
+          "closed": {
+            "title": "Closed",
+            "body": "The deal is closed for any further investments."
+          },
+          "claim": {
+            "title": "Token Claim",
+            "body": "For successful deals that reached their funding goal, you will receive the tokens that you purchased. You can claim back your initial investment for unsuccessful deals that did not reach their funding goal."
+          }
+        },
+        "offeringTerms": {
+          "investmentStructure": "Investment Structure",
+          "dividendYield": "Dividend Yield",
+          "investmentPeriod": "Investment Period",
+          "grossIrr": "Gross IRR (%)",
+          "distributionFrequency": "Distribution Frequency"
+        },
+        "additionalDocs": {
+          "title": "Additional Documents",
+          "placeholder": "There are no Documents to display"
+        },
+        "contactUs": "Contact Us",
+        "backToTop": "Back to top"
+      }
     }
   },
   "maintenance": {
