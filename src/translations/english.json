@@ -18,7 +18,9 @@
   "buttons": {
     "submit": "Submit",
     "connectWallet": "Connect Wallet",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "learnMore": "Learn more",
+    "invest": "Invest"
   },
   "landing": {
     "welcome": "Welcome to",
@@ -93,9 +95,63 @@
     }
   },
   "launchpad": {
-    "section1Title": "Invest in Startups and Other Unicorn Like Opportunities",
+    "heading": "Invest in Startups and Other Unicorn Like Opportunities",
+    "redirectTitle": "How does IXS Launchpad work?",
+    "learnMore": "Learn more",
     "totalRaised": "Total Raised",
-    "investments": "Investments"
+    "investments": {
+      "heading": "Investments",
+      "tabs": {
+        "issuance": "Issuance",
+        "lbp": "LBP"
+      },
+      "filters": {
+        "industry": "Industry",
+        "stage": "Stage",
+        "network": "Network",
+        "type": "Type",
+        "filter": "Filter",
+        "search": "Search"
+      },
+      "loadMore": "Load more",
+      "card": {
+        "stages": {
+          "funded": "Funded",
+          "closesSoon": "Closes soon"
+        },
+        "details": {
+          "projectedFundraise": "Projected Fundraise",
+          "minInvestment": "Minimum Investment",
+          "investingToken": "Investing Token",
+          "investmentType": "Investment Type",
+          "issuer": "Issuer"
+        },
+        "raisedFund": {
+          "raised": "Raised",
+          "calculating": "Calculating"
+        },
+        "saleStatus": {
+          "closed": "Closed",
+          "successful": {
+            "title": "Successful",
+            "body": "This deal was successfully funded and reached above it’s soft cap funding goal."
+          },
+          "unsuccessful": {
+            "title": "Unsuccessful",
+            "body": "This deal was unsuccessfully funded and did not reach above it’s soft cap funding goal."
+          }
+        },
+        "accreditedInvestors": {
+          "title": "Accredited investors only",
+          "body": "You have to be an accredited investor (AI) to access this deal."
+        },
+        "buttons": {
+          "invest": "Invest",
+          "learnMore": "Learn More",
+          "preview": "Preview"
+        }
+      }
+    }
   },
   "maintenance": {
     "title": "We're down for Maintenance",

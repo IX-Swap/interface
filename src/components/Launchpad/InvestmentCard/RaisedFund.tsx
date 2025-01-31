@@ -1,5 +1,6 @@
 import { text2 } from 'components/LaunchpadMisc/typography'
 import Logo from 'components/Logo'
+import { useLocalization } from 'i18n'
 import React from 'react'
 import styled from 'styled-components'
 import { getTokenIcon } from 'utils'
@@ -11,13 +12,14 @@ interface Props {
 
 export const RaisedFund: React.FC<Props> = ({ totalInvestment, symbol }) => {
   const NUM_MIN = 1000
+  const { t } = useLocalization()
 
   return (
     <Container>
-      <LeftLabel>Raised</LeftLabel>
+      <LeftLabel>{t('launchpad.investments.card.raisedFund.raised')}</LeftLabel>
 
       {totalInvestment < NUM_MIN ? (
-        <LabelCalculating>Calculating</LabelCalculating>
+        <LabelCalculating>{t('launchpad.investments.card.raisedFund.calculating')}</LabelCalculating>
       ) : (
         <LogoTokenWrapper>
           <Label>

@@ -15,6 +15,7 @@ import { MEDIA_WIDTHS } from 'theme'
 import { isMobile } from 'react-device-detect'
 import { useWeb3React } from 'hooks/useWeb3React'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
+import { useLocalization } from 'i18n'
 
 const getStageLabel = (stage: OfferStatus) => {
   return OFFER_STAGE_LABELS.find((x) => x.value === stage)?.label ?? ''
@@ -31,6 +32,7 @@ export const Pinned: React.FC = () => {
   const [offer, setOffer] = React.useState<Offer>()
   const [loading, setLoading] = React.useState(true)
   const [showKYCModal, setShowKYCModal] = React.useState(false)
+  const { t } = useLocalization()
 
   const isClosed = React.useMemo(
     () => !!offer?.status && [OfferStatus.closed, OfferStatus.claim].includes(offer?.status),
@@ -108,10 +110,10 @@ export const Pinned: React.FC = () => {
           <PinnedContentTitle>{offer.title}</PinnedContentTitle>
           <PinnedContentBody>{offer.shortDescription}</PinnedContentBody>
 
-          {isClosed ? <LearnMoreButton onClick={onClick}>Learn more</LearnMoreButton> : null}
+          {isClosed ? <LearnMoreButton onClick={onClick}>{t('buttons.learnMore')}</LearnMoreButton> : null}
           {!isClosed ? (
             <PinnedContentButton type="button" onClick={onClick}>
-              Invest
+              {t('buttons.invest')}
             </PinnedContentButton>
           ) : null}
         </PinnedContent>

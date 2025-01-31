@@ -10,6 +10,7 @@ import { OFFER_INDUSTRY_LABELS, OFFER_STAGE_LABELS, OFFER_TYPE_LABELS } from 'st
 import { text8 } from 'components/LaunchpadMisc/typography'
 import { isMobile } from 'react-device-detect'
 import { networkOptions } from 'components/LaunchpadIssuance/IssuanceForm/Information/util'
+import { useLocalization } from 'i18n'
 
 export interface FilterConfig {
   search: string
@@ -25,6 +26,8 @@ interface Props {
 }
 
 export const InvestmentListFilter: React.FC<Props> = ({ filter, onFilter }) => {
+  const { t } = useLocalization()
+
   const updateFilter = (newFilter: Partial<FilterConfig>) => {
     onFilter((oldFilter) => ({ ...oldFilter, ...newFilter } as FilterConfig))
   }
@@ -44,19 +47,19 @@ export const InvestmentListFilter: React.FC<Props> = ({ filter, onFilter }) => {
       <FilterContainer>
         <FilterDropdown
           selected={filter.industry}
-          label="Industry"
+          label={t('launchpad.investments.filters.industry')}
           options={OFFER_INDUSTRY_LABELS}
           onSelect={handleDropdownSelect('industry')}
         />
         <FilterDropdown
           selected={filter.stage}
-          label="Stage"
+          label={t('launchpad.investments.filters.stage')}
           options={OFFER_STAGE_LABELS}
           onSelect={handleDropdownSelect('stage')}
         />
         <FilterDropdown
           selected={filter.network}
-          label="Network"
+          label={t('launchpad.investments.filters.network')}
           options={networkOptions}
           onSelect={handleDropdownSelect('network')}
         />
@@ -65,20 +68,24 @@ export const InvestmentListFilter: React.FC<Props> = ({ filter, onFilter }) => {
         {/* Disabled for version 2 https://app.clickup.com/t/4733323/IXS-2662 */}
         <FilterDropdown
           selected={filter.type}
-          label="Type"
+          label={t('launchpad.investments.filters.type')}
           options={OFFER_TYPE_LABELS}
           onSelect={handleDropdownSelect('type')}
           disabled={true}
         />
 
         <FilterButton type="button" disabled={true}>
-          <FilterIcon /> Filter
+          <FilterIcon /> {t('launchpad.investments.filters.filter')}
         </FilterButton>
       </FilterContainer>
       {!isMobile && (
         <FilterSearchField>
           <SearchIcon />
-          <FilterSearchInput placeholder="Search" value={filter.search} onChange={onSearchChange} />
+          <FilterSearchInput
+            placeholder={t('launchpad.investments.filters.search')}
+            value={filter.search}
+            onChange={onSearchChange}
+          />
         </FilterSearchField>
       )}
 

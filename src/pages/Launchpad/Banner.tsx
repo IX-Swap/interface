@@ -9,16 +9,16 @@ import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { ReactComponent as LPBackground } from 'assets/images/LPBackground.svg'
 import { ReactComponent as LaunchpadHeader } from 'assets/images/lauchpadHeader.svg'
 import apiService from 'services/apiService'
+import { useLocalization } from 'i18n'
 
 export const Banner = () => {
   const { config } = useWhitelabelState()
+  const { t } = useLocalization()
 
   const [totalRaised, setTotalRaised] = useState(0)
 
-  const launchpadBannerTitle = config?.launchpadBannerTitle
-    ? config.launchpadBannerTitle
-    : 'Invest in Startups <br /> and Other Unicorn <br /> Like Opportunities'
-  const launchpadBannerInfoRedirectTitle = config?.launchpadBannerInfoRedirectTitle ?? 'How does IXS Launchpad work?'
+  const launchpadBannerTitle = config?.launchpadBannerTitle ? config.launchpadBannerTitle : t('launchpad.heading')
+  const launchpadBannerInfoRedirectTitle = config?.launchpadBannerInfoRedirectTitle ?? t('launchpad.redirectTitle')
   const launchpadBannerInfoRedirectUrl = config?.launchpadBannerInfoRedirectUrl ?? 'https://www.ixswap.io/academy'
   const isIxswap = config?.isIxSwap ?? false
 
@@ -56,7 +56,7 @@ export const Banner = () => {
         <TotalRaisedWrap>
           {isIxswap ? (
             <div>
-              <TotalRaisedLabel>Total Raised</TotalRaisedLabel>
+              <TotalRaisedLabel>{t('launchpad.totalRaised')}</TotalRaisedLabel>
               <TotalRaisedValue>${totalRaised.toLocaleString('en-US')}</TotalRaisedValue>
             </div>
           ) : null}
@@ -65,7 +65,9 @@ export const Banner = () => {
             <BannerInfoRedirectImage src={LearnMoreIcon} />
             <BannerInfoRedirectLabel>
               <BannerInfoRedirectTitle>{launchpadBannerInfoRedirectTitle}</BannerInfoRedirectTitle>
-              <BannerInfoRedirectSubtitle href={launchpadBannerInfoRedirectUrl} target='_blank'>Learn more</BannerInfoRedirectSubtitle>
+              <BannerInfoRedirectSubtitle href={launchpadBannerInfoRedirectUrl} target="_blank">
+                {t('launchpad.learnMore')}
+              </BannerInfoRedirectSubtitle>
             </BannerInfoRedirectLabel>
           </BannerInfoRedirect>
         </TotalRaisedWrap>

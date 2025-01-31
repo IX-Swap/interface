@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { text9 } from 'components/LaunchpadMisc/typography'
+import { useLocalization } from 'i18n'
 
 interface Props {
   isLoading?: boolean
@@ -11,6 +12,8 @@ interface Props {
 }
 
 export const PaginationTrigger: React.FC<Props> = (props) => {
+  const { t } = useLocalization()
+
   if (props.isLoading) {
     return (
       <LoaderWrapper>
@@ -21,7 +24,7 @@ export const PaginationTrigger: React.FC<Props> = (props) => {
 
   return (
     <LoadMoreButton type="button" onClick={props.onTriggered}>
-      Load more
+      {t('launchpad.investments.loadMore')}
     </LoadMoreButton>
   )
 }

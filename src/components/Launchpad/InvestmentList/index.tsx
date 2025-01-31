@@ -9,16 +9,12 @@ import { text53, text8 } from 'components/LaunchpadMisc/typography'
 import { LbpList } from 'components/LBP/InvestmentList/LbpList'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { MEDIA_WIDTHS } from 'theme'
+import { useLocalization } from 'i18n'
 
 enum InvesmentTabs {
   issuance = 'issuance',
   lbp = 'lbp',
 }
-
-const tabs = [
-  { title: 'Issuance', value: InvesmentTabs.issuance },
-  { title: 'LBP', value: InvesmentTabs.lbp },
-]
 
 interface TabsProps {
   current: InvesmentTabs
@@ -56,6 +52,7 @@ interface Props {
 
 export const InvestmentList: React.FC<Props> = (props) => {
   const { config } = useWhitelabelState()
+  const { t } = useLocalization()
   const enableLbp = config?.enableLbp ?? false
   const [activeTab, setActiveTab] = React.useState<InvesmentTabs>(() => {
     if (!enableLbp) {
@@ -67,6 +64,11 @@ export const InvestmentList: React.FC<Props> = (props) => {
     return (investmentTab as InvesmentTabs) ?? InvesmentTabs.issuance
   })
 
+  const tabs = [
+    { title: t('launchpad.investments.tabs.issuance'), value: InvesmentTabs.issuance },
+    { title: t('launchpad.investments.tabs.lbp'), value: InvesmentTabs.lbp },
+  ]
+
   const handleTabChange = (tab: InvesmentTabs) => {
     setActiveTab(tab)
     localStorage.setItem('investmentTab', tab)
@@ -74,7 +76,7 @@ export const InvestmentList: React.FC<Props> = (props) => {
 
   return (
     <InvestmentListContainer>
-      <InvestmentTitle>Investments</InvestmentTitle>
+      <InvestmentTitle>{t('launchpad.investments.heading')}</InvestmentTitle>
       {enableLbp ? <LblTabs current={activeTab} options={tabs} onSelect={handleTabChange} /> : null}
       {activeTab === InvesmentTabs.issuance && (
         <div>

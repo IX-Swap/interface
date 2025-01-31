@@ -3,6 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { Tooltip } from './Tooltip'
+import { useLocalization } from 'i18n'
 
 interface Props {
   isClosed: boolean
@@ -15,6 +16,8 @@ interface Props {
 }
 
 export const InvestmentSaleStatusInfo: React.FC<Props> = (props) => {
+  const { t } = useLocalization()
+
   const info = props.hoursTillClosed
     ? `${props.hoursTillClosed > 1 ? `${props.hoursTillClosed} Hours` : 'Less than 1 Hour'}`
     : props.daysTillClosed
@@ -24,23 +27,27 @@ export const InvestmentSaleStatusInfo: React.FC<Props> = (props) => {
   if (props.isClosed) {
     return (
       <ClosedContainer margin={props.margin}>
-        <ClosedLabel>Closed</ClosedLabel>
+        <ClosedLabel>{t('launchpad.investments.card.saleStatus.closed')}</ClosedLabel>
 
         {props.isSuccesfull && (
           <Tooltip
-            title="Successful"
-            body="This deal was successfully funded and reached above it’s soft cap funding goal."
+            title={t('launchpad.investments.card.saleStatus.successful.title')}
+            body={t('launchpad.investments.card.saleStatus.successful.body')}
           >
-            <ClosedSuccessullyLabel>Successful</ClosedSuccessullyLabel>
+            <ClosedSuccessullyLabel>
+              {t('launchpad.investments.card.saleStatus.successful.title')}
+            </ClosedSuccessullyLabel>
           </Tooltip>
         )}
 
         {!props.isSuccesfull && (
           <Tooltip
-            title="Unsuccessful"
-            body="This deal was unsuccessfully funded and did not reach above it’s soft cap funding goal."
+            title={t('launchpad.investments.card.saleStatus.unsuccessful.title')}
+            body={t('launchpad.investments.card.saleStatus.unsuccessful.body')}
           >
-            <ClosedUnsuccessfullyLabel>Unsuccessful</ClosedUnsuccessfullyLabel>
+            <ClosedUnsuccessfullyLabel>
+              {t('launchpad.investments.card.saleStatus.unsuccessful.title')}
+            </ClosedUnsuccessfullyLabel>
           </Tooltip>
         )}
       </ClosedContainer>

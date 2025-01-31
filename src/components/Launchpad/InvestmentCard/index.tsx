@@ -23,6 +23,7 @@ import { NETWORK_LOGOS } from 'constants/chains'
 import { PinnedContentButton } from 'components/Button'
 import { MEDIA_WIDTHS } from 'theme'
 import { RaisedFund } from './RaisedFund'
+import { useLocalization } from 'i18n'
 
 interface Props {
   offer: any
@@ -33,6 +34,7 @@ const getStageLabel = (stage: OfferStatus) => {
 }
 
 export const InvestmentCard: React.FC<Props> = ({ offer }) => {
+  const { t } = useLocalization()
   const checkKYC = useCheckKYC()
   const history = useHistory()
   const theme = useTheme()
@@ -64,11 +66,11 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
 
   const stage = React.useMemo(() => {
     if (offer?.hardCapReached) {
-      return { label: 'Funded', color: '#1FBA66' }
+      return { label: t('launchpad.investments.card.stages.funded'), color: '#1FBA66' }
     }
 
     if (offer?.closesSoon) {
-      return { label: 'Closes soon', color: theme.launchpad.colors.text.error }
+      return { label: t('launchpad.investments.card.stages.closesSoon'), color: theme.launchpad.colors.text.error }
     }
 
     return null
@@ -129,7 +131,9 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
             {showDetails && (
               <>
                 <InvestmentCardDetailsEntry>
-                  <InvestmentCardDetailsEntryLabel>Projected Fundraise</InvestmentCardDetailsEntryLabel>
+                  <InvestmentCardDetailsEntryLabel>
+                    {t('launchpad.investments.card.details.projectedFundraise')}
+                  </InvestmentCardDetailsEntryLabel>
                   <InvestmentCardDetailsEntryValue>
                     {formatNumberWithDecimals(offer.hardCap, 2, true)}
                   </InvestmentCardDetailsEntryValue>
@@ -138,7 +142,9 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
                 <InvestmentCardDetailsSeparator />
 
                 <InvestmentCardDetailsEntry>
-                  <InvestmentCardDetailsEntryLabel>Minimum Investment</InvestmentCardDetailsEntryLabel>
+                  <InvestmentCardDetailsEntryLabel>
+                    {t('launchpad.investments.card.details.minInvestment')}
+                  </InvestmentCardDetailsEntryLabel>
                   <InvestmentCardDetailsEntryValue>
                     {formatNumberWithDecimals(offer.minInvestment, 2, true)}
                   </InvestmentCardDetailsEntryValue>
@@ -147,14 +153,18 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
                 <InvestmentCardDetailsSeparator />
 
                 <InvestmentCardDetailsEntry>
-                  <InvestmentCardDetailsEntryLabel>Investing Token</InvestmentCardDetailsEntryLabel>
+                  <InvestmentCardDetailsEntryLabel>
+                    {t('launchpad.investments.card.details.investingToken')}
+                  </InvestmentCardDetailsEntryLabel>
                   <InvestmentCardDetailsEntryValue>{offer.investingTokenSymbol}</InvestmentCardDetailsEntryValue>
                 </InvestmentCardDetailsEntry>
 
                 <InvestmentCardDetailsSeparator />
 
                 <InvestmentCardDetailsEntry>
-                  <InvestmentCardDetailsEntryLabel>Investment Type</InvestmentCardDetailsEntryLabel>
+                  <InvestmentCardDetailsEntryLabel>
+                    {t('launchpad.investments.card.details.investmentType')}
+                  </InvestmentCardDetailsEntryLabel>
                   <InvestmentCardDetailsEntryValue>
                     {capitalizeFirstLetter(offer.investmentType)}
                   </InvestmentCardDetailsEntryValue>
@@ -162,7 +172,9 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
 
                 <InvestmentCardDetailsSeparator />
                 <InvestmentCardDetailsEntry>
-                  <InvestmentCardDetailsEntryLabel>Issuer</InvestmentCardDetailsEntryLabel>
+                  <InvestmentCardDetailsEntryLabel>
+                    {t('launchpad.investments.card.details.issuer')}
+                  </InvestmentCardDetailsEntryLabel>
                   <InvestmentCardDetailsEntryValue>{offer.issuerName}</InvestmentCardDetailsEntryValue>
                 </InvestmentCardDetailsEntry>
               </>
@@ -182,35 +194,35 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
           <InvestmentCardFooter>
             {!isClosed && !offer.allowOnlyAccredited && (
               <PinnedContentButton type="button" onClick={onClick}>
-                Invest
+                {t('launchpad.investments.card.buttons.invest')}
               </PinnedContentButton>
             )}
 
             {!isClosed && offer.allowOnlyAccredited && (
               <InvestButton style={{ height: '51px' }} type="button" onClick={onClick}>
                 <Tooltip
-                  title="Accredited investors only"
+                  title={t('launchpad.investments.card.accreditedInvestors.title')}
                   body={
                     <>
-                      You have to be an accredited investor (AI) to access this deal. <a href="#">Learn more.</a>
+                      {t('launchpad.investments.card.accreditedInvestors.body')} <a href="#">Learn more.</a>
                     </>
                   }
                 >
                   <LockIcon />
                 </Tooltip>
-                Invest
+                {t('launchpad.investments.card.buttons.invest')}
               </InvestButton>
             )}
 
             {isClosed && (
               <InvestButton style={{ height: '51px' }} type="button" onClick={onClick}>
-                Learn More
+                {t('launchpad.investments.card.buttons.learnMore')}
               </InvestButton>
             )}
 
             {!isKycApproved && (
               <InvestButton style={{ marginTop: '10px' }} type="button" onClick={openModal}>
-                Preview
+                {t('launchpad.investments.card.buttons.preview')}
               </InvestButton>
             )}
           </InvestmentCardFooter>
