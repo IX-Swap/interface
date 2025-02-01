@@ -5256,6 +5256,11 @@
     lz-string "^1.4.4"
     pretty-format "^26.6.2"
 
+"@tomfrench/ens-avatar-resolver@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@tomfrench/ens-avatar-resolver/-/ens-avatar-resolver-0.1.2.tgz#3c96b7746366a3c6966b159f05fcc8baca356794"
+  integrity sha512-x++cUbfkWHsZXiufOHS/fW19p44w2iNMF0v04hWayk448IkiUG0XQ47TsimldfN17GBJthzPX64Gf2a0KfcrCQ==
+
 "@tootallnate/once@1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
@@ -13000,7 +13005,7 @@ json-stringify-safe@~5.0.1:
   resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
   integrity sha512-ZClg6AaYvamvYEE82d3Iyd3vSSIjQ+odgjaTzRuO3s7toCdFKczob2i0zCh7JE8kWn17yvAWhUVxvqGwUalsRA==
 
-json-to-graphql-query@^2.2.4:
+json-to-graphql-query@^2.0.0, json-to-graphql-query@^2.2.4:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/json-to-graphql-query/-/json-to-graphql-query-2.3.0.tgz#cf2d4927f99c372c91abff699b2c3dd4cc2f825e"
   integrity sha512-khZtaLLQ0HllFec+t89ZWduUZ0rmne/OpRm/39hyZUWDHNx9Yk4DgQzDtMeqd8zj2g5opBD4GHrdtH0JzKnN2g==
@@ -16027,6 +16032,13 @@ react-is@^18.0.0, react-is@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
+
+react-jazzicon@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-jazzicon/-/react-jazzicon-1.0.4.tgz#31e5f6908e042786ba93a9093b852dea1870e7a0"
+  integrity sha512-/3kWv5vtAhI18GBFoqjpxRTtL+EImuB73PAC02r/zJQ6E+PAUmoBx8edYvTCIYHwS01uFf6N3elTDqSrVPwg4w==
+  dependencies:
+    mersenne-twister "^1.1.0"
 
 react-lazy-load-image-component@^1.5.1:
   version "1.5.4"
