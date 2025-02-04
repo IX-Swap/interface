@@ -17,7 +17,6 @@
     "@lingui/macro": "^4.5.0",
     "@lingui/react": "^4.5.0",
     "@metamask/jazzicon": "^2.0.0",
-    "@playwright/test": "1.21.1",
     "@popperjs/core": "^2.4.4",
     "@reach/dialog": "^0.10.3",
     "@reach/portal": "^0.10.3",
