@@ -2767,10 +2767,10 @@
   resolved "https://registry.yarnpkg.com/@istanbuljs/schema/-/schema-0.1.3.tgz#e45e384e4b8ec16bce2fd903af78450f6bf7ec98"
   integrity sha512-ZXRY4jNvVgSVQ8DL3LTcakaAtXwTVUxE81hslsyD2AtoXW/wVob10HkOJ1X/pAlcI7D+2YoZKg5do8G/w6RYgA==
 
-"@ixswap1/default-token-list@1.5.4":
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/@ixswap1/default-token-list/-/default-token-list-1.5.4.tgz#f974d6405967325ca6173a65c8fe23124781a1d1"
-  integrity sha512-pT+zL9SC5PezkRpzoPjC8sYVpvYI1LEXvoWx34/LnAPIzOuAWqg5lTrrOZVyH891FXlyfGZWBzWaawCzvm+emw==
+"@ixswap1/default-token-list@1.5.5":
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/@ixswap1/default-token-list/-/default-token-list-1.5.5.tgz#41a3d0e8ebc85065c8c154619551d7568916ff0c"
+  integrity sha512-myG7n9AcNbf1CGDjm5jww1ao0Nde8U16XZt+DGhKjVxRHhG1RuBml1emSnkTRmUqp51vClwcYPd+wcqYUueAjw==
 
 "@ixswap1/lib@1.x.x":
   version "1.3.0"
