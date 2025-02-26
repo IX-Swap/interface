@@ -2,7 +2,7 @@ import { QueryClient } from '@tanstack/react-query'
 import { getDefaultConfig } from '@rainbow-me/rainbowkit'
 import * as wallets from '@rainbow-me/rainbowkit/wallets'
 
-import {  CHAINS, transports } from './constants'
+import { CHAINS, transports } from './constants'
 import walletConnectConfig from 'walletConnectConfig.json'
 import { tryClearIndexedDB } from 'utils'
 
@@ -12,6 +12,7 @@ type WalletConnectConfig = {
 
 function getWalletConnectProjectId() {
   const key = window.location.host as keyof WalletConnectConfig
+  debugger
   const configs: WalletConnectConfig = walletConnectConfig || {}
 
   const projectId = configs[key]
