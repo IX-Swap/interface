@@ -254,6 +254,7 @@ export interface Offer {
   tokenName: string
   tokenTicker: string
   tokenPrice: string
+  presaleTokenPrice: string
   tokenStandart: OfferTokenStandart
   tokenType: OfferTokenType
 
