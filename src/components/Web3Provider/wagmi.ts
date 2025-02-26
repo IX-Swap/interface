@@ -26,7 +26,7 @@ export function createWagmiConfig() {
 
   const config = getDefaultConfig({
     appName: 'IXSwap',
-    projectId: WALLET_CONNECT_PROJECT_ID,
+    projectId: 'fd50d8c55e847566ce7e873ba898467e',
     wallets: [
       {
         groupName: 'Popular',
