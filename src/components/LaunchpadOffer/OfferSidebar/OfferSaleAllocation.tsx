@@ -79,7 +79,10 @@ export const OfferSaleAllocation: React.FC<SaleProps> = (props) => {
 }
 
 type PresaleProps = Props &
-  Pick<Offer, 'investingTokenSymbol' | 'presaleMaxInvestment' | 'presaleMinInvestment' | 'network'>
+  Pick<
+    Offer,
+    'investingTokenSymbol' | 'presaleMaxInvestment' | 'presaleMinInvestment' | 'network' | 'presaleTokenPrice'
+  >
 
 export const OfferPreSaleInfo: React.FC<PresaleProps> = (props) => {
   const formatedValue = useFormatOfferValue()
@@ -114,6 +117,15 @@ export const OfferPreSaleInfo: React.FC<PresaleProps> = (props) => {
         <EntryValue>
           {getTokenSymbol(props?.network, props?.investingTokenSymbol)}&nbsp;
           {formatedValue(formatter.format(Number(props.presaleMinInvestment)))}
+        </EntryValue>
+      </SaleAllocationEntry>
+
+      <Separator />
+      <SaleAllocationEntry>
+        <EntryLabel>Pre-Sale Price</EntryLabel>
+        <EntryValue>
+          {getTokenSymbol(props?.network, props?.investingTokenSymbol)}&nbsp;
+          {formatedValue(formatter.format(Number(props.presaleTokenPrice)))}
         </EntryValue>
       </SaleAllocationEntry>
     </SaleAllocationContainer>
