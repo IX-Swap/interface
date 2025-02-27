@@ -13,99 +13,100 @@ import { SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
 export const isDefinedNumber = (foo: any) => ![undefined, null, ''].includes(foo) && !Number.isNaN(foo)
 
 export const getInitialValues = (smartContractStrategy?: SMART_CONTRACT_STRATEGIES) =>
-  ({
-    profilePicture: null,
-    cardPicture: null,
+({
+  profilePicture: null,
+  cardPicture: null,
 
-    shortDescription: '',
-    longDescription: '',
+  shortDescription: '',
+  longDescription: '',
 
-    title: '',
+  title: '',
 
-    companyIdNumber: '',
+  companyIdNumber: '',
 
+  investmentStructure: '',
+  issuerIdentificationNumber: '',
+
+  industry: null,
+  investmentType: null,
+
+  country: '',
+
+  tokenName: '',
+  tokenTicker: '',
+  decimals: '',
+  trusteeAddress: '',
+  tokenType: '',
+
+  network: null,
+
+  hardCap: '',
+  softCap: '',
+
+  tokenPrice: '',
+  tokenStandart:
+    smartContractStrategy === SMART_CONTRACT_STRATEGIES.nonOriginalWithNoAccess ? OfferTokenStandart.erc20 : null,
+  totalSupply: '',
+  tokenReceiverAddress: '',
+
+  minInvestment: '',
+  maxInvestment: '',
+
+  hasPresale: false,
+  presaleAlocated: '',
+  presaleMinInvestment: '',
+  presaleMaxInvestment: '',
+  presaleTokenPrice: '',
+
+  images: [],
+  videos: [{ url: '' }],
+
+  purchaseAgreement: null,
+  investmentMemorandum: null,
+  otherExecutionDocuments: [{ file: null }],
+  additionalDocuments: [{ file: null }],
+
+  members: [
+    {
+      photo: null,
+      name: '',
+      role: '',
+      about: '',
+    },
+  ],
+  faq: [
+    {
+      question: '',
+      answer: '',
+    },
+  ],
+
+  allowOnlyAccredited: false,
+  tokenomicsAgreement: false,
+
+  terms: {
     investmentStructure: '',
-    issuerIdentificationNumber: '',
+    dividentYield: '',
+    investmentPeriod: '',
+    grossIrr: '',
+    distributionFrequency: '',
+  },
 
-    industry: null,
-    investmentType: null,
+  timeframe: {
+    whitelist: null,
+    preSale: null,
+    sale: null,
+    closed: null,
+    claim: null,
+  },
 
-    country: '',
+  social: [],
 
-    tokenName: '',
-    tokenTicker: '',
-    decimals: '',
-    trusteeAddress: '',
-    tokenType: '',
-
-    network: null,
-
-    hardCap: '',
-    softCap: '',
-
-    tokenPrice: '',
-    tokenStandart:
-      smartContractStrategy === SMART_CONTRACT_STRATEGIES.nonOriginalWithNoAccess ? OfferTokenStandart.erc20 : null,
-    totalSupply: '',
-    tokenReceiverAddress: '',
-
-    minInvestment: '',
-    maxInvestment: '',
-
-    hasPresale: false,
-    presaleAlocated: '',
-    presaleMinInvestment: '',
-    presaleMaxInvestment: '',
-
-    images: [],
-    videos: [{ url: '' }],
-
-    purchaseAgreement: null,
-    investmentMemorandum: null,
-    otherExecutionDocuments: [{ file: null }],
-    additionalDocuments: [{ file: null }],
-
-    members: [
-      {
-        photo: null,
-        name: '',
-        role: '',
-        about: '',
-      },
-    ],
-    faq: [
-      {
-        question: '',
-        answer: '',
-      },
-    ],
-
-    allowOnlyAccredited: false,
-    tokenomicsAgreement: false,
-
-    terms: {
-      investmentStructure: '',
-      dividentYield: '',
-      investmentPeriod: '',
-      grossIrr: '',
-      distributionFrequency: '',
-    },
-
-    timeframe: {
-      whitelist: null,
-      preSale: null,
-      sale: null,
-      closed: null,
-      claim: null,
-    },
-
-    social: [],
-
-    website: '',
-    whitepaper: '',
-    email: '',
-    smartContractStrategy,
-  } as unknown as InformationFormValues)
+  website: '',
+  whitepaper: '',
+  email: '',
+  smartContractStrategy,
+} as unknown as InformationFormValues)
 
 export const industryOptions = [
   { label: 'Blockchain', value: OfferIndustry.blockchain },

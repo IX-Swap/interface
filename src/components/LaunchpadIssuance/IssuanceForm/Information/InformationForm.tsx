@@ -50,7 +50,7 @@ import { DateRangeField } from '../shared/fields/DateRangeField'
 import { RejectInfo } from '../shared/RejectInfo'
 import { FormSideBar, FormBody } from '../shared/styled'
 import { IssuanceTooltip } from '../shared/fields/IssuanceTooltip'
-import { text11 } from 'components/LaunchpadMisc/typography'
+import { text10 } from 'components/LaunchpadMisc/typography'
 import { useFormatOfferValue } from 'state/launchpad/hooks'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 
@@ -89,18 +89,8 @@ export const InformationForm = (props: Props) => {
     initialValues,
     smartContractStrategy,
   } = props
-  const {
-    values,
-    errors,
-    touched,
-    setFieldValue,
-    setFieldTouched,
-    submitForm,
-    resetForm,
-    validateForm,
-    setTouched,
-    setFieldError,
-  } = formikProps
+  const { values, errors, touched, setFieldValue, setFieldTouched, submitForm, resetForm, validateForm, setTouched } =
+    formikProps
 
   // hooks
   const history = useHistory()
@@ -489,8 +479,8 @@ export const InformationForm = (props: Props) => {
             field="tokenPrice"
             setter={setFieldValue}
             touch={setFieldTouched}
-            label="Price per Token"
-            placeholder="Price per Token"
+            label="Public sale Price"
+            placeholder="Public sale Price"
             inputFilter={numberFilter}
             disabled={edit}
             value={values.tokenPrice?.toString()}
@@ -572,12 +562,13 @@ export const InformationForm = (props: Props) => {
             maxLength={64}
           />
 
+          {showSupplyHint && (
+            <SupplyHintText>
+              {supplyHintValue} tokens will be issued based on the price per token and total fundraising amount.
+            </SupplyHintText>
+          )}
+
           <Column gap="1rem">
-            {showSupplyHint && (
-              <SupplyHintText>
-                {supplyHintValue} tokens will be issued based on the price per token and total fundraising amount.
-              </SupplyHintText>
-            )}
             <BaseCheckboxWithLabel
               state={Boolean(values.tokenomicsAgreement)}
               toggle={() => {
@@ -650,6 +641,27 @@ export const InformationForm = (props: Props) => {
             value={values.presaleMinInvestment}
             error={(touched.presaleMinInvestment && errors.presaleMinInvestment) as string}
             padding={'1rem 4px 1rem 1.25rem'}
+            maxLength={64}
+          />
+
+          <FormField
+            span={2}
+            disabled={edit || !values.hasPresale}
+            field="presaleTokenPrice"
+            setter={setFieldValue}
+            touch={setFieldTouched}
+            label="Pre-sale Price"
+            placeholder="Pre-sale Price"
+            inputFilter={numberFilter}
+            value={values.presaleTokenPrice?.toString()}
+            error={(touched.presaleTokenPrice && errors.presaleTokenPrice) as string}
+            trailing={
+              <IssuanceTooltip
+                tooltipContent={
+                  'The price input is based on the denominated currency selected under "Investment Currency".\nFor example, if you select USDC as the base currency, the price input will be in USDC.'
+                }
+              />
+            }
             maxLength={64}
           />
         </FormGrid>
@@ -947,9 +959,11 @@ const ErrorText = styled.div`
   font-size: 10px;
 `
 
-const SupplyHintText = styled.div`
-  ${text11}
-  color: ${(props) => props.theme.launchpad.colors.primary};
-  margin-bottom: 6px;
-  margin-top: -26px;
+const SupplyHintText = styled(Column)`
+  ${text10}
+  color: ${(props) => props.theme.text5};
+  grid-column: span 2;
+  background: ${(props) => props.theme.launchpad.colors.foreground};
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
 `

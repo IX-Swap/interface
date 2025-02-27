@@ -119,6 +119,14 @@ export const createValidationSchema = (account: string | null | undefined) => {
         return !originalValue || +originalValue > 0
       })
       .required(REQUIRED),
+    presaleTokenPrice: yup
+      .string()
+      .nullable()
+      .test('notZero', 'Pre-sale Token price should be bigger than 0!', function () {
+        const { originalValue } = this as any
+        return !originalValue || +originalValue > 0
+      })
+      .required(REQUIRED),
     tokenStandart: yup.string().nullable().oneOf(Object.values(OfferTokenStandart)).required(REQUIRED),
 
     tokenReceiverAddress: yup
