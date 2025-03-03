@@ -94,7 +94,7 @@ export const createValidationSchema = (account: string | null | undefined) => {
       .string()
       .nullable()
       .required(REQUIRED)
-      .min(8, getLongerThanOrEqual('Identification number', 8))
+      .min(4, getLongerThanOrEqual('Identification number', 4))
       .max(64, getHaveAtMost('Identification number', 64)),
 
     tokenType: yup.string().nullable().oneOf(Object.values(OfferTokenType)).required(REQUIRED),
