@@ -1,6 +1,8 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
 
+const apiUrl = process.env.REACT_APP_API_URL
+
 const Logo = styled.img<{ width: string; height: string }>`
   width: ${({ width }) => width};
   height: ${({ height }) => height};
@@ -15,7 +17,6 @@ const Logo = styled.img<{ width: string; height: string }>`
 interface TokenLogoProps {
   logo:
     | {
-        storageUrl?: string
         uuid?: string
       }
     | string
@@ -30,8 +31,9 @@ export const TokenLogo: FC<TokenLogoProps> = ({ logo, width = '72px', height = '
 
   if (typeof logo === 'string') {
     src = logo // Handle case where logo is a URL string
-  } else if (logo.storageUrl && logo.uuid) {
-    src = `${logo.storageUrl}${logo.uuid}` // Handle case where logo is an object with storageUrl and uuid
+  } else if (logo.uuid) {
+    const storageUrl = apiUrl + 'storage/file/public/'
+    src = `${storageUrl}${logo.uuid}` // Handle case where logo is an object with uuid
   }
 
   return <Logo width={width} height={height} src={src} />
