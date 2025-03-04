@@ -10,6 +10,7 @@ import PoligonLogo from '../../assets/images/polygon.svg'
 import useHttpLocations from '../../hooks/useHttpLocations'
 import { WrappedTokenInfo } from '../../state/lists/wrappedTokenInfo'
 import Logo from '../Logo'
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
 
 type Network = 'ethereum' | 'polygon'
 
@@ -74,7 +75,7 @@ export default function CurrencyLogo({
     currency instanceof WrappedTokenInfo
       ? currency?.logoURI ||
         (tokens[currency?.address] as any)?.tokenInfo?.logoURI ||
-        (currency?.tokenInfo as any)?.logo?.public
+        getPublicAssetUrl((currency?.tokenInfo as any)?.logo)
       : undefined
   const uriLocations = useHttpLocations(uri)
   const { chainId } = useActiveWeb3React()
