@@ -42,12 +42,17 @@ export default function LBPForm() {
     id: 0,
     branding: {
       LBPLogo: {
-        mimeType: undefined,
+        id: 0,
+        uuid: 0,
+        mimeType: '',
         name: '',
       },
       LBPBanner: {
+        id: 0,
+        uuid: 0,
         mimeType: undefined,
         name: '',
+        createdAt: '',
       },
     },
     projectInfo: {
@@ -72,7 +77,7 @@ export default function LBPForm() {
       maxPrice: '',
       startDate: '',
       endWeight: 1,
-      network: ''
+      network: '',
     },
   })
   const [canSubmit, setCanSubmit] = useState(false)
@@ -175,7 +180,6 @@ export default function LBPForm() {
     setCanSubmit(brandingComplete && hasSocialLinks && projectInfoComplete && tokenomicsComplete && datesValid)
   }
 
-
   const saveLbp = async (actionType: string) => {
     loader.start()
     try {
@@ -231,7 +235,7 @@ export default function LBPForm() {
       startDate: dayjs(formData.tokenomics?.startDate)?.utc()?.format('YYYY-MM-DD HH:mm:ss'),
       endDate: dayjs(formData.tokenomics?.endDate)?.utc()?.format('YYYY-MM-DD HH:mm:ss'),
       additionalDocumentIds: [],
-      network: formData?.tokenomics?.network
+      network: formData?.tokenomics?.network,
     }
 
     if (formData?.tokenomics?.maxSupply) {
@@ -275,7 +279,7 @@ export default function LBPForm() {
         endDate: dayjs(data.endDate)?.local()?.format('YYYY-MM-DD HH:mm:ss'),
         maxPrice: data.maxPrice,
         endWeight: data.endWeight,
-        network: data?.network
+        network: data?.network,
       },
     }
   }

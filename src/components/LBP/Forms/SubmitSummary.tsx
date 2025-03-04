@@ -18,6 +18,7 @@ import { useTransactionAdder } from 'state/transactions/hooks'
 import { formatNumberWithDecimals } from 'state/lbp/hooks'
 import { ReactComponent as SerenityIcon } from '../../../assets/images/serenity.svg'
 import { PinnedContentButton, ButtonOutlined } from 'components/Button'
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
 
 export const MAX_UINT88 = ethers.BigNumber.from('309485009821345068724781055')
 
@@ -168,8 +169,8 @@ export const SubmitSummary = ({ projectTokenSymbol, formData, onCancel, startPri
   const generateLBPLogo = (formData: any) => {
     const getLBPLogoSrc = () => {
       const logo = formData?.branding?.LBPLogo
-      if (logo?.public) {
-        return logo.public
+      if (logo?.uuid) {
+        return getPublicAssetUrl(logo)
       } else if (logo instanceof File) {
         return URL.createObjectURL(logo)
       } else {

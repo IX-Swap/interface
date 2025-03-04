@@ -45,6 +45,7 @@ import { Line } from 'components/Line'
 import { RowEnd } from 'components/Row'
 import TokenForm from './TokenForm'
 import { shortAddress } from 'utils'
+import { TokenLogo } from 'components/TokenLogo'
 
 interface Tab {
   value: 'catalog' | 'add_issuer' | 'edit_issuer'
@@ -242,12 +243,12 @@ export const AdminSecurityCatalog: FC = () => {
                         onDrop={(file) => handleDropImage(file)}
                       >
                         <Logo>
-                          {currentIssuer?.filePath || currentIssuer?.logo?.public ? (
-                            <img
-                              style={{ borderRadius: '6px' }}
+                          {currentIssuer?.filePath || currentIssuer?.logo?.uuid ? (
+                            <TokenLogo
+                              logo={currentIssuer.logo}
                               width={isMobile ? '60px' : '146px'}
                               height={isMobile ? '60px' : '146px'}
-                              src={currentIssuer?.filePath || currentIssuer?.logo?.public}
+                              borderRadius="6px"
                             />
                           ) : (
                             <div style={{ border: '1px solid #E6E6FF', borderRadius: '8px', padding: '35px' }}>
@@ -336,7 +337,7 @@ export const AdminSecurityCatalog: FC = () => {
                       return (
                         <TokenCard style={{ marginBottom: 20 }} key={`token-${id}`}>
                           <Box>
-                            <img style={{ borderRadius: '24px' }} width="30px" height="30px" src={logo?.public} />
+                            <TokenLogo logo={logo} width="30px" height="30px" borderRadius="24px" />
                             <TYPE.body3 color="text1" marginLeft="12px">
                               {ticker}
                             </TYPE.body3>

@@ -15,6 +15,7 @@ import { MEDIA_WIDTHS } from 'theme'
 import { isMobile } from 'react-device-detect'
 import { useWeb3React } from 'hooks/useWeb3React'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
 
 const getStageLabel = (stage: OfferStatus) => {
   return OFFER_STAGE_LABELS.find((x) => x.value === stage)?.label ?? ''
@@ -93,7 +94,7 @@ export const Pinned: React.FC = () => {
     <PinnedWrapper>
       <PinnedContainer>
         <PinnedImageContainer>
-          <PinnedImage src={offer.cardPicture.public} />
+          <PinnedImage src={getPublicAssetUrl(offer.cardPicture)} />
           <PinnedTags>
             {stage && <InvestmentStatusBadge label={stage.label} color={stage.color} />}
             {offer.status !== OfferStatus.claim && (

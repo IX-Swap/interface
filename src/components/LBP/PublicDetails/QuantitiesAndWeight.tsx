@@ -9,6 +9,7 @@ import { useFormatNumberWithDecimal } from 'state/lbp/hooks'
 import { useCurrency } from 'hooks/Tokens'
 import { getTokenOption } from 'pages/LBP/components/Tokenomics'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
 
 interface QuantitiesAndWeightProps {
   lbpData: LbpFormValues | null
@@ -36,7 +37,7 @@ const QuantitiesAndWeight: React.FC<QuantitiesAndWeightProps> = ({ lbpData, stat
           <TYPE.subHeader1 color={'#555566'}>Start Quantities</TYPE.subHeader1>
           <TokenWrapper>
             <>
-              <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
+              <LogoIcon as="img" src={getPublicAssetUrl(lbpData?.logo)} alt="Serenity Logo" />
               <TYPE.label fontSize={'14px'}>{lbpData?.shareAmount}</TYPE.label>
               <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
                 {shareSymbol || lbpData?.title}
@@ -58,7 +59,7 @@ const QuantitiesAndWeight: React.FC<QuantitiesAndWeightProps> = ({ lbpData, stat
             <TYPE.subHeader1 color={'#555566'}>Current Quantities</TYPE.subHeader1>
             <TokenWrapper>
               <>
-                <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
+                <LogoIcon as="img" src={getPublicAssetUrl(lbpData?.logo)} alt="Serenity Logo" />
                 <TYPE.label fontSize={'14px'}>
                   {useFormatNumberWithDecimal(statsData?.currentShareReserve || '', 2)}{' '}
                 </TYPE.label>
@@ -86,7 +87,7 @@ const QuantitiesAndWeight: React.FC<QuantitiesAndWeightProps> = ({ lbpData, stat
           <TYPE.subHeader1 color={'#555566'}>Start Weight</TYPE.subHeader1>
           <TokenWrapper>
             <>
-              <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
+              <LogoIcon as="img" src={getPublicAssetUrl(lbpData?.logo)} alt="Serenity Logo" />
               <TYPE.label fontSize={'14px'}>{lbpData?.startWeight}% </TYPE.label>
             </>
             <VerticalLine />
@@ -102,7 +103,7 @@ const QuantitiesAndWeight: React.FC<QuantitiesAndWeightProps> = ({ lbpData, stat
             <TYPE.subHeader1 color={'#555566'}>Current Weight</TYPE.subHeader1>
             <TokenWrapper>
               <>
-                <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
+                <LogoIcon as="img" src={getPublicAssetUrl(lbpData?.logo)} alt="Serenity Logo" />
                 <TYPE.label fontSize={'14px'}>
                   {useFormatNumberWithDecimal(statsData?.currentShareWeight || '', 2)}%{' '}
                 </TYPE.label>
@@ -122,7 +123,7 @@ const QuantitiesAndWeight: React.FC<QuantitiesAndWeightProps> = ({ lbpData, stat
           <TYPE.subHeader1 color={'#555566'}>End Weight</TYPE.subHeader1>
           <TokenWrapper>
             <>
-              <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
+              <LogoIcon as="img" src={getPublicAssetUrl(lbpData?.logo)} alt="Serenity Logo" />
               <TYPE.label fontSize={'14px'}>{lbpData?.endWeight}% </TYPE.label>
             </>
             <VerticalLine />

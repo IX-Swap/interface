@@ -12,6 +12,7 @@ import { useLBPContract } from 'hooks/useContract'
 import { formatNumberWithDecimals } from 'state/lbp/hooks'
 import useAddTokenToMetamask from 'hooks/useAddTokenToMetamask'
 import { useCurrency } from 'hooks/Tokens'
+import { TokenLogo } from 'components/TokenLogo'
 
 interface SideBarPausedProps {
   shareLogo: any
@@ -64,7 +65,7 @@ const SideBarPaused: React.FC<SideBarPausedProps> = ({ shareName, lbpData, share
           <ShareWrapper>
             <TYPE.description2 color={'#8F8FB2'}>Project Token Balance:</TYPE.description2>
             <ShareTokenWrapper>
-              <img style={{ borderRadius: '100%' }} width="25px" height="25px" src={shareLogo?.public} />
+              <TokenLogo logo={shareLogo} width="25px" height="25px" />
               <TYPE.label style={{ inlineSize: 'max-content', alignSelf: 'center' }} fontSize={'14px'}>
                 {shareName}
               </TYPE.label>

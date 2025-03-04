@@ -33,6 +33,8 @@ import Portal from '@reach/portal'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 import { LBP_TOKENS } from 'state/lbp/constants'
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
+import { Asset } from 'state/launchpad/types'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -107,7 +109,7 @@ interface ProjectInfoProps {
   onChange: (data: any) => void
   formDataTokenomics: TokenomicsData
   shareTitle: string
-  shareLogo: any
+  shareLogo?: Asset
   endPrice: number
   isEditable: boolean
   setProjectTokenSymbol: (projectToken: string) => void
@@ -386,8 +388,8 @@ const Tokenomics = ({
   }
 
   const renderLogo = (shareLogo: any) => {
-    return shareLogo && typeof shareLogo === 'object' && shareLogo.public ? (
-      <LogoIcon as="img" src={shareLogo.public} alt="Serenity Logo" />
+    return shareLogo && typeof shareLogo === 'object' && shareLogo.uuid ? (
+      <LogoIcon as="img" src={getPublicAssetUrl(shareLogo)} alt="Serenity Logo" />
     ) : shareLogo && (typeof shareLogo === 'string' || shareLogo instanceof File) ? (
       <LogoIcon
         as="img"

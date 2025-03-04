@@ -1,12 +1,12 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
+import { getPublicAssetUrl } from './utils'
+import { Asset } from 'state/launchpad/types'
 
-const apiUrl = process.env.REACT_APP_API_URL
-
-const Logo = styled.img<{ width: string; height: string }>`
+const Logo = styled.img<{ width: string; height: string; borderRadius: string }>`
   width: ${({ width }) => width};
   height: ${({ height }) => height};
-  border-radius: 50%;
+  border-radius: ${({ borderRadius }) => borderRadius};
 
   ${({ theme }) => theme.mediaWidth.upToMedium`
     width: 36px;
@@ -15,16 +15,18 @@ const Logo = styled.img<{ width: string; height: string }>`
 `
 
 interface TokenLogoProps {
-  logo:
-    | {
-        uuid?: string
-      }
-    | string
+  logo?: Asset | string
   width?: string
   height?: string
+  borderRadius?: string
 }
 
-export const TokenLogo: FC<TokenLogoProps> = ({ logo, width = '72px', height = '72px' }: TokenLogoProps) => {
+export const TokenLogo: FC<TokenLogoProps> = ({
+  logo,
+  width = '72px',
+  height = '72px',
+  borderRadius = '50%',
+}: TokenLogoProps) => {
   if (!logo) return null
 
   let src: string = ''
@@ -32,9 +34,8 @@ export const TokenLogo: FC<TokenLogoProps> = ({ logo, width = '72px', height = '
   if (typeof logo === 'string') {
     src = logo // Handle case where logo is a URL string
   } else if (logo.uuid) {
-    const storageUrl = apiUrl + 'storage/file/public/'
-    src = `${storageUrl}${logo.uuid}` // Handle case where logo is an object with uuid
+    src = getPublicAssetUrl(logo) // This function is not imported
   }
 
-  return <Logo width={width} height={height} src={src} />
+  return <Logo width={width} height={height} borderRadius={borderRadius} src={src} />
 }
