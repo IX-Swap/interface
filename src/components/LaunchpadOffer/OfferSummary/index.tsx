@@ -6,6 +6,7 @@ import { Offer } from 'state/launchpad/types'
 import { InvestmentTypeInfo } from 'components/Launchpad/InvestmentCard/InvestmentTypeInfo'
 import { text12, text52 } from 'components/LaunchpadMisc/typography'
 import { MEDIA_WIDTHS } from 'theme'
+import { TokenLogo } from 'components/TokenLogo'
 
 interface Props {
   offer: Offer
@@ -15,7 +16,7 @@ export const OfferSummary: React.FC<Props> = (props) => {
   return (
     <SummaryContainer>
       <TitleRow>
-        <ProfilePicture src={props.offer.profilePicture.public} />
+        <TokenLogo logo={props.offer.profilePicture} width="64px" height="64px" borderRadius="6px" />
         <SummaryTitle>{props.offer.title}</SummaryTitle>
       </TitleRow>
 

@@ -2,28 +2,25 @@ import React from 'react'
 import CurrencyLogo from 'components/CurrencyLogo'
 import styled from 'styled-components'
 import { NETWORK_LOGOS } from 'constants/chains'
-import { SecTokenLogo } from 'types/secToken'
+import { TokenLogo } from 'components/TokenLogo'
+import { Asset } from 'state/launchpad/types'
 
 interface ITokenNetwork {
   token: {
-    logo?: SecTokenLogo
+    logo?: Asset
   }
   network: string
   width?: string
   height?: string
 }
 
-const TokenNetwork = ({
-  width='48px',
-  height='48px',
-  token, network,
-}: ITokenNetwork) => {
+const TokenNetwork = ({ width = '48px', height = '48px', token, network }: ITokenNetwork) => {
   const networkLogo = network ? NETWORK_LOGOS[network] : ''
 
   return (
     <div style={{ position: 'relative' }}>
       {token.logo ? (
-        <img style={{ borderRadius: '50%' }} width={width} height={height} src={token.logo.public} />
+        <TokenLogo logo={token.logo} width={width} height={height} />
       ) : (
         <CurrencyLogo currency={undefined} size={'46px'} style={{ marginRight: 16, minWidth: 46 }} />
       )}

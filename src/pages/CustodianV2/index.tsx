@@ -91,7 +91,7 @@ export default function CustodianV2() {
 
   return (
     <>
-      <MySecTokensTab marginTop= '24px' marginBottom="72px">
+      <MySecTokensTab marginTop="24px" marginBottom="72px">
         <TYPE.title5 marginBottom="32px">
           <Trans>My RWAs</Trans>
         </TYPE.title5>

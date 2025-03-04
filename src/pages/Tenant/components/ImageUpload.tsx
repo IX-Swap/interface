@@ -7,6 +7,7 @@ import { ReactComponent as UploadLogoLbp } from 'assets/images/Browse.svg'
 import { ReactComponent as TrashNoBorder } from 'assets/images/TrashNoBorder.svg'
 import apiService from 'services/apiService'
 import { ErrorText } from './styleds'
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
 
 interface ImageUploadProps {
   title: string
@@ -49,7 +50,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
           const responseImage = await apiService.get(`/storage/file/public/metadata/${id}`)
           if (responseImage.status === 200 && responseImage.data) {
-            const imageUrl = responseImage.data.public
+            const imageUrl = getPublicAssetUrl(responseImage.data)
             setFieldValue(name, imageUrl, true)
             setImage(imageUrl)
           } else {

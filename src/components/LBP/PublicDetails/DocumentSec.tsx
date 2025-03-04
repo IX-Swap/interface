@@ -7,12 +7,10 @@ import { ReactComponent as EyeIcon } from '../../../assets/images/eyeIconNew.svg
 import DocViewer, { DocViewerRenderers } from '@cyntler/react-doc-viewer'
 import { AcceptFiles } from 'components/Upload/types'
 import { isMobile } from 'react-device-detect'
-
-interface Document {
-  name: string
-  public: string
-  mimeType: string
-}
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
+import { Asset } from 'state/launchpad/types'
+import { TokenLogo } from 'components/TokenLogo'
+import { Box } from '@mui/material'
 
 interface AdditionalDocumentsProps {
   uploadDocs: any
@@ -73,10 +71,10 @@ const DownloadButton = styled.button`
 `
 
 export default function AdditionalDocuments({ uploadDocs }: AdditionalDocumentsProps) {
-  const [selectedDocument, setSelectedDocument] = useState<Document | null>(null)
+  const [selectedDocument, setSelectedDocument] = useState<Asset | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const openModal = useCallback((doc: Document) => {
+  const openModal = useCallback((doc: Asset) => {
     setSelectedDocument(doc)
     setIsModalOpen(true)
   }, [])
@@ -105,25 +103,30 @@ export default function AdditionalDocuments({ uploadDocs }: AdditionalDocumentsP
   const modalContent = useMemo(() => {
     if (!selectedDocument) return null
 
-    const docs = [{ uri: selectedDocument.public }]
+    const docs = [{ uri: getPublicAssetUrl(selectedDocument) }]
 
     return (
       <div style={{ background: '#ffffff', padding: '20px' }}>
         {selectedDocument.mimeType.startsWith('image') ? (
           <ScrollableWrapper>
-            <DocumentImage src={selectedDocument.public} alt={selectedDocument.name} />
+            <DocumentImage src={getPublicAssetUrl(selectedDocument)} alt={selectedDocument.name} />
           </ScrollableWrapper>
         ) : selectedDocument.mimeType === AcceptFiles.PDF ? (
           <ScrollableWrapper>
             <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} />
           </ScrollableWrapper>
         ) : (
-          <embed src={selectedDocument.public} type={selectedDocument.mimeType} width="100%" height="100%" />
+          <embed
+            src={getPublicAssetUrl(selectedDocument)}
+            type={selectedDocument.mimeType}
+            width="100%"
+            height="100%"
+          />
         )}
         <DownloadButton
           onClick={(e) => {
             e.preventDefault()
-            handleDownload(selectedDocument.public, selectedDocument.name)
+            handleDownload(getPublicAssetUrl(selectedDocument), selectedDocument.name)
           }}
         >
           Download
@@ -137,9 +140,9 @@ export default function AdditionalDocuments({ uploadDocs }: AdditionalDocumentsP
       <TYPE.label fontSize={'20px'}>Additional Documents</TYPE.label>
       {isMobile ? (
         <div>
-          {uploadDocs.map((doc: Document, index: number) => (
+          {uploadDocs.map((doc: Asset, index: number) => (
             <DocumentView key={index} onClick={() => openModal(doc)}>
-              <span style={{display: 'flex', placeItems: 'center'}}>
+              <span style={{ display: 'flex', placeItems: 'center' }}>
                 <FileIcon style={{ marginRight: '6px' }} />
                 <DocumentName>{doc.name}</DocumentName>
               </span>
@@ -151,10 +154,12 @@ export default function AdditionalDocuments({ uploadDocs }: AdditionalDocumentsP
         </div>
       ) : (
         <div>
-          {uploadDocs.map((doc: Document, index: number) => (
+          {uploadDocs.map((doc: Asset, index: number) => (
             <DocumentView key={index} onClick={() => openModal(doc)}>
               {doc.mimeType.startsWith('image') ? (
-                <img src={doc.public} alt={doc.name} style={{ marginRight: '6px', width: '24px', height: '24px' }} />
+                <Box mr={1}>
+                  <TokenLogo logo={doc} width={'24px'} height={'24px'} />
+                </Box>
               ) : (
                 <FileIcon style={{ marginRight: '6px' }} />
               )}

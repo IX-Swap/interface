@@ -24,8 +24,6 @@ import { text10, text11, text59 } from 'components/LaunchpadMisc/typography'
 import { useLaunchpadInvestmentContract } from 'hooks/useContract'
 import { ethers } from 'ethers'
 import { useAllowance } from 'hooks/useApproveCallback'
-import { useCurrency } from 'hooks/Tokens'
-import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { IXSALE_ADDRESS } from 'constants/addresses'
 import { useActiveWeb3React } from 'hooks/web3'
 import { IssuanceTooltip } from 'components/LaunchpadIssuance/IssuanceForm/shared/fields/IssuanceTooltip'
@@ -35,6 +33,7 @@ import { KYCPromptIconContainer } from 'components/Launchpad/KYCPrompt/styled'
 import { WalletEvent, INVEST_FLOW_EVENTS } from 'utils/event-logs'
 import usePostbackJumpTask from 'hooks/usePostbackJumpTask'
 import { MEDIA_WIDTHS } from 'theme'
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
 
 interface Props {
   offer: Offer
@@ -299,7 +298,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
                   textDecoration: 'none',
                   color: '#6667FF',
                 }}
-                href={purchaseAgreement.file?.public}
+                href={getPublicAssetUrl(purchaseAgreement.file)}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -324,7 +323,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
                   textDecoration: 'none',
                   color: '#6667FF',
                 }}
-                href={investmentMemorandum.file?.public}
+                href={getPublicAssetUrl(investmentMemorandum.file)}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -350,7 +349,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
                       textDecoration: 'none',
                       color: '#6667FF',
                     }}
-                    href={document.file?.public}
+                    href={getPublicAssetUrl(document.file)}
                     target="_blank"
                     rel="noreferrer"
                   >

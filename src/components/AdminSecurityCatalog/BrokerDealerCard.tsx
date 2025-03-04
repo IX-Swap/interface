@@ -8,10 +8,11 @@ import { ExternalLink, TYPE } from 'theme'
 import { ReactComponent as Passed } from 'assets/images/newRightCheck.svg'
 import { ReactComponent as NonTradable } from 'assets/images/newReject.svg'
 import { ReactComponent as EditIcon } from 'assets/images/NewEditButton.svg'
-import { ReactComponent as PendingIcon } from 'assets/images/newPending.svg'
 
 import { CardHeader, EditWrapper, TokensList, TokensListItem } from './styleds'
 import { statusIconMapping } from './mock'
+import { TokenLogo } from 'components/TokenLogo'
+
 export interface BrokerDealerFakeProps {
   issuer: any
   handleEditClick: (editIssuer: any) => void
@@ -25,26 +26,22 @@ export const BrokerDealerCard: FC<BrokerDealerFakeProps> = ({ issuer, handleEdit
       <CardHeader>
         <div className="left-side">
           {isMobile ? (
-            <img style={{ width: '30px', height: '30px', marginRight: '20px' }} src={logo.public} />
+            <TokenLogo logo={logo} width="30px" height="30px" />
           ) : (
-            <img style={{ width: '64px', height: '64px', marginRight: '20px' }} src={logo.public} />
+            <TokenLogo logo={logo} width="64px" height="64px" />
           )}
-          <div>
+          <Box ml={20}>
             <TYPE.title7 style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</TYPE.title7>
             <TYPE.small overflow="hidden">
               <ExternalLink style={{ color: '#B8B8CC', overflow: 'hidden', textOverflow: 'ellipsis' }} href={url}>
                 {url}
               </ExternalLink>
             </TYPE.small>
-          </div>
+          </Box>
         </div>
 
-        {/* <div className="left-side">
-          <img style={{ width: '64px', height: '64px', marginRight: '20px' }} src={logo.public} />
-        </div> */}
         <EditWrapper onClick={() => handleEditClick(issuer)}>
           <EditIcon />
-          {/* <img style={{ width: '64px', height: '64px', marginRight: '20px' }} src={logo.public} /> */}
         </EditWrapper>
       </CardHeader>
 
@@ -53,7 +50,7 @@ export const BrokerDealerCard: FC<BrokerDealerFakeProps> = ({ issuer, handleEdit
           {tokens.map(({ ticker, url, token: wrappedToken, logo, active }: any, index: number) => (
             <TokensListItem key={`token-list-${index}`}>
               <Box>
-                <img style={{ borderRadius: '24px' }} width="30px" height="31px" src={logo?.public} />
+                <TokenLogo logo={logo} width="30px" height="31px" />
                 <TYPE.title7 style={{ whiteSpace: 'nowrap' }} marginLeft="12px">
                   {ticker}
                 </TYPE.title7>

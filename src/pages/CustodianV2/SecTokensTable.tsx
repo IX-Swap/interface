@@ -23,6 +23,8 @@ import { routes } from 'utils/routes'
 import { BodyWrapper } from 'pages/AppBody'
 import EmptyData from './EmptyData'
 import { NETWORK_LOGOS } from 'constants/chains'
+import { TokenLogo } from 'components/TokenLogo'
+import { Box } from '@mui/material'
 // import { Pagination } from 'components/Vault/Pagination'
 // import { Pagination } from 'components/AdminAccreditationTable/Pagination'
 // import Pagination from '@mui/material/Pagination/Pagination'
@@ -80,12 +82,9 @@ const Body: FC<BodyProps> = ({ tokens }: BodyProps) => {
             <div>
               <Flex alignItems="center">
                 {token.logo ? (
-                  <img
-                    style={{ marginRight: 10, borderRadius: 24 }}
-                    width="30px"
-                    height="30px"
-                    src={token.logo.public}
-                  />
+                  <Box mr={1}>
+                    <TokenLogo logo={token.logo} width="30px" height="30px" borderRadius="24px" />
+                  </Box>
                 ) : (
                   <CurrencyLogo currency={undefined} size={'30px'} style={{ marginRight: 10 }} />
                 )}
@@ -139,7 +138,7 @@ export const SecTokensTable: FC<Props> = ({
   offset,
   totalPages,
   enableFeaturedSecurityVaults,
-  totalItems
+  totalItems,
 }: Props) => {
   const { config } = useWhitelabelState()
   const isIxswap = config?.isIxSwap ?? false
@@ -291,8 +290,7 @@ export const SecTokensTable: FC<Props> = ({
           ) : tokens.length > 0 ? (
             <>
               <Table style={{ marginBottom: 32 }} header={<Header />} body={<Body tokens={tokens} />} />
-              <Pagination totalItems={totalItems}  page={page} totalPages={totalPages} onPageChange={onPageChange} />
-
+              <Pagination totalItems={totalItems} page={page} totalPages={totalPages} onPageChange={onPageChange} />
             </>
           ) : (
             <EmptyData title="No other RWAs" desc="You have no other RWAs at the moment" />

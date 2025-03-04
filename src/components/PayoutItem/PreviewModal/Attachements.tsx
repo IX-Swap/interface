@@ -6,6 +6,7 @@ import { Attachment } from './Attachment'
 import { isDownload, isPreview } from 'components/LaunchpadOffer/util/files'
 import { File } from 'react-feather'
 import { Flex } from 'rebass'
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
 
 interface Props {
   attachments: Array<Document>
@@ -29,13 +30,14 @@ export const Attachments = ({ attachments }: Props) => {
         const isDownloading = !isPreviewing && isDownload(asset.name)
         return {
           label: (
-            <LabelContainer alignItems='center'>
-              <File size="18" />{asset.name}
+            <LabelContainer alignItems="center">
+              <File size="18" />
+              {asset.name}
             </LabelContainer>
           ),
           file: {
             ...asset,
-            publicUrl: asset.public,
+            publicUrl: getPublicAssetUrl(asset),
           },
           isPreviewing,
           isDownloading,
@@ -46,16 +48,9 @@ export const Attachments = ({ attachments }: Props) => {
 
   return (
     <Container flexWrap="wrap">
-      {(entries).map((entry, idx) => {
-        const id = `document-${ idx }`
-        return (
-          <Attachment
-            key={id}
-            idx={idx}
-            entry={entry}
-            isLast
-          />
-        )
+      {entries.map((entry, idx) => {
+        const id = `document-${idx}`
+        return <Attachment key={id} idx={idx} entry={entry} isLast />
       })}
     </Container>
   )

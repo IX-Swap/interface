@@ -18,6 +18,7 @@ import useAddTokenToMetamask from 'hooks/useAddTokenToMetamask'
 import { useCurrency } from 'hooks/Tokens'
 import useDebounce from 'hooks/useDebounce'
 import useDecimals from 'hooks/useDecimals'
+import { TokenLogo } from 'components/TokenLogo'
 
 interface BuySellFieldsProps {
   activeTab: string
@@ -651,7 +652,7 @@ const BuySellFields: React.FC<BuySellFieldsProps> = ({
               </div>
               <div>
                 <BuySellFieldsSelect>
-                  <img style={{ borderRadius: '100%' }} width="25px" height="25px" src={logo?.public} />
+                  <TokenLogo logo={logo} width="25px" height="25px" />
                   <TYPE.body4 fontSize={'14px'} lineHeight={'normal'}>
                     {shareSymbol}
                   </TYPE.body4>

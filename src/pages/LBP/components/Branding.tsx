@@ -6,6 +6,7 @@ import { FormGrid } from 'pages/KYC/styleds'
 import styled from 'styled-components'
 import { BrandingProps } from 'components/LBP/types'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
 
 interface BrandingDataProps {
   onChange: (data: any) => void
@@ -32,8 +33,8 @@ export default function Branding({ onChange, brandingData }: BrandingDataProps) 
     const fetchData = async () => {
       const fetchFileData = async (fileInfo: any, key: string) => {
         try {
-          if (fileInfo && fileInfo.public) {
-            const response = await fetch(fileInfo.public)
+          if (fileInfo && fileInfo.uuid) {
+            const response = await fetch(getPublicAssetUrl(fileInfo))
             if (response.ok) {
               const blob = await response.blob()
               setValues((prevValues: any) => ({

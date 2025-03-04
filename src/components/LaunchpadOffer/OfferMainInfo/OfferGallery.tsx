@@ -18,6 +18,7 @@ import { text8 } from 'components/LaunchpadMisc/typography'
 import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { isMobile } from 'react-device-detect'
 import { Flex } from 'rebass'
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
 
 interface Props {
   offer: Offer
@@ -61,7 +62,7 @@ export const OfferGallery: React.FC<Props> = (props) => {
     <div>
       <GalleryCarousel>
         <GalleryCarouselMainImage onClick={() => openViewer(cardImage)}>
-          <GalleryCarouselImage src={props.offer?.cardPicture.public} />
+          <GalleryCarouselImage src={getPublicAssetUrl(props.offer?.cardPicture)} />
         </GalleryCarouselMainImage>
 
         <GalleryCarouselExtraMediaList style={{ height: gallery?.length > 0 ? '160px' : '' }}>

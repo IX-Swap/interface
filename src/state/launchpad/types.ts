@@ -124,9 +124,8 @@ export enum IssunaceOfferStatus {
 
 export interface Asset {
   id: number
-  public: string
+  uuid: number
   name: string
-  publicUrl: string
   mimeType: string
 }
 

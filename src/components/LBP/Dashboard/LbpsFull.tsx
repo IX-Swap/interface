@@ -29,6 +29,8 @@ import { getStageLabel } from 'utils/stage'
 import { ReactComponent as Ended } from '../../../assets/images/status/ended.svg'
 import { ReactComponent as Closed } from '../../../assets/images/status/closed.svg'
 import { MEDIA_WIDTHS } from 'theme'
+import { Box } from '@mui/material'
+import { TokenLogo } from 'components/TokenLogo'
 
 interface Props {
   type: string
@@ -213,15 +215,12 @@ export const LbpsFull: React.FC<Props> = (props) => {
             lbps.map((lbp, idx) => (
               <LbpRow type={props.type} key={idx} tab={LbpStatus.live} amount={amountColumns[props.type]}>
                 <Raw>
-                  {lbp?.logo?.public ? (
-                    <img
-                      style={{ marginRight: '20px', borderRadius: 24, position: 'absolute' }}
-                      width="30px"
-                      height="30px"
-                      src={lbp?.logo?.public}
-                    />
+                  {lbp?.logo ? (
+                    <Box style={{ position: 'absolute' }}>
+                      <TokenLogo logo={lbp?.logo} width="30px" height="30px" borderRadius="24px" />
+                    </Box>
                   ) : (
-                    <Disabled style={{ marginRight: '20px', borderRadius: 24, position: 'absolute' }} />
+                    <Disabled style={{ borderRadius: 24, position: 'absolute' }} />
                   )}
 
                   <p style={{ marginLeft: '45px', marginTop: '5px' }}> {lbp.title}</p>
