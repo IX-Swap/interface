@@ -29,6 +29,7 @@ import { InvestFailedModal } from '../InvestDialog/utils/InvestFailedModal'
 import { INVESTING_TOKEN_SYMBOL } from 'state/launchpad/constants'
 import { isTestnet } from 'utils/isEnvMode'
 import { KYCPrompt } from 'components/Launchpad/KYCPrompt'
+import { Box, Flex } from 'rebass'
 
 interface Props {
   offer: Offer
@@ -139,6 +140,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
     return true
   }
 
+  const isShowInvestButton = shouldShowInvestButton(stageStatus, props?.offer?.status, isInterested)
   return (
     <Container>
       <OfferSidebarSummary>
@@ -204,14 +206,32 @@ export const OfferDetails: React.FC<Props> = (props) => {
             </InvestButton>
           ) : (
             <>
-              {shouldShowInvestButton(stageStatus, props?.offer?.status, isInterested) ? (
+              {isShowInvestButton ? (
                 <InvestButton onClick={openInvestDialog}>
                   {stageStatus === OfferStageStatus.checkStatus && 'Check Status'}
                   {stageStatus === OfferStageStatus.notStarted && 'Register To Invest'}
                   {stageStatus === OfferStageStatus.active && 'Invest'}
                   {stageStatus === OfferStageStatus.closed && 'Open Dashboard '}
                 </InvestButton>
-              ) : null}
+              ) : (
+                <Flex
+                  justifyContent="center"
+                  alignItems="center"
+                  css={{
+                    border: '1px solid rgba(255, 168, 0, 0.50)',
+                    borderRadius: '8px',
+                    background: 'rgba(255, 168, 0, 0.10)',
+                    padding: '24px',
+                    width: '100%',
+                    textAlign: 'center',
+                    fontSize: '13px',
+                    lineHeight: '18px',
+                  }}
+                >
+                  You are not eligible to participate in Pre-sale. <br />
+                  Please wait for the Public Sale Phase.
+                </Flex>
+              )}
             </>
           )}
         </InvestButtonContainer>
