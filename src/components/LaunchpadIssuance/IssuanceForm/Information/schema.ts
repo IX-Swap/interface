@@ -122,11 +122,18 @@ export const createValidationSchema = (account: string | null | undefined) => {
     presaleTokenPrice: yup
       .string()
       .nullable()
-      .test('notZero', 'Pre-sale Token price should be bigger than 0!', function () {
-        const { originalValue } = this as any
-        return !originalValue || +originalValue > 0
-      })
-      .required(REQUIRED),
+      .when('hasPresale', {
+        is: true,
+        then: yup
+          .string()
+          .nullable()
+          .required(REQUIRED)
+          .test('notZero', 'Pre-sale Token price should be bigger than 0!', function () {
+            const { originalValue } = this as any
+            return !originalValue || +originalValue > 0
+          }),
+        otherwise: yup.string().nullable(),
+      }),
     tokenStandart: yup.string().nullable().oneOf(Object.values(OfferTokenStandart)).required(REQUIRED),
 
     tokenReceiverAddress: yup
