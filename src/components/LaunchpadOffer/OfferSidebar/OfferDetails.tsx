@@ -141,6 +141,8 @@ export const OfferDetails: React.FC<Props> = (props) => {
   }
 
   const isShowInvestButton = shouldShowInvestButton(stageStatus, props?.offer?.status, isInterested)
+  const isShowWarning = !whitelistedStatus || props?.offer?.status === OfferStatus.preSale
+  console.log('props?.offer?.status', props?.offer?.status)
   return (
     <Container>
       <OfferSidebarSummary>
@@ -214,23 +216,27 @@ export const OfferDetails: React.FC<Props> = (props) => {
                   {stageStatus === OfferStageStatus.closed && 'Open Dashboard '}
                 </InvestButton>
               ) : (
-                <Flex
-                  justifyContent="center"
-                  alignItems="center"
-                  css={{
-                    border: '1px solid rgba(255, 168, 0, 0.50)',
-                    borderRadius: '8px',
-                    background: 'rgba(255, 168, 0, 0.10)',
-                    padding: '24px',
-                    width: '100%',
-                    textAlign: 'center',
-                    fontSize: '13px',
-                    lineHeight: '18px',
-                  }}
-                >
-                  You are not eligible to participate in Pre-sale. <br />
-                  Please wait for the Public Sale Phase.
-                </Flex>
+                <>
+                  {isShowWarning ? (
+                    <Flex
+                      justifyContent="center"
+                      alignItems="center"
+                      css={{
+                        border: '1px solid rgba(255, 168, 0, 0.50)',
+                        borderRadius: '8px',
+                        background: 'rgba(255, 168, 0, 0.10)',
+                        padding: '24px',
+                        width: '100%',
+                        textAlign: 'center',
+                        fontSize: '13px',
+                        lineHeight: '18px',
+                      }}
+                    >
+                      You are not eligible to participate in Pre-sale. <br />
+                      Please wait for the Public Sale Phase.
+                    </Flex>
+                  ) : null}
+                </>
               )}
             </>
           )}
