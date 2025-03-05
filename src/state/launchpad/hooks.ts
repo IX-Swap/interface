@@ -55,6 +55,7 @@ import { useKyc } from 'state/user/hooks'
 import { PaginateResponse } from 'types/pagination'
 import { useActiveWeb3React } from 'hooks/web3'
 import { getPublicAssetUrl } from 'components/TokenLogo/utils'
+import { useWeb3React } from 'hooks/useWeb3React'
 
 interface OfferPagination {
   page: number
@@ -203,6 +204,7 @@ export const useSubscribeToOffer = () => {
 
 export const useGetOffer = (id: string | number | undefined, startLoading = true) => {
   const loader = useLoader()
+  const { account } = useWeb3React()
   const [data, setData] = React.useState<Offer | undefined>()
   const [error, setError] = React.useState('')
   const load = React.useCallback(() => {
@@ -218,7 +220,7 @@ export const useGetOffer = (id: string | number | undefined, startLoading = true
       .then(setData)
       .catch((e: any) => setError(e?.message))
       .finally(loader.stop)
-  }, [id])
+  }, [id, account])
 
   React.useEffect(() => {
     if (startLoading && id) {
@@ -226,11 +228,12 @@ export const useGetOffer = (id: string | number | undefined, startLoading = true
     } else {
       loader.stop()
     }
-  }, [id])
+  }, [id, account])
   return { loading: loader.isLoading, load, data, error }
 }
 
 export const useGetWhitelistStatus = (id: string) => {
+  const { account } = useWeb3React()
   const [loading, setLoading] = React.useState(true)
   const [info, setInfo] = React.useState<{ status: WhitelistStatus; isInterested: number }>()
 
@@ -240,7 +243,7 @@ export const useGetWhitelistStatus = (id: string) => {
     getWhitelist()
       .then((res) => setInfo(res.data))
       .finally(() => setLoading(false))
-  }, [id])
+  }, [id, account])
 
   return { ...info, loading }
 }
@@ -318,6 +321,7 @@ export const useCheckClaimed = (offerId: string) => {
 
 export const useInvestedData = (offerId: string) => {
   const loader = useLoader()
+  const { account } = useWeb3React()
 
   const [data, setData] = React.useState<InvestedData>({
     amount: 0,
@@ -334,11 +338,11 @@ export const useInvestedData = (offerId: string) => {
       .then(setData)
       .catch((e: any) => setError(e?.message))
       .finally(loader.stop)
-  }, [offerId])
+  }, [offerId, account])
 
   React.useEffect(() => {
     load()
-  }, [offerId])
+  }, [offerId, account])
 
   return { ...data, load, error, loading: loader.isLoading }
 }
@@ -1091,15 +1095,15 @@ export const useOfferFormInitialValues = (
         faq: payload.faq?.length ? payload.faq : initialValues.faq,
         members: payload.members?.length
           ? payload.members.map(
-            (member) =>
-            ({
-              id: member.id,
-              name: member.name,
-              role: member.title,
-              about: member.description,
-              photo: files.find((x) => x.id === member.avatar?.id),
-            } as TeamMember)
-          )
+              (member) =>
+                ({
+                  id: member.id,
+                  name: member.name,
+                  role: member.title,
+                  about: member.description,
+                  photo: files.find((x) => x.id === member.avatar?.id),
+                } as TeamMember)
+            )
           : initialValues.members,
 
         social: Object.entries(payload.socialMedia || {}).map(([name, link]) => ({
@@ -1115,20 +1119,20 @@ export const useOfferFormInitialValues = (
 
         additionalDocuments: documents.length
           ? documents.map((document: any) => {
-            const file = files.find((x) => x.id === document.file?.id)
+              const file = files.find((x) => x.id === document.file?.id)
 
-            return { file: file, asset: document?.file } as AdditionalDocument
-          })
+              return { file: file, asset: document?.file } as AdditionalDocument
+            })
           : initialValues.additionalDocuments,
 
         purchaseAgreement,
         investmentMemorandum,
         otherExecutionDocuments: otherExecutionDocuments.length
           ? otherExecutionDocuments.map((document: any) => {
-            const file = files.find((x) => x.id === document.file?.id)
+              const file = files.find((x) => x.id === document.file?.id)
 
-            return { file: file, asset: document?.file } as AdditionalDocument
-          })
+              return { file: file, asset: document?.file } as AdditionalDocument
+            })
           : initialValues.otherExecutionDocuments,
 
         hasPresale: payload.hasPresale,
