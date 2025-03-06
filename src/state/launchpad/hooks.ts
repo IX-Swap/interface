@@ -233,6 +233,7 @@ export const useGetOffer = (id: string | number | undefined, startLoading = true
 }
 
 export const useGetWhitelistStatus = (id: string) => {
+  const { account } = useWeb3React()
   const [loading, setLoading] = React.useState(true)
   const [info, setInfo] = React.useState<{ status: WhitelistStatus; isInterested: number }>()
 
@@ -242,7 +243,7 @@ export const useGetWhitelistStatus = (id: string) => {
     getWhitelist()
       .then((res) => setInfo(res.data))
       .finally(() => setLoading(false))
-  }, [id])
+  }, [id, account])
 
   return { ...info, loading }
 }
@@ -320,6 +321,7 @@ export const useCheckClaimed = (offerId: string) => {
 
 export const useInvestedData = (offerId: string) => {
   const loader = useLoader()
+  const { account } = useWeb3React()
 
   const [data, setData] = React.useState<InvestedData>({
     amount: 0,
@@ -336,11 +338,11 @@ export const useInvestedData = (offerId: string) => {
       .then(setData)
       .catch((e: any) => setError(e?.message))
       .finally(loader.stop)
-  }, [offerId])
+  }, [offerId, account])
 
   React.useEffect(() => {
     load()
-  }, [offerId])
+  }, [offerId, account])
 
   return { ...data, load, error, loading: loader.isLoading }
 }

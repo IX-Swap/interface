@@ -9,6 +9,8 @@ import { APIServiceRequestConfig, KeyValueMap, RequestConfig } from './types'
 import { LONG_WAIT_RESPONSE, LONG_WAIT_RESPONSE_CODE, OK_RESPONSE_CODE, CREATED_RESPONSE_CODE } from 'constants/misc'
 import * as Sentry from '@sentry/react'
 import { setWalletState } from 'state/wallet'
+import { getAccount } from '@wagmi/core'
+import { wagmiConfig } from 'components/Web3Provider'
 
 const _axios = axios.create()
 _axios.defaults.baseURL = API_URL
@@ -182,9 +184,10 @@ const apiService = {
       'x-tenant-domain': window.location.host,
       // 'x-tenant-domain': 'dev-readi.ixswap.io',
     }
-    const { auth, user } = store.getState()
+    const { auth } = store.getState()
 
-    const account = user?.account ?? ''
+    const { address } = getAccount(wagmiConfig)
+    const account = address || ''
     const token = auth?.token ? auth.token[account] : ''
 
     if (token) {
