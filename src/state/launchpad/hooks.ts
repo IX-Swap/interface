@@ -220,7 +220,7 @@ export const useGetOffer = (id: string | number | undefined, startLoading = true
       .then(setData)
       .catch((e: any) => setError(e?.message))
       .finally(loader.stop)
-  }, [id])
+  }, [id, account])
 
   React.useEffect(() => {
     if (startLoading && id) {
