@@ -141,8 +141,9 @@ export const OfferDetails: React.FC<Props> = (props) => {
   }
 
   const isShowInvestButton = shouldShowInvestButton(stageStatus, props?.offer?.status, isInterested)
-  const isShowWarning = !whitelistedStatus || props?.offer?.status === OfferStatus.preSale
+  const isShowWarning = !whitelistedStatus && props?.offer?.status === OfferStatus.preSale
   console.log('props?.offer?.status', props?.offer?.status)
+  console.log('whitelistedStatus', whitelistedStatus)
   return (
     <Container>
       <OfferSidebarSummary>
