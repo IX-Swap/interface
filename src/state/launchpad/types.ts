@@ -53,6 +53,7 @@ export enum OfferIndustry {
 export enum OfferTokenStandart {
   erc20 = 'ERC20',
   xtokenlite = 'xtokenlite',
+  rwaErc20 = 'RWAERC20',
 }
 
 export enum OfferType {

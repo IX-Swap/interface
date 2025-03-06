@@ -137,7 +137,8 @@ export const networkOptions = [
 ]
 
 export const ERC20Option = { label: 'ERC20', value: OfferTokenStandart.erc20 }
-export const standardOptions = [ERC20Option, { label: 'XTokenLite', value: OfferTokenStandart.xtokenlite }]
+export const RWAERC20Option = { label: 'RWA ERC-20', value: OfferTokenStandart.rwaErc20 }
+export const standardOptions = [ERC20Option, { label: 'XTokenLite', value: OfferTokenStandart.xtokenlite }, RWAERC20Option]
 
 export const structureOptions = [
   { label: 'ERC20', value: OfferTokenStandart.erc20 },
