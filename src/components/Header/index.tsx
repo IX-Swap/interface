@@ -62,7 +62,7 @@ export default function Header() {
     const supportedChains: any = CHAINS ? CHAINS.map((chain) => chain.id) : []
     const defaultChainId = Number(DEFAULT_CHAIN_ID)
 
-    if (!lastAccount && account && chainId !== defaultChainId && supportedChains.includes(currentChainId)) {
+    if (!lastAccount && account && chainId !== defaultChainId && !supportedChains.includes(currentChainId)) {
       localStorage.setItem('account', account)
       switchChain({ chainId: defaultChainId })
     }

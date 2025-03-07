@@ -3,10 +3,10 @@ import styled, { useTheme } from 'styled-components'
 import Portal from '@reach/portal'
 import { useHistory, useParams } from 'react-router-dom'
 import { ArrowLeft } from 'react-feather'
+import { useAccount } from 'wagmi'
 
 import { Footer } from 'pages/Launchpad/Footer'
-import { OfferStatus } from 'state/launchpad/types'
-import { useCheckKYC, useGetOffer } from 'state/launchpad/hooks'
+import { useGetOffer } from 'state/launchpad/hooks'
 import { useSetHideHeader } from 'state/application/hooks'
 import { OfferSummary } from 'components/LaunchpadOffer/OfferSummary'
 import { OfferMainInfo } from 'components/LaunchpadOffer/OfferMainInfo'
@@ -14,20 +14,13 @@ import { OfferSidebar } from 'components/LaunchpadOffer/OfferSidebar'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
-import { KYCPrompt } from 'components/Launchpad/KYCPrompt'
 import { BackToTopButton } from 'components/LaunchpadMisc/BackToTopButton'
 import { FilledButton } from 'components/LaunchpadMisc/buttons'
 import { MEDIA_WIDTHS } from 'theme'
-import { routes } from 'utils/routes'
 import Header from 'components/Header'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 import WhiteLabelFooter from 'components/WhiteLabelFooter'
 import { checkWrongChain } from 'utils/chains'
-import { useAccount } from 'wagmi'
-import { CHAINS } from 'components/Web3Provider/constants'
-import { useAuthState } from 'state/auth/hooks'
-import { Flex } from 'rebass'
-import ConnectWalletCard from 'components/NotAvailablePage/ConnectWalletCard'
 
 interface OfferPageParams {
   offerId: string
@@ -40,40 +33,12 @@ export default function LaunchpadOffer() {
   const { chainId, address: account } = useAccount()
   const offer: any = useGetOffer(params.offerId)
   const hideHeader = useSetHideHeader()
-  const checkKYC = useCheckKYC()
   const { config } = useWhitelabelState()
-  const { token } = useAuthState()
 
   const network = offer?.data?.network ?? ''
   const { isWrongChain, expectChain } = checkWrongChain(chainId, network)
 
-  const [isAllowed, setIsAllowed] = React.useState<boolean>(true)
-
   const isIxSwap = config?.isIxSwap ?? false
-
-  const chains = CHAINS ? CHAINS.map((chain) => chain.id) : []
-  // @ts-ignore
-  const shouldShowSignModal = !token && account && chains.includes(chainId)
-
-  React.useEffect(() => {
-    if (offer.data) {
-      if (offer && offer.data && offer.data.ethAddress) {
-        setIsAllowed(
-          checkKYC(
-            offer.data.allowOnlyAccredited,
-            [OfferStatus.closed, OfferStatus.claim].includes(offer?.data?.status)
-          ) || account?.toLowerCase() === offer?.data?.ethAddress?.toLowerCase()
-        )
-      } else {
-        setIsAllowed(
-          checkKYC(
-            offer.data.allowOnlyAccredited,
-            [OfferStatus.closed, OfferStatus.claim].includes(offer?.data?.status)
-          )
-        )
-      }
-    }
-  }, [offer])
 
   React.useEffect(() => {
     hideHeader(true)
@@ -96,31 +61,6 @@ export default function LaunchpadOffer() {
       <Centered>
         <ErrorTitle>{offer.error || 'Offer not found'}</ErrorTitle>
       </Centered>
-    )
-  }
-
-  if (!account) {
-    return (
-      <OfferBackgroundWrapper>
-        <header>
-          <Header />
-        </header>
-        <Flex justifyContent="center" width="100%" mt="8rem">
-          <ConnectWalletCard />
-        </Flex>
-      </OfferBackgroundWrapper>
-    )
-  }
-
-  if (!shouldShowSignModal && !isAllowed) {
-    return (
-      <Portal>
-        <KYCPrompt
-          offerId={offer.data.id}
-          allowOnlyAccredited={offer.data.allowOnlyAccredited}
-          onClose={() => history.push(routes.launchpad)}
-        />
-      </Portal>
     )
   }
 
@@ -155,7 +95,7 @@ export default function LaunchpadOffer() {
         </footer>
       </OfferContainer>
 
-      {isWrongChain ? (
+      {account && chainId && isWrongChain ? (
         <Portal>
           <CenteredFixed width="100vw" height="100vh">
             <NetworkNotAvailable expectChainId={expectChain} />
