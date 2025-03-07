@@ -12,7 +12,7 @@ type WalletConnectConfig = {
 
 function getWalletConnectProjectId() {
   const key = window.location.host as keyof WalletConnectConfig
-  debugger
+
   const configs: WalletConnectConfig = walletConnectConfig || {}
 
   const projectId = configs[key]
@@ -26,7 +26,7 @@ export function createWagmiConfig() {
 
   const config = getDefaultConfig({
     appName: 'IXSwap',
-    projectId: 'fd50d8c55e847566ce7e873ba898467e',
+    projectId: WALLET_CONNECT_PROJECT_ID,
     wallets: [
       {
         groupName: 'Popular',
