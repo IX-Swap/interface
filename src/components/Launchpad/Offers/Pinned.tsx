@@ -1,20 +1,17 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
-import Portal from '@reach/portal'
 import { useHistory } from 'react-router-dom'
+import { isMobile } from 'react-device-detect'
+
 import { Offer, OfferStatus } from 'state/launchpad/types'
 import { OFFER_STAGE_LABELS } from 'state/launchpad/constants'
-import { useGetPinnedOffer, useCheckKYC } from 'state/launchpad/hooks'
-import { KYCPrompt } from '../KYCPrompt'
+import { useGetPinnedOffer } from 'state/launchpad/hooks'
 import { InvestmentStatusBadge } from 'components/Launchpad/InvestmentCard/InvestmentStatusBadge'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import { InvestmentTypeInfo } from '../InvestmentCard/InvestmentTypeInfo'
 import { text1, text12, text54, text59 } from 'components/LaunchpadMisc/typography'
 import { MEDIA_WIDTHS } from 'theme'
-import { isMobile } from 'react-device-detect'
-import { useWeb3React } from 'hooks/useWeb3React'
-import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { getPublicAssetUrl } from 'components/TokenLogo/utils'
 
 const getStageLabel = (stage: OfferStatus) => {
@@ -24,41 +21,25 @@ const getStageLabel = (stage: OfferStatus) => {
 export const Pinned: React.FC = () => {
   const history = useHistory()
   const getPinnedOffer = useGetPinnedOffer()
-  const checkKYC = useCheckKYC()
   const theme = useTheme()
-  const { account } = useWeb3React()
-  const { openConnectModal } = useConnectModal()
 
   const [offer, setOffer] = React.useState<Offer>()
   const [loading, setLoading] = React.useState(true)
-  const [showKYCModal, setShowKYCModal] = React.useState(false)
 
   const isClosed = React.useMemo(
     () => !!offer?.status && [OfferStatus.closed, OfferStatus.claim].includes(offer?.status),
     [offer?.status]
   )
-  const toggleKYCModal = React.useCallback(() => setShowKYCModal((state) => !state), [])
 
   React.useEffect(() => {
     getPinnedOffer()
       .then(setOffer)
       .finally(() => setLoading(false))
   }, [])
-  const onClick = React.useCallback(() => {
-    if (account) {
-      const canOpen = checkKYC(
-        offer?.allowOnlyAccredited || false,
-        !!offer?.status && [OfferStatus.closed, OfferStatus.claim].includes(offer.status)
-      )
-      if (canOpen) {
-        history.push(`/offers/${offer?.id ?? ''}`)
-      } else {
-        toggleKYCModal()
-      }
-    } else {
-      openConnectModal && openConnectModal()
-    }
-  }, [account, checkKYC, toggleKYCModal, offer])
+
+  const onClick = () => {
+    history.push(`/offers/${offer?.id ?? ''}`)
+  }
 
   const stage = React.useMemo(() => {
     if (offer?.hardCapReached) {
@@ -117,12 +98,6 @@ export const Pinned: React.FC = () => {
           ) : null}
         </PinnedContent>
       </PinnedContainer>
-
-      {showKYCModal && (
-        <Portal>
-          <KYCPrompt offerId={offer.id} allowOnlyAccredited={offer.allowOnlyAccredited} />
-        </Portal>
-      )}
     </PinnedWrapper>
   )
 }
