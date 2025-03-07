@@ -5,6 +5,7 @@ import { getData } from 'country-list'
 import { useHistory } from 'react-router-dom'
 import Portal from '@reach/portal'
 import { FormikProps, setNestedObjectValues } from 'formik'
+import Big from 'big.js'
 
 import { useShowError } from 'state/application/hooks'
 import { OfferReview } from '../Review'
@@ -51,7 +52,6 @@ import { RejectInfo } from '../shared/RejectInfo'
 import { FormSideBar, FormBody } from '../shared/styled'
 import { IssuanceTooltip } from '../shared/fields/IssuanceTooltip'
 import { text10 } from 'components/LaunchpadMisc/typography'
-import { useFormatOfferValue } from 'state/launchpad/hooks'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 interface Props {
@@ -95,7 +95,6 @@ export const InformationForm = (props: Props) => {
   // hooks
   const history = useHistory()
   const showError = useShowError()
-  const formatedValue = useFormatOfferValue()
 
   // memos
   const draftDisabled = useMemo(() => isDraftDisabled(errors, touched), [errors, touched])
@@ -105,18 +104,29 @@ export const InformationForm = (props: Props) => {
   }, [])
   const showSupplyHint = useMemo(
     () =>
-      smartContractStrategy === SMART_CONTRACT_STRATEGIES.original &&
-      values.tokenStandart === OfferTokenStandart.xtokenlite,
+      smartContractStrategy === SMART_CONTRACT_STRATEGIES.original && values.tokenStandart === OfferTokenStandart.erc20,
     [smartContractStrategy, values.tokenStandart]
   )
   const supplyHintValue = useMemo(() => {
-    if (showSupplyHint && values.tokenPrice && values.hardCap) {
-      const supplyForSale = Number(values.hardCap) / Number(values.tokenPrice)
-      return formatedValue(Math.ceil(supplyForSale).toString())
-    } else {
-      return '0'
+    if (!values.tokenPrice) return '0'
+
+    if (values.hasPresale) {
+      if (!values.presaleTokenPrice || !values.presaleAlocated || !values.hardCap) return '0'
+
+      const presaleTokenAmount = new Big(values.presaleAlocated).div(values.presaleTokenPrice)
+      const publicTokenAmount = new Big(values.hardCap).minus(values.presaleAlocated).div(values.tokenPrice)
+      return presaleTokenAmount.plus(publicTokenAmount).round(0, Big.roundUp).toString()
     }
-  }, [showSupplyHint, values.tokenPrice, values.hardCap])
+
+    return new Big(values.hardCap).div(values.tokenPrice).round(0, Big.roundUp).toString()
+  }, [
+    showSupplyHint,
+    values.tokenPrice,
+    values.hasPresale,
+    values.presaleTokenPrice,
+    values.presaleAlocated,
+    values.hardCap,
+  ])
   const filteredStandardOptions = useMemo(() => {
     return smartContractStrategy === SMART_CONTRACT_STRATEGIES.nonOriginalWithNoAccess ? [ERC20Option] : standardOptions
   }, [smartContractStrategy])
@@ -562,12 +572,6 @@ export const InformationForm = (props: Props) => {
             maxLength={64}
           />
 
-          {showSupplyHint && (
-            <SupplyHintText>
-              {supplyHintValue} tokens will be issued based on the price per token and total fundraising amount.
-            </SupplyHintText>
-          )}
-
           <Column gap="1rem">
             <BaseCheckboxWithLabel
               state={Boolean(values.tokenomicsAgreement)}
@@ -665,6 +669,12 @@ export const InformationForm = (props: Props) => {
             maxLength={64}
           />
         </FormGrid>
+
+        {showSupplyHint && (
+          <SupplyHintText>
+            {supplyHintValue} tokens will be issued based on the price per token and total fundraising amount.
+          </SupplyHintText>
+        )}
 
         <Separator />
 
