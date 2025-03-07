@@ -1273,7 +1273,7 @@ export const useSubmitOffer = () => {
         maxInvestment: payload.maxInvestment,
 
         hasPresale: payload.hasPresale,
-        presaleTokenPrice: payload.presaleTokenPrice,
+        presaleTokenPrice: payload.presaleTokenPrice?.toString(),
         presaleMinInvestment: payload.presaleMinInvestment,
         presaleMaxInvestment: payload.presaleMaxInvestment,
         presaleAlocated: payload.presaleAlocated,
