@@ -13,6 +13,7 @@ import { isEthChainAddress } from 'utils'
 import { SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
 import { STRING_MIN, STRING_MAX, TEXT_MAX, TEXT_MIN } from 'components/LaunchpadIssuance/utils/TextField'
 import { truncate } from 'fs/promises'
+import { calculateSupplyForSale } from './util'
 
 const fileSchema = yup.mixed()
 const REQUIRED = 'Required'
@@ -163,6 +164,15 @@ export const createValidationSchema = (account: string | null | undefined) => {
             .string()
             .nullable()
             .matches(/[0-9]+/, 'Invalid value')
+            .test('totalSupplyConstraint', function (totalSupply): boolean | yup.ValidationError {
+              const requiredSupply = calculateSupplyForSale(this.parent)
+              if (+(totalSupply || '0') < +requiredSupply) {
+                return this.createError({
+                  message: `Total supply must be at least ${requiredSupply}. Adjust your input to continue.`,
+                })
+              }
+              return true
+            })
             .required(REQUIRED),
         }),
       })
