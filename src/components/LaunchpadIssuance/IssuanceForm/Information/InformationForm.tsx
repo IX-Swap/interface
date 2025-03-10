@@ -33,6 +33,7 @@ import {
   investmentStructureOptions,
   isDefinedNumber,
   ERC20Option,
+  calculateSupplyForSale,
 } from './util'
 
 import { InformationFormValues } from './types'
@@ -107,26 +108,17 @@ export const InformationForm = (props: Props) => {
       smartContractStrategy === SMART_CONTRACT_STRATEGIES.original && values.tokenStandart === OfferTokenStandart.erc20,
     [smartContractStrategy, values.tokenStandart]
   )
-  const supplyHintValue = useMemo(() => {
-    if (!values.tokenPrice) return '0'
-
-    if (values.hasPresale) {
-      if (!values.presaleTokenPrice || !values.presaleAlocated || !values.hardCap) return '0'
-
-      const presaleTokenAmount = new Big(values.presaleAlocated).div(values.presaleTokenPrice)
-      const publicTokenAmount = new Big(values.hardCap).minus(values.presaleAlocated).div(values.tokenPrice)
-      return presaleTokenAmount.plus(publicTokenAmount).round(0, Big.roundUp).toString()
-    }
-
-    return new Big(values.hardCap).div(values.tokenPrice).round(0, Big.roundUp).toString()
-  }, [
-    showSupplyHint,
-    values.tokenPrice,
-    values.hasPresale,
-    values.presaleTokenPrice,
-    values.presaleAlocated,
-    values.hardCap,
-  ])
+  const supplyHintValue = useMemo(
+    () => calculateSupplyForSale(values),
+    [
+      showSupplyHint,
+      values.tokenPrice,
+      values.hasPresale,
+      values.presaleTokenPrice,
+      values.presaleAlocated,
+      values.hardCap,
+    ]
+  )
   const filteredStandardOptions = useMemo(() => {
     return smartContractStrategy === SMART_CONTRACT_STRATEGIES.nonOriginalWithNoAccess ? [ERC20Option] : standardOptions
   }, [smartContractStrategy])

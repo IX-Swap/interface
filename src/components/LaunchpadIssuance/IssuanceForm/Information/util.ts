@@ -1,4 +1,5 @@
 import React from 'react'
+import Big from 'big.js'
 import { InformationFormValues, OfferTokenType } from './types'
 
 import {
@@ -7,6 +8,7 @@ import {
   OfferTokenStandart,
   OfferDistributionFrequency,
   OfferInvestmentStructure,
+  Offer,
 } from 'state/launchpad/types'
 import { SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
 
@@ -196,4 +198,18 @@ export const getSetter = (onChange: (e: Partial<React.ChangeEvent<any>>) => void
     onChange({
       target: { name, value },
     })
+}
+
+export const calculateSupplyForSale = (offer: Pick<InformationFormValues, 'tokenPrice' | 'hasPresale' | 'presaleTokenPrice' | 'presaleAlocated' | 'hardCap'>) => {
+  if (!offer.tokenPrice || !offer.hardCap) return '0'
+
+  if (offer.hasPresale) {
+    if (!offer.presaleTokenPrice || !offer.presaleAlocated) return '0'
+
+    const presaleTokenAmount = new Big(offer.presaleAlocated).div(offer.presaleTokenPrice)
+    const publicTokenAmount = new Big(offer.hardCap).minus(offer.presaleAlocated).div(offer.tokenPrice)
+    return presaleTokenAmount.plus(publicTokenAmount).round(0, Big.roundUp).toString()
+  }
+
+  return new Big(offer.hardCap).div(offer.tokenPrice).round(0, Big.roundUp).toString()
 }
