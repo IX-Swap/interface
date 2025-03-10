@@ -317,7 +317,7 @@ export const createValidationSchema = (account: string | null | undefined) => {
           .required(REQUIRED)
           .test(
             'presaleAlocatedMax',
-            'Pre-sale allocated should be smaller or equal to total amount to raise',
+            'Pre-sale allocated should be smaller to total amount to raise',
             function () {
               return checkMinSmallerThanMaximum(this.parent.presaleAlocated, this.parent.hardCap)
             }
