@@ -16,6 +16,21 @@ import { wagmiConfig } from 'components/Web3Provider'
 const _axios = axios.create()
 _axios.defaults.baseURL = API_URL
 
+let isRefreshing = false; // Track if a refresh request is in progress
+type subscriberCallback = (token: string) => void;
+let subscribers: subscriberCallback[] = []; // Queue for pending requests
+
+// Function to add subscribers (pending requests)
+const subscribeTokenRefresh = (callback: subscriberCallback) => {
+  subscribers.push(callback);
+};
+
+// Function to notify all subscribers with new token
+const onRefreshed = (newToken: string) => {
+  subscribers.forEach((callback) => callback(newToken));
+  subscribers = [];
+};
+
 _axios.interceptors.response.use(responseSuccessInterceptor, async function responseErrorInterceptor(error: any) {
   if (error?.response?.status !== OK_RESPONSE_CODE || error?.response?.status !== CREATED_RESPONSE_CODE) {
     const method = error?.response?.config?.method
@@ -28,9 +43,8 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
         data: error?.response?.data,
       })
 
-      const message = `API Error ${error?.response?.config?.method?.toUpperCase()} ${error?.response?.config?.url}: ${
-        error?.response?.data?.message
-      }`
+      const message = `API Error ${error?.response?.config?.method?.toUpperCase()} ${error?.response?.config?.url}: ${error?.response?.data?.message
+        }`
       Sentry.captureMessage(message)
     }
   }
@@ -42,17 +56,18 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
   }
   if (shouldRetry() && error?.response) {
     if (error.response.status === 401 && !originalConfig._retry) {
-      originalConfig._retry = true
-      const {
-        auth: authState,
-        user: { account },
-      } = store.getState()
-      try {
-        const refreshToken = authState.refreshToken[account ?? '']
-
-        if (refreshToken) {
+      originalConfig._retry = true // Mark request as retried to prevent loops
+      const { user: { account }, } = store.getState()
+      if (!isRefreshing) {
+        try {
+          isRefreshing = true;
           store.dispatch(postLogin.pending(account))
-          const response = await _axios.post(auth.refresh, { refreshToken })
+          const response = await _axios.post(auth.refresh, null, {
+            withCredentials: true,
+            headers: {
+              'x-tenant-domain': window.location.host,
+            }
+          })
           if (!response?.data) {
             store.dispatch(
               postLogin.rejected({
@@ -69,15 +84,23 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
               account,
             })
           )
-          return _axios(originalConfig)
-        } else {
-          store.dispatch(saveAccount({ account: '' }))
+          onRefreshed(response?.data?.accessToken);
+        } catch (error: any) {
+          console.error({ requestError: error.message })
+          store.dispatch(postLogin.rejected({ errorMessage: error.message, account }))
+          store.dispatch(setWalletState({ isSignLoading: false }))
+        } finally {
+          isRefreshing = false;
         }
-      } catch (error: any) {
-        console.error({ requestError: error.message })
-        store.dispatch(postLogin.rejected({ errorMessage: error.message, account }))
-        store.dispatch(setWalletState({ isSignLoading: false }))
       }
+
+      // Wait for the refresh token to complete, then retry the original request
+      return new Promise((resolve) => {
+        subscribeTokenRefresh((newAccessToken) => {
+          originalConfig.headers.Authorization = `Bearer ${newAccessToken}`;
+          resolve(axios(originalConfig)); // Retry request with new token
+        });
+      });
     }
 
     if (error?.response) {
@@ -183,7 +206,6 @@ const apiService = {
   _prepareHeaders(data: any) {
     const headers: KeyValueMap = {
       'x-tenant-domain': window.location.host,
-      // 'x-tenant-domain': 'dev-readi.ixswap.io',
     }
     const { auth } = store.getState()
 
