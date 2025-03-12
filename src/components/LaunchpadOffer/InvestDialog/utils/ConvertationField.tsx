@@ -89,6 +89,8 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const theme = useTheme()
   const {
     tokenPrice,
+    status,
+    presaleTokenPrice,
     tokenAddress,
     tokenSymbol,
     investingTokenAddress,
@@ -149,7 +151,8 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const convertedValue = React.useMemo(() => {
     if (inputValue) {
       const realValue = +inputValue.replace(/,/g, '')
-      const multiplier = (1 / +tokenPrice).toFixed(6)
+      const currentTokenPrice = status === OfferStatus.preSale ? presaleTokenPrice : tokenPrice
+      const multiplier = (1 / +currentTokenPrice).toFixed(6)
 
       let result = `${realValue * +multiplier}`
 
