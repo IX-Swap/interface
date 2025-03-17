@@ -64,7 +64,6 @@ const PoolDetail: React.FC = () => {
       <Container>
         <GridContainer>
           <Flex flexDirection="column" css={{ gap: '20px' }}>
-            <BalCard shadow="none" noBorder className="p-8">
             <BalCard shadow="none" noBorder className="p-4">
               {loadingPool ? (
                 <LoadingBlock darker rounded="lg" className="h-20" />
