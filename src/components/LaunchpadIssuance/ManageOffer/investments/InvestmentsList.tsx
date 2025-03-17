@@ -18,7 +18,7 @@ import { EmptyTable } from 'components/LaunchpadIssuance/utils/EmptyTable'
 import { IssuancePagination } from 'components/LaunchpadIssuance/IssuanceDashboard/IssuancePagination'
 import { ExtractButton, ExtractText, HeaderLabel, TableTitle } from '../shared/styled'
 import { DiscreteInternalLink } from 'theme'
-import { useOnChangeOrder } from 'state/launchpad/hooks'
+import { useFormatOfferValue, useOnChangeOrder } from 'state/launchpad/hooks'
 
 interface Props {
   data: PaginationRes<ManagedOfferInvestment>
@@ -39,6 +39,8 @@ const HEADERS = [
   { key: 'createdAt', label: 'Purchase Date' },
 ]
 
+const AMOUNT_OUT_DECIMALS = 4
+
 export const OfferInvestmentsList = ({
   data,
   order,
@@ -52,6 +54,7 @@ export const OfferInvestmentsList = ({
 }: Props) => {
   const { issuanceId, investingTokenSymbol, tokenSymbol } = offer
   const { totalItems, totalPages, items } = data
+  const formatedValue = useFormatOfferValue()
   const theme = useTheme()
   const onChangeOrder = useOnChangeOrder(order as AbstractOrder, setOrder, setPage)
   const extractLink = useMemo(() => `/issuance/extract/${issuanceId}?tab=investment&page=1`, [issuanceId])
@@ -87,7 +90,7 @@ export const OfferInvestmentsList = ({
               <IssuanceRow key={idx} tab={IssuanceFilter.pending}>
                 <Raw>{item.username || '<Name Uknown>'}</Raw>
                 <Raw>{(+item.amount).toLocaleString() + ' ' + investingTokenSymbol}</Raw>
-                <Raw>{(+item.tokenAmount).toLocaleString() + ' ' + tokenSymbol}</Raw>
+                <Raw>{formatedValue(item.tokenAmount.toString(), AMOUNT_OUT_DECIMALS) + ' ' + tokenSymbol}</Raw>
                 <Raw>{formatDates(item.createdAt)}</Raw>
               </IssuanceRow>
             ))}
