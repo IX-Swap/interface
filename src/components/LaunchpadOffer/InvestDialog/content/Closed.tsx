@@ -5,7 +5,6 @@ import { CheckCircle, Clock, Info } from 'react-feather'
 import _get from 'lodash/get'
 import dayjs from 'dayjs'
 import { CurrencyAmount } from '@ixswap1/sdk-core'
-import { ethers } from 'ethers'
 
 import { ReactComponent as CrossIcon } from 'assets/launchpad/svg/close.svg'
 import { useCheckClaimed, useClaimOfferRefund } from 'state/launchpad/hooks'
@@ -26,6 +25,7 @@ import { ApprovalState, useApproveCallback } from 'hooks/useApproveCallback'
 import { useCurrency } from 'hooks/Tokens'
 import { IXSALE_ADDRESS } from 'constants/addresses'
 import { getTokenSymbol } from 'components/LaunchpadOffer/OfferSidebar/OfferDetails'
+import { safeParseUnits } from 'utils/formatCurrencyAmount'
 
 interface Props {
   offer: Offer
@@ -69,11 +69,8 @@ export const ClosedStage: React.FC<Props> = (props) => {
   const tokenCurrency = useCurrency(investingTokenAddress)
 
   const [approval, approveCallback] = useApproveCallback(
-    tokenCurrency
-      ? CurrencyAmount.fromRawAmount(
-          tokenCurrency,
-          ethers.utils.parseUnits(amount?.toString(), investingTokenDecimals) as any
-        )
+    tokenCurrency && amount
+      ? CurrencyAmount.fromRawAmount(tokenCurrency, safeParseUnits(amount, investingTokenDecimals) as any)
       : undefined,
     contractAddress || IXSALE_ADDRESS[chainId]
   )
