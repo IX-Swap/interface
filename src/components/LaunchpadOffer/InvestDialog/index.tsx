@@ -65,7 +65,6 @@ export const InvestDialog: React.FC<Props> = (props) => {
   useInterval(updateCallback, 30 * 1000)
   const labelToShow = allLabels.find((label) => label.value === props.offer.status)?.label
 
-  console.log(props.offer.status, 'kklklk')
   return (
     <>
       <ModalContainer>
