@@ -90,7 +90,7 @@ export const OfferInvestmentsList = ({
               <IssuanceRow key={idx} tab={IssuanceFilter.pending}>
                 <Raw>{item.username || '<Name Uknown>'}</Raw>
                 <Raw>{(+item.amount).toLocaleString() + ' ' + investingTokenSymbol}</Raw>
-                <Raw>{formatedValue(item.tokenAmount.toString(), AMOUNT_OUT_DECIMALS) + ' ' + tokenSymbol}</Raw>
+                <Raw>{formatedValue(item.tokenAmount, AMOUNT_OUT_DECIMALS) + ' ' + tokenSymbol}</Raw>
                 <Raw>{formatDates(item.createdAt)}</Raw>
               </IssuanceRow>
             ))}

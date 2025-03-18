@@ -147,12 +147,12 @@ export const useGetPinnedOffer = () => {
 }
 
 export const useFormatOfferValue = (addComa = true) => {
-  return React.useCallback((value?: string, decimalsLimit?: number) => {
+  return React.useCallback((value?: string | number, decimalsLimit?: number) => {
     if (!value) {
       return ''
     }
 
-    let result = value
+    let result = value.toString()
 
     if (result) {
       const [wholeNumber, decimals] = result.split('.')
@@ -1095,15 +1095,15 @@ export const useOfferFormInitialValues = (
         faq: payload.faq?.length ? payload.faq : initialValues.faq,
         members: payload.members?.length
           ? payload.members.map(
-              (member) =>
-                ({
-                  id: member.id,
-                  name: member.name,
-                  role: member.title,
-                  about: member.description,
-                  photo: files.find((x) => x.id === member.avatar?.id),
-                } as TeamMember)
-            )
+            (member) =>
+            ({
+              id: member.id,
+              name: member.name,
+              role: member.title,
+              about: member.description,
+              photo: files.find((x) => x.id === member.avatar?.id),
+            } as TeamMember)
+          )
           : initialValues.members,
 
         social: Object.entries(payload.socialMedia || {}).map(([name, link]) => ({
@@ -1119,20 +1119,20 @@ export const useOfferFormInitialValues = (
 
         additionalDocuments: documents.length
           ? documents.map((document: any) => {
-              const file = files.find((x) => x.id === document.file?.id)
+            const file = files.find((x) => x.id === document.file?.id)
 
-              return { file: file, asset: document?.file } as AdditionalDocument
-            })
+            return { file: file, asset: document?.file } as AdditionalDocument
+          })
           : initialValues.additionalDocuments,
 
         purchaseAgreement,
         investmentMemorandum,
         otherExecutionDocuments: otherExecutionDocuments.length
           ? otherExecutionDocuments.map((document: any) => {
-              const file = files.find((x) => x.id === document.file?.id)
+            const file = files.find((x) => x.id === document.file?.id)
 
-              return { file: file, asset: document?.file } as AdditionalDocument
-            })
+            return { file: file, asset: document?.file } as AdditionalDocument
+          })
           : initialValues.otherExecutionDocuments,
 
         hasPresale: payload.hasPresale,
