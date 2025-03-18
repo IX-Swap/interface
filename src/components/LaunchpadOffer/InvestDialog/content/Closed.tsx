@@ -7,7 +7,7 @@ import dayjs from 'dayjs'
 import { CurrencyAmount } from '@ixswap1/sdk-core'
 
 import { ReactComponent as CrossIcon } from 'assets/launchpad/svg/close.svg'
-import { useCheckClaimed, useClaimOfferRefund } from 'state/launchpad/hooks'
+import { useCheckClaimed, useClaimOfferRefund, useFormatOfferValue } from 'state/launchpad/hooks'
 import { InvestedDataRes, Offer, OfferStatus } from 'state/launchpad/types'
 import { InvestFormContainer } from './styled'
 import { Column, Row, Separator } from 'components/LaunchpadMisc/styled'
@@ -33,6 +33,8 @@ interface Props {
   investedData: InvestedDataRes
 }
 
+const AMOUNT_OUT_DECIMALS = 4
+
 export const ClosedStage: React.FC<Props> = (props) => {
   const theme = useTheme()
   const {
@@ -55,6 +57,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
   const claimRefund = useClaimOfferRefund(id)
   const { setHasClaimed, hasClaimed } = useCheckClaimed(id)
   const [claiming, setClaiming] = useState(false)
+  const formatedValue = useFormatOfferValue()
 
   const [contactFormOpen, setContactForm] = React.useState(false)
   const toggleContactForm = React.useCallback(() => setContactForm((state) => !state), [])
@@ -126,7 +129,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
           {amountLoading && <Loader />}
           {!amountLoading && !amountError && (
             <MyInvestmentAmount>
-              {isSuccessfull ? amountClaim : amount}&nbsp;
+              {formatedValue(isSuccessfull ? amountClaim : amount, AMOUNT_OUT_DECIMALS)}&nbsp;
               {isSuccessfull ? getTokenSymbol(network, tokenSymbol) : getTokenSymbol(network, investingTokenSymbol)}
             </MyInvestmentAmount>
           )}
