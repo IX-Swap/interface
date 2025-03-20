@@ -92,7 +92,6 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
           console.error({ requestError: error.message })
           store.dispatch(postLogin.rejected({ errorMessage: error.message, account }))
           store.dispatch(setWalletState({ isSignLoading: false }))
-          postLogoutApi();
         } finally {
           isRefreshing = false;
         }
