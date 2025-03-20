@@ -8,10 +8,11 @@ import { metamask } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
 import { clearEventLog } from 'state/eventLog/actions'
 import { clearUserData, saveAccount } from 'state/user/actions'
-import {  postLogin } from './actions'
-import {  useDisconnect } from 'wagmi'
+import { logout, postLogin } from './actions'
+import { useDisconnect } from 'wagmi'
 import { setWalletState } from 'state/wallet'
 import { tryClearIndexedDB } from 'utils'
+import { postLogoutApi } from 'hooks/postLogoutApi'
 
 export enum LOGIN_STATUS {
   NO_ACCOUNT,
@@ -19,16 +20,15 @@ export enum LOGIN_STATUS {
   FAILED,
 }
 
-type AuthState = Omit<AppState['auth'], 'token' | 'refreshToken'> & {
+type AuthState = Omit<AppState['auth'], 'token'> & {
   token?: string
-  refreshToken?: string
 }
 
 export function useAuthState(): AuthState {
   const data = useSelector<AppState, AppState['auth']>((state) => state.auth)
   const { account } = useActiveWeb3React()
 
-  return { ...data, token: data.token?.[account ?? ''], refreshToken: data.refreshToken?.[account ?? ''] }
+  return { ...data, token: data.token?.[account ?? ''] }
 }
 
 export function useHasLogin() {
@@ -58,9 +58,12 @@ export function useUserisLoggedIn() {
 export function useLogout() {
   const dispatch = useDispatch<AppDispatch>()
   const { disconnect } = useDisconnect()
+  const { account } = useActiveWeb3React()
 
   const disconnectWallet = () => {
-    disconnect();
+    disconnect()
+    postLogoutApi()
+    dispatch(logout(account))
     dispatch(setWalletState({ isConnected: false, walletName: '', isSignLoading: false }))
     dispatch(clearUserData())
     dispatch(clearEventLog())

@@ -1,11 +1,9 @@
 import { ActionCreatorWithPayload, createAction } from '@reduxjs/toolkit'
 export interface AuthPayload {
   token: string
-  refreshToken: string
 }
 export interface RawAuthPayload {
   accessToken: string
-  refreshToken: string
 }
 export const saveToken = createAction<{ value: AuthPayload }>('auth/saveToken')
 export const clearToken = createAction('auth/clearToken')

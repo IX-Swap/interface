@@ -12,6 +12,7 @@ import { APIServiceRequestConfig, KeyValueMap, RequestConfig } from './types'
 import { LONG_WAIT_RESPONSE, LONG_WAIT_RESPONSE_CODE, OK_RESPONSE_CODE, CREATED_RESPONSE_CODE } from 'constants/misc'
 import { setWalletState } from 'state/wallet'
 import { wagmiConfig } from 'components/Web3Provider'
+import { postLogoutApi } from 'hooks/postLogoutApi'
 
 const _axios = axios.create()
 _axios.defaults.baseURL = API_URL
@@ -66,6 +67,7 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
             withCredentials: true,
             headers: {
               'x-tenant-domain': window.location.host,
+              'x-user-address': account,
             }
           })
           if (!response?.data) {
@@ -76,6 +78,7 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
               })
             )
             store.dispatch(setWalletState({ isSignLoading: false }))
+            postLogoutApi()
             return
           }
           store.dispatch(
@@ -89,6 +92,7 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
           console.error({ requestError: error.message })
           store.dispatch(postLogin.rejected({ errorMessage: error.message, account }))
           store.dispatch(setWalletState({ isSignLoading: false }))
+          postLogoutApi();
         } finally {
           isRefreshing = false;
         }
