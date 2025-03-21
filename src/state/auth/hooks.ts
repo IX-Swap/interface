@@ -12,6 +12,7 @@ import { logout, postLogin } from './actions'
 import { useDisconnect } from 'wagmi'
 import { setWalletState } from 'state/wallet'
 import { tryClearIndexedDB } from 'utils'
+import { postLogoutApi } from 'hooks/postLogoutApi'
 
 export enum LOGIN_STATUS {
   NO_ACCOUNT,
@@ -61,6 +62,7 @@ export function useLogout() {
 
   const disconnectWallet = () => {
     disconnect()
+    postLogoutApi()
     dispatch(logout(account))
     dispatch(setWalletState({ isConnected: false, walletName: '', isSignLoading: false }))
     dispatch(clearUserData())
