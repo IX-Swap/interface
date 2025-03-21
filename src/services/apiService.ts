@@ -12,25 +12,24 @@ import { APIServiceRequestConfig, KeyValueMap, RequestConfig } from './types'
 import { LONG_WAIT_RESPONSE, LONG_WAIT_RESPONSE_CODE, OK_RESPONSE_CODE, CREATED_RESPONSE_CODE } from 'constants/misc'
 import { setWalletState } from 'state/wallet'
 import { wagmiConfig } from 'components/Web3Provider'
-import { postLogoutApi } from 'hooks/postLogoutApi'
 
 const _axios = axios.create()
 _axios.defaults.baseURL = API_URL
 
-let isRefreshing = false; // Track if a refresh request is in progress
-type subscriberCallback = (token: string) => void;
-let subscribers: subscriberCallback[] = []; // Queue for pending requests
+let isRefreshing = false // Track if a refresh request is in progress
+type subscriberCallback = (token: string) => void
+let subscribers: subscriberCallback[] = [] // Queue for pending requests
 
 // Function to add subscribers (pending requests)
 const subscribeTokenRefresh = (callback: subscriberCallback) => {
-  subscribers.push(callback);
-};
+  subscribers.push(callback)
+}
 
 // Function to notify all subscribers with new token
 const onRefreshed = (newToken: string) => {
-  subscribers.forEach((callback) => callback(newToken));
-  subscribers = [];
-};
+  subscribers.forEach((callback) => callback(newToken))
+  subscribers = []
+}
 
 _axios.interceptors.response.use(responseSuccessInterceptor, async function responseErrorInterceptor(error: any) {
   if (error?.response?.status !== OK_RESPONSE_CODE || error?.response?.status !== CREATED_RESPONSE_CODE) {
@@ -44,8 +43,9 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
         data: error?.response?.data,
       })
 
-      const message = `API Error ${error?.response?.config?.method?.toUpperCase()} ${error?.response?.config?.url}: ${error?.response?.data?.message
-        }`
+      const message = `API Error ${error?.response?.config?.method?.toUpperCase()} ${error?.response?.config?.url}: ${
+        error?.response?.data?.message
+      }`
       Sentry.captureMessage(message)
     }
   }
@@ -56,19 +56,29 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
     return !loginUrLs.includes(originalConfig.url)
   }
   if (shouldRetry() && error?.response) {
+    if (
+      [401, 404, 406].includes(error.response.status) &&
+      !originalConfig._retry &&
+      originalConfig.url.includes('auth/refresh')
+    ) {
+      return Promise.reject(error)
+    }
+
     if (error.response.status === 401 && !originalConfig._retry) {
       originalConfig._retry = true // Mark request as retried to prevent loops
-      const { user: { account }, } = store.getState()
+      const {
+        user: { account },
+      } = store.getState()
       if (!isRefreshing) {
         try {
-          isRefreshing = true;
+          isRefreshing = true
           store.dispatch(postLogin.pending(account))
           const response = await _axios.post(auth.refresh, null, {
             withCredentials: true,
             headers: {
               'x-tenant-domain': window.location.host,
               'x-user-address': account,
-            }
+            },
           })
           if (!response?.data) {
             store.dispatch(
@@ -78,8 +88,7 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
               })
             )
             store.dispatch(setWalletState({ isSignLoading: false }))
-            postLogoutApi()
-            return
+            return Promise.reject(error)
           }
           store.dispatch(
             postLogin.fulfilled({
@@ -87,23 +96,24 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
               account,
             })
           )
-          onRefreshed(response?.data?.accessToken);
+          onRefreshed(response?.data?.accessToken)
         } catch (error: any) {
           console.error({ requestError: error.message })
           store.dispatch(postLogin.rejected({ errorMessage: error.message, account }))
           store.dispatch(setWalletState({ isSignLoading: false }))
+          return Promise.reject(error)
         } finally {
-          isRefreshing = false;
+          isRefreshing = false
         }
       }
 
       // Wait for the refresh token to complete, then retry the original request
       return new Promise((resolve) => {
         subscribeTokenRefresh((newAccessToken) => {
-          originalConfig.headers.Authorization = `Bearer ${newAccessToken}`;
-          resolve(axios(originalConfig)); // Retry request with new token
-        });
-      });
+          originalConfig.headers.Authorization = `Bearer ${newAccessToken}`
+          resolve(axios(originalConfig)) // Retry request with new token
+        })
+      })
     }
 
     if (error?.response) {
