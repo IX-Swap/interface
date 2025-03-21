@@ -201,15 +201,16 @@ export const getSetter = (onChange: (e: Partial<React.ChangeEvent<any>>) => void
 }
 
 export const calculateSupplyForSale = (offer: Pick<InformationFormValues, 'tokenPrice' | 'hasPresale' | 'presaleTokenPrice' | 'presaleAlocated' | 'hardCap'>) => {
-  if (!offer.tokenPrice || !offer.hardCap) return '0'
+  const { tokenPrice, hardCap, hasPresale, presaleTokenPrice, presaleAlocated } = offer
+  if (!tokenPrice || !hardCap || +tokenPrice === 0) return '0'
 
-  if (offer.hasPresale) {
-    if (!offer.presaleTokenPrice || !offer.presaleAlocated) return '0'
+  if (hasPresale) {
+    if (!presaleTokenPrice || !presaleAlocated || +presaleTokenPrice === 0) return '0'
 
-    const presaleTokenAmount = new Big(offer.presaleAlocated).div(offer.presaleTokenPrice)
-    const publicTokenAmount = new Big(offer.hardCap).minus(offer.presaleAlocated).div(offer.tokenPrice)
+    const presaleTokenAmount = new Big(presaleAlocated).div(presaleTokenPrice)
+    const publicTokenAmount = new Big(hardCap).minus(presaleAlocated).div(tokenPrice)
     return presaleTokenAmount.plus(publicTokenAmount).round(0, Big.roundUp).toString()
   }
 
-  return new Big(offer.hardCap).div(offer.tokenPrice).round(0, Big.roundUp).toString()
+  return new Big(hardCap).div(tokenPrice).round(0, Big.roundUp).toString()
 }
