@@ -132,6 +132,15 @@ export const createValidationSchema = (account: string | null | undefined) => {
           .test('notZero', 'Pre-sale Token price should be bigger than 0!', function () {
             const { originalValue } = this as any
             return !originalValue || +originalValue > 0
+          })
+          .when('tokenPrice', {
+            is: (tokenPrice: string) => tokenPrice && +tokenPrice > 0,
+            then: yup
+              .string()
+              .test('presaleTokenPriceLessThanTokenPrice', 'Pre-sale Token price should be less than Public Token price!', function () {
+                const { originalValue } = this as any
+                return !originalValue || +originalValue <= +this.parent.tokenPrice
+              })
           }),
         otherwise: yup.string().nullable(),
       }),
