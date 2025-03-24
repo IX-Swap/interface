@@ -56,19 +56,16 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
     return !loginUrLs.includes(originalConfig.url)
   }
   if (shouldRetry() && error?.response) {
-    if (
-      [401, 404, 406].includes(error.response.status) &&
-      !originalConfig._retry &&
-      originalConfig.url.includes('auth/refresh')
-    ) {
-      return Promise.reject(error)
-    }
-
     if (error.response.status === 401 && !originalConfig._retry) {
       originalConfig._retry = true // Mark request as retried to prevent loops
       const {
         user: { account },
       } = store.getState()
+
+      if (originalConfig.url.includes('auth/refresh')) {
+        return Promise.reject(error)
+      }
+
       if (!isRefreshing) {
         try {
           isRefreshing = true
@@ -88,7 +85,6 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
               })
             )
             store.dispatch(setWalletState({ isSignLoading: false }))
-            return Promise.reject(error)
           }
           store.dispatch(
             postLogin.fulfilled({
@@ -96,14 +92,14 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
               account,
             })
           )
+          isRefreshing = false
           onRefreshed(response?.data?.accessToken)
         } catch (error: any) {
+          isRefreshing = false
           console.error({ requestError: error.message })
           store.dispatch(postLogin.rejected({ errorMessage: error.message, account }))
           store.dispatch(setWalletState({ isSignLoading: false }))
           return Promise.reject(error)
-        } finally {
-          isRefreshing = false
         }
       }
 
