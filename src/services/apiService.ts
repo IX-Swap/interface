@@ -99,7 +99,6 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
           console.error({ requestError: error.message })
           store.dispatch(postLogin.rejected({ errorMessage: error.message, account }))
           store.dispatch(setWalletState({ isSignLoading: false }))
-          return Promise.reject(error)
         }
       }
 
@@ -107,7 +106,8 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
       return new Promise((resolve) => {
         subscribeTokenRefresh((newAccessToken) => {
           originalConfig.headers.Authorization = `Bearer ${newAccessToken}`
-          resolve(axios(originalConfig)) // Retry request with new token
+          // Use _axios to ensure the correct configuration is applied
+          resolve(_axios(originalConfig))
         })
       })
     }
