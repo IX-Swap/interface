@@ -60,7 +60,7 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId: number]: Token | undefined } =
     'WMATIC',
     'Wrapped MATIC'
   ),
-  [SupportedChainId.RED_BELLY_TESNET]: new Token(SupportedChainId.RED_BELLY_TESNET, '0xC8fce9E9F0a999Def5cbc041AcC64750C3F92Cd8', 18, 'wRBNT', 'Wrapped RBNT'),
+  [SupportedChainId.REDBELLY_TESNET]: new Token(SupportedChainId.REDBELLY_TESNET, '0xC8fce9E9F0a999Def5cbc041AcC64750C3F92Cd8', 18, 'wRBNT', 'Wrapped RBNT'),
 }
 
 function isMatic(chainId: number) {
@@ -119,7 +119,7 @@ export const TOKEN_SHORTHANDS: { [shorthand: string]: Record<any, any> } = {
     [SupportedChainId.AMOY]: USDC[80002],
     [SupportedChainId.BASE_SEPOLIA]: USDC[84532],
     [SupportedChainId.BASE]: USDC[8453],
-    [SupportedChainId.RED_BELLY_TESNET]: USDC[153],
+    [SupportedChainId.REDBELLY_TESNET]: USDC[153],
     // [SupportedChainId.MUMBAI]: '0xe11a86849d99f524cac3e7a0ec1241828e332c62',
   },
   IXS: {
@@ -130,7 +130,7 @@ export const TOKEN_SHORTHANDS: { [shorthand: string]: Record<any, any> } = {
     [SupportedChainId.AMOY]: IXS[80002],
     [SupportedChainId.BASE_SEPOLIA]: IXS[84532],
     [SupportedChainId.BASE]: IXS[8453],
-    [SupportedChainId.RED_BELLY_TESNET]: IXS[153],
+    [SupportedChainId.REDBELLY_TESNET]: IXS[153],
   },
 }
 
