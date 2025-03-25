@@ -84,6 +84,7 @@ export const IXS_ADDRESS: { [key: number]: string } = {
   [137]: '0x1ba17c639bdaecd8dc4aac37df062d17ee43a1b8',
   [84532]: '0x949546713004ee02537292b1F41046f705909191',
   [8453]: isProd ? '0x7913B2F933911c4FCf29DA62DB0Db2CF3CdEA894' : '0xb473dc4C4B7d51247c01F07A9dCB7f947D9F9389', // TODO: update address for base chain
+  153: '0x0aeF02d9cb4cd7a480d867ae765E6eA8D00368df',
 }
 
 export const IXS_GOVERNANCE_ADDRESS: { [key: number]: string } = {

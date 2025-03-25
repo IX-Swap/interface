@@ -16,6 +16,8 @@ export enum SupportedChainId {
   OZEAN_TESTNET = 7849306,
   KAIROS_TESTNET = 1001,
   KAIA = 8217,
+  RED_BELLY = 152,
+  RED_BELLY_TESNET = 153,
 }
 
 export const NETWORK_LOGOS: { [chainName: string]: string } = {
