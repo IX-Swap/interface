@@ -61,7 +61,7 @@ export function listToTokenMapArray(list: TokenList): Record<string, any[]> {
       1001: [], // kaia testnet
       8217: [], // kaia mainnet
       7849306: [], // ozean mainnet
-      152: [], // red belly mainnet
+      151: [], // red belly mainnet
       153: [], // red belly testnet
     }
   )

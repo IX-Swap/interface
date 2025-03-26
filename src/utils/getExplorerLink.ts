@@ -12,6 +12,8 @@ const ETHERSCAN_PREFIXES: { [chainId: number]: string } = {
   7849306: 'ozean-testnet.',
   1001: 'kairos.',
   8217: '',
+  151: 'redbelly.',
+  153: 'redbelly.testnet.',
 }
 const CHAIN_EXPLORERS: { [chainId: number]: string } = {
   1: 'etherscan.io',
@@ -27,6 +29,8 @@ const CHAIN_EXPLORERS: { [chainId: number]: string } = {
   7849306: 'explorer.caldera.xyz',
   1001: 'kaiascan.io',
   8217: 'kaiascan.io',
+  153: 'routescan.io',
+  151: 'routescan.io',
 }
 
 export enum ExplorerDataType {

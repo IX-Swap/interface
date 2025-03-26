@@ -2206,10 +2206,10 @@
     "@ixswap1/lib" "1.x.x"
     "@ixswap1/v2-core" "1.x.x"
 
-"@ixswap1/v2-sdk@^1.3.8":
-  version "1.3.8"
-  resolved "https://registry.yarnpkg.com/@ixswap1/v2-sdk/-/v2-sdk-1.3.8.tgz#0e56f251ac620f494d1e5f84dd4eb619a775e092"
-  integrity sha512-j/Jt/duL1+863UfQPkWc6n6zdvnVZrzdExwACg1SdQg1qZl4nHMqBRV15ej32TCjuWHFjsYhTIbvDRvutcelSw==
+"@ixswap1/v2-sdk@^1.3.9":
+  version "1.3.9"
+  resolved "https://registry.yarnpkg.com/@ixswap1/v2-sdk/-/v2-sdk-1.3.9.tgz#3d935fa093540253ecc331a65bc91a5ae7e0e66b"
+  integrity sha512-uajGLXfR2HlAY/ZTyXEYyc/bWcK/MAS0Lt6MYMjkomDqDe1BAO7RduJud00q1bAnUVihYUihOWJVvtWFzrxIMQ==
   dependencies:
     "@ethersproject/address" "^5.0.0"
     "@ethersproject/solidity" "^5.0.0"
