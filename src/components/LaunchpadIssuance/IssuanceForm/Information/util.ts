@@ -178,6 +178,12 @@ export const tokenTypeOptionsByNetwork = {
     { label: 'USDC', value: OfferTokenType.USDC },
     { label: 'USDT', value: OfferTokenType.USDT },
   ],
+  [OfferNetwork.redBelly]: [
+    { label: 'USDC', value: OfferTokenType.USDC },
+    { label: 'USDT', value: OfferTokenType.USDT },
+    { label: 'WIXS', value: OfferTokenType.WIXS },
+    { label: 'WETH', value: OfferTokenType.WETH },
+  ],
 } as any
 
 export const tokenDecimalsOnOptions = [
