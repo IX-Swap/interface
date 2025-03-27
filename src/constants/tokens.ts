@@ -99,15 +99,42 @@ export class ExtendedEther extends Ether {
   }
 }
 
+function isRedBelly(chainId: number) {
+  return chainId === SupportedChainId.REDBELLY || chainId === SupportedChainId.REDBELLY_TESNET
+}
+
+export class RedBellyNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other?.isNative && other.chainId === this.chainId
+  }
+
+  get wrapped(): Token {
+    const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId]
+    invariant(wrapped instanceof Token)
+    return wrapped
+  }
+
+  public constructor(chainId: number) {
+    super(chainId, 18, 'RBNT', 'RBNT')
+  }
+}
+
 const cachedNativeCurrency: { [chainId: number]: NativeCurrency } = {}
 
 export function nativeOnChain(chainId: number) {
-  return (
-    cachedNativeCurrency[chainId] ??
-    (cachedNativeCurrency[chainId] = isMatic(chainId)
-      ? new MaticNativeCurrency(chainId)
-      : ExtendedEther.onChain(chainId))
-  )
+  if (cachedNativeCurrency[chainId]) return cachedNativeCurrency[chainId]
+
+  switch (chainId) {
+    case SupportedChainId.MATIC:
+    case SupportedChainId.MUMBAI:
+    case SupportedChainId.AMOY:
+      return (cachedNativeCurrency[chainId] = new MaticNativeCurrency(chainId))
+    case SupportedChainId.REDBELLY:
+    case SupportedChainId.REDBELLY_TESNET:
+      return (cachedNativeCurrency[chainId] = new RedBellyNativeCurrency(chainId))
+    default:
+      return (cachedNativeCurrency[chainId] = ExtendedEther.onChain(chainId))
+  }
 }
 
 export const TOKEN_SHORTHANDS: { [shorthand: string]: Record<any, any> } = {

@@ -7,6 +7,7 @@ import React, { useMemo } from 'react'
 import styled from 'styled-components/macro'
 import EthereumLogo from '../../assets/images/ethereum-logo.png'
 import PoligonLogo from '../../assets/images/polygon.svg'
+import RedBellyLogo from '../../assets/images/chains/redbelly.png'
 import useHttpLocations from '../../hooks/useHttpLocations'
 import { WrappedTokenInfo } from '../../state/lists/wrappedTokenInfo'
 import Logo from '../Logo'
@@ -93,6 +94,9 @@ export default function CurrencyLogo({
   }, [currency, uriLocations, chainId])
 
   if (currency?.isNative) {
+    if (native.symbol === 'RBNT') {
+      return <StyledEthereumLogo src={RedBellyLogo} size={size} style={style} {...rest} />
+    }
     if (native.symbol === 'MATIC') {
       return <StyledEthereumLogo src={PoligonLogo} size={size} style={style} {...rest} />
     }
