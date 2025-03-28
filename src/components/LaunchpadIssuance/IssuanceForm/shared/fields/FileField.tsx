@@ -44,7 +44,7 @@ export const FileField: React.FC<Props> = (props) => {
 
   const input = React.useRef<HTMLInputElement>(null)
 
-  const [value, setValue] = React.useState<File | undefined>(props.value?.file)
+  const value = props.value?.file
 
   const openFileBrowser = React.useCallback(() => {
     input.current?.click()
@@ -58,8 +58,6 @@ export const FileField: React.FC<Props> = (props) => {
         if (props.touch) props.touch(props.field, true)
       })
     }
-
-    setValue(files[0])
   }, [])
 
   const onFileRemove = React.useCallback(() => {
@@ -70,12 +68,7 @@ export const FileField: React.FC<Props> = (props) => {
         if (props.touch) props.touch(props.field, true)
       })
     }
-    setValue(undefined)
   }, [])
-
-  React.useEffect(() => {
-    setValue(props.value?.file)
-  }, [props.value])
 
   const dropzoneOpts = useMemo(() => {
     return {
@@ -139,7 +132,6 @@ export const FileField: React.FC<Props> = (props) => {
 
           <input {...getInputProps()} ref={input} multiple={false} disabled={props.disabled} />
 
-
           {value && !props.disabled && (
             <Download
               size="18"
@@ -148,7 +140,9 @@ export const FileField: React.FC<Props> = (props) => {
               onClick={onDownloadFile}
             />
           )}
-                    {value && !props.disabled && <CancelIcon style={{marginLeft: '4px'}} onClick={onFileRemove} title="remove" cursor="pointer" />}
+          {value && !props.disabled && (
+            <CancelIcon style={{ marginLeft: '4px' }} onClick={onFileRemove} title="remove" cursor="pointer" />
+          )}
           <Spacer />
 
           {!props.disabled && (
