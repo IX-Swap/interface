@@ -31,10 +31,10 @@ export const UploadDocuments: React.FC<Props> = ({ documents, otherExecutionDocu
             }
           />
         </Flex>
-        <Field name={`purchaseAgreement`}>
+        <Field name={`purchaseAgreement.file`}>
           {({ field: { name, value, onChange, onBlur }, meta }: FieldProps) => (
             <FileField
-              field={'purchaseAgreement.file'}
+              field={name}
               setter={getSetter(onChange)}
               touch={getSetter(onBlur)}
               value={value}
@@ -45,10 +45,10 @@ export const UploadDocuments: React.FC<Props> = ({ documents, otherExecutionDocu
             />
           )}
         </Field>
-        <Field name={`investmentMemorandum`}>
+        <Field name={`investmentMemorandum.file`}>
           {({ field: { name, value, onChange, onBlur }, meta }: FieldProps) => (
             <FileField
-              field={'investmentMemorandum.file'}
+              field={name}
               setter={getSetter(onChange)}
               touch={getSetter(onBlur)}
               value={value}

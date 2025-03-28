@@ -1125,8 +1125,8 @@ export const useOfferFormInitialValues = (
           })
           : initialValues.additionalDocuments,
 
-        purchaseAgreement,
-        investmentMemorandum,
+        purchaseAgreement: { file: purchaseAgreement },
+        investmentMemorandum: { file: investmentMemorandum },
         otherExecutionDocuments: otherExecutionDocuments.length
           ? otherExecutionDocuments.map((document: any) => {
             const file = files.find((x) => x.id === document.file?.id)
