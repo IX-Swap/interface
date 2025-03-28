@@ -37,6 +37,7 @@ import { useGetEventCallback } from 'state/eventLog/hooks'
 import { shortAddress } from 'utils'
 import { floorToDecimals } from 'utils/formatCurrencyAmount'
 import { useWeb3React } from 'hooks/useWeb3React'
+import { AmountInputReceived } from './AmountInputReceived'
 
 interface Props {
   currency?: SecCurrency & { tokenInfo?: { decimals?: number; originalDecimals?: number } }
@@ -88,14 +89,15 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
       setLoadingDeposit(true)
       const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
       if (tokenId && !error && parsedAmount && !inputError && computedAddress) {
-        const response = await depositToken({ tokenId, amount, fromAddress: computedAddress })
+        const amountToDeposit = amount.toString();
+        const response = await depositToken({ tokenId, amount: amountToDeposit, fromAddress: computedAddress })
         if (!response?.data) {
           throw new Error(`Something went wrong. Could not deposit amount`)
         }
         requestId = response.data.id
         const transaction = await tokenContract?.transfer(
           tokenInfo?.custodyAssetAddress || '',
-          parseUnits(amount, tokenDecimals)
+          parseUnits(amountToDeposit, tokenDecimals)
         )
         getEvents({ tokenId: token?.token?.id, page: 1, filter: 'all' })
         dispatch(setWalletState({ depositView: DepositView.PENDING }))
@@ -225,7 +227,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
                 </TYPE.description2>
               </HideSmall>
             </RowBetween>
-            <AmountInput
+            <AmountInputReceived
               token={token}
               currency={currency}
               originalDecimals={tokenInfo?.originalDecimals}

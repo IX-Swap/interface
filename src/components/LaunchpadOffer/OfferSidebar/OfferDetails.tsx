@@ -1,12 +1,15 @@
+/* eslint-disable indent */
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
 import { capitalize } from '@material-ui/core'
 import { Copy, Info } from 'react-feather'
+import _get from 'lodash/get'
+import { useAccount } from 'wagmi'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
+
 import { Offer, OfferNetwork, OfferStatus, WhitelistStatus } from 'state/launchpad/types'
-
 import MetamaskIcon from 'assets/images/metamask.png'
-
-import { useFormatOfferValue, useGetWhitelistStatus, useInvestedData } from 'state/launchpad/hooks'
+import { useCheckKYC, useFormatOfferValue, useGetWhitelistStatus, useInvestedData } from 'state/launchpad/hooks'
 import { InvestmentSaleStatusInfo } from 'components/Launchpad/InvestmentCard/InvestmentSaleStatusInfo'
 import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
 import { InfoList } from 'components/LaunchpadOffer/util/InfoList'
@@ -25,6 +28,9 @@ import { InvestSuccessModal } from '../InvestDialog/utils/InvestSuccessModal'
 import { InvestFailedModal } from '../InvestDialog/utils/InvestFailedModal'
 import { INVESTING_TOKEN_SYMBOL } from 'state/launchpad/constants'
 import { isTestnet } from 'utils/isEnvMode'
+import { KYCPrompt } from 'components/Launchpad/KYCPrompt'
+import { Flex } from 'rebass'
+
 interface Props {
   offer: Offer
 }
@@ -40,6 +46,11 @@ export enum OfferStageStatus {
 export const OfferDetails: React.FC<Props> = (props) => {
   const theme = useTheme()
   const investedData = useInvestedData(props.offer.id)
+  const { address: account } = useAccount()
+  const { openConnectModal } = useConnectModal()
+  const checkKYC = useCheckKYC()
+
+  const data = _get(props, 'offer', null)
   const { amount: amountToClaim } = investedData
   const { status: whitelistedStatus, isInterested } = useGetWhitelistStatus(props.offer.id)
   const nameChainMapNetwork = getChainFromName(props?.offer?.network, isTestnet)
@@ -86,14 +97,34 @@ export const OfferDetails: React.FC<Props> = (props) => {
   }, [whitelistedStatus, amountToClaim, props.offer.status])
 
   const [showInvestDialog, setShowInvestDialog] = React.useState(false)
+  const [showRequireKyc, setShowRequireKyc] = React.useState<boolean>(false)
 
-  const openInvestDialog = React.useCallback(() => setShowInvestDialog(true), [])
   const closeInvestDialog = React.useCallback(() => setShowInvestDialog(false), [])
 
   const daysTillClosed = props.offer.daysTillClosed ?? 0
 
   const [showSuccess, setShowSuccess] = React.useState(false)
   const [showFailed, setShowFailed] = React.useState(false)
+
+  const openInvestDialog = () => {
+    let isAllow = false
+
+    if (data) {
+      if (data.ethAddress) {
+        isAllow =
+          checkKYC(data.allowOnlyAccredited, [OfferStatus.closed, OfferStatus.claim].includes(data?.status)) ||
+          account?.toLowerCase() === data?.ethAddress?.toLowerCase()
+      } else {
+        isAllow = checkKYC(data.allowOnlyAccredited, [OfferStatus.closed, OfferStatus.claim].includes(data?.status))
+      }
+    }
+
+    if (!isAllow) {
+      setShowRequireKyc(true)
+    } else {
+      setShowInvestDialog(true)
+    }
+  }
 
   const shouldShowInvestButton = (
     stageStatus: OfferStageStatus,
@@ -108,6 +139,9 @@ export const OfferDetails: React.FC<Props> = (props) => {
     }
     return true
   }
+
+  const isShowInvestButton = shouldShowInvestButton(stageStatus, props?.offer?.status, isInterested)
+  const isShowWarning = (!whitelistedStatus || isInterested === 0) && props?.offer?.status === OfferStatus.preSale
 
   return (
     <Container>
@@ -164,14 +198,48 @@ export const OfferDetails: React.FC<Props> = (props) => {
         </OfferStats>
 
         <InvestButtonContainer>
-          {shouldShowInvestButton(stageStatus, props?.offer?.status, isInterested) ? (
-            <InvestButton onClick={openInvestDialog}>
-              {stageStatus === OfferStageStatus.checkStatus && 'Check Status'}
-              {stageStatus === OfferStageStatus.notStarted && 'Register To Invest'}
-              {stageStatus === OfferStageStatus.active && 'Invest'}
-              {stageStatus === OfferStageStatus.closed && 'Open Dashboard '}
+          {!account ? (
+            <InvestButton
+              onClick={() => {
+                openConnectModal && openConnectModal()
+              }}
+            >
+              Connect Wallet
             </InvestButton>
-          ) : null}
+          ) : (
+            <>
+              {isShowInvestButton ? (
+                <InvestButton onClick={openInvestDialog}>
+                  {stageStatus === OfferStageStatus.checkStatus && 'Check Status'}
+                  {stageStatus === OfferStageStatus.notStarted && 'Register To Invest'}
+                  {stageStatus === OfferStageStatus.active && 'Invest'}
+                  {stageStatus === OfferStageStatus.closed && 'Open Dashboard '}
+                </InvestButton>
+              ) : (
+                <>
+                  {isShowWarning ? (
+                    <Flex
+                      justifyContent="center"
+                      alignItems="center"
+                      css={{
+                        border: '1px solid rgba(255, 168, 0, 0.50)',
+                        borderRadius: '8px',
+                        background: 'rgba(255, 168, 0, 0.10)',
+                        padding: '24px',
+                        width: '100%',
+                        textAlign: 'center',
+                        fontSize: '13px',
+                        lineHeight: '18px',
+                      }}
+                    >
+                      You are not eligible to participate in Pre-sale. <br />
+                      Please wait for the Public Sale Phase.
+                    </Flex>
+                  ) : null}
+                </>
+              )}
+            </>
+          )}
         </InvestButtonContainer>
 
         {showSuccess && <InvestSuccessModal show={showSuccess} onClose={() => setShowSuccess(false)} />}
@@ -220,6 +288,14 @@ export const OfferDetails: React.FC<Props> = (props) => {
       </TokenInfo>
 
       <OfferGeneralInfo {...props.offer} />
+
+      {showRequireKyc && data ? (
+        <KYCPrompt
+          offerId={data.id}
+          allowOnlyAccredited={data.allowOnlyAccredited}
+          onClose={() => setShowRequireKyc(false)}
+        />
+      ) : null}
     </Container>
   )
 }
@@ -265,7 +341,7 @@ export const OfferGeneralInfo: React.FC<GeneralInfoProps> = (props) => {
           value: props.investmentType?.replace(/\b\w/g, (match) => match.toUpperCase()) ?? 'N/A',
         },
         {
-          label: 'Token Price',
+          label: 'Public sale Price',
           value: `${getTokenSymbol(props?.network, props?.investingTokenSymbol)}  ${
             formatedValue(props.tokenPrice) ?? 'N/A'
           } / 1 ${props.tokenSymbol}`,

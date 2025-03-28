@@ -3,5 +3,6 @@ export const NETWORK_ADDRESS_PATTERNS: { [network: string]: RegExp[] } = {
   Polygon: [/^0x[0-9a-fA-F]{40}$/, /^0x[0-9a-f]{40}$/, /^0x?[0-9A-F]{40}$/],
   Ethereum: [/^0x[0-9a-fA-F]{40}$/, /^0x[0-9a-f]{40}$/, /^0x?[0-9A-F]{40}$/],
   Base: [/^0x[0-9a-fA-F]{40}$/, /^0x[0-9a-f]{40}$/, /^0x?[0-9A-F]{40}$/],
+  RedBelly: [/^0x[0-9a-fA-F]{40}$/, /^0x[0-9a-f]{40}$/, /^0x?[0-9A-F]{40}$/],
 }
 

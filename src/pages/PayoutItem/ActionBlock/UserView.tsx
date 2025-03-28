@@ -108,7 +108,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
         <Box marginRight="4px">
           <Trans>{`Based on your SEC token balance of`}</Trans>
         </Box>
-        {secToken?.logo ? <TokenLogo logo={secToken.logo.public} width="32px" height="32px" /> : null}
+        <TokenLogo logo={secToken?.logo} width="32px" height="32px" />
         <Box marginX="4px">
           {payout.includeOriginSupply ? (tokenInfo as SecToken)?.originalSymbol : tokenInfo?.symbol}
         </Box>
@@ -177,7 +177,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
               </Box>
             </div>
             <Flex marginBottom="24px" alignItems="center">
-              {secToken?.logo ? <TokenLogo logo={secToken.logo.public} width="32px" height="32px" /> : null}
+              <TokenLogo logo={secToken?.logo} width="32px" height="32px" />
               <Box marginX="4px" color={theme.text2}>
                 {(tokenInfo as SecToken).originalSymbol ?? tokenInfo?.symbol}
               </Box>
@@ -232,12 +232,12 @@ const NotTokenHoldersView: FC<{ secToken?: SecToken; status: PAYOUT_STATUS }> = 
             <Trans>
               No
               <Flex color="#8f8fb2" marginX="4px" alignItems="center" style={{ gap: 4 }}>
-                {secToken?.logo ? <TokenLogo logo={secToken.logo.public} width="24px" height="24px" /> : null}
+                <TokenLogo logo={secToken?.logo} width="24px" height="24px" />
                 {secToken?.symbol}
               </Flex>
               detected. You need
               <Flex color="#8f8fb2" marginX="4px" alignItems="center" style={{ gap: 4 }}>
-                {secToken?.logo ? <TokenLogo logo={secToken.logo.public} width="24px" height="24px" /> : null}
+                <TokenLogo logo={secToken?.logo} width="24px" height="24px" />
                 {secToken?.symbol}
               </Flex>
               to be eligible for this payout.
@@ -263,12 +263,9 @@ const NotTokenHoldersView: FC<{ secToken?: SecToken; status: PAYOUT_STATUS }> = 
           <Box style={{ display: 'flex', alignItems: 'center', gap: '2px' }} marginBottom="16px">
             <TYPE.title5>Payout unavailable: </TYPE.title5>
             <TYPE.description4> You have</TYPE.description4>
-            <img
-              style={{ borderRadius: '50%', margin: '0 4px -1px' }}
-              width="20px"
-              height="20px"
-              src={secToken?.logo?.public}
-            />
+            <Box style={{ margin: '0 4px -1px' }}>
+              <TokenLogo logo={secToken?.logo} width="20px" height="20px" />
+            </Box>
             <TYPE.description4>
               <StyledTokenBalance style={{ fontWeight: '600' }}>0 {secTokenSymbol}</StyledTokenBalance> tokens as of
               record date.
@@ -336,7 +333,7 @@ const FuturePayout: FC<{ secToken: any }> = ({ secToken }) => {
       >
         <Flex alignItems="center" style={{ gap: 4 }}>
           <Trans>{`Add`}</Trans>
-          {secToken?.logo ? <TokenLogo logo={secToken.logo.public} width="24px" height="24px" /> : null}
+          <TokenLogo logo={secToken.logo} width="24px" height="24px" />
           <Box color="#8f8fb2">{secToken.symbol}</Box>
         </Flex>
         <Trans>{`to increase possible payout.`}</Trans>

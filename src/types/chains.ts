@@ -7,6 +7,8 @@ export enum SupportedChainId {
   OZEAN_TESTNET = 7849306,
   KAIROS_TESTNET = 1001,
   KAIA = 8217,
+  REDBELLY = 151,
+  REDBELLY_TESNET = 153,
 }
 
 export enum ChainId {
@@ -18,6 +20,8 @@ export enum ChainId {
   OzeanTestnet = SupportedChainId.OZEAN_TESTNET,
   KairosTestnet = SupportedChainId.KAIROS_TESTNET,
   Kaia = SupportedChainId.KAIA,
+  RedBelly = SupportedChainId.REDBELLY,
+  RedBellyTestnet = SupportedChainId.REDBELLY_TESNET,
 }
 
 export interface RetryOptions {

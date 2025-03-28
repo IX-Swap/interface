@@ -5,10 +5,9 @@ import { CheckCircle, Clock, Info } from 'react-feather'
 import _get from 'lodash/get'
 import dayjs from 'dayjs'
 import { CurrencyAmount } from '@ixswap1/sdk-core'
-import { ethers } from 'ethers'
 
 import { ReactComponent as CrossIcon } from 'assets/launchpad/svg/close.svg'
-import { useCheckClaimed, useClaimOfferRefund } from 'state/launchpad/hooks'
+import { useCheckClaimed, useClaimOfferRefund, useFormatOfferValue } from 'state/launchpad/hooks'
 import { InvestedDataRes, Offer, OfferStatus } from 'state/launchpad/types'
 import { InvestFormContainer } from './styled'
 import { Column, Row, Separator } from 'components/LaunchpadMisc/styled'
@@ -26,12 +25,15 @@ import { ApprovalState, useApproveCallback } from 'hooks/useApproveCallback'
 import { useCurrency } from 'hooks/Tokens'
 import { IXSALE_ADDRESS } from 'constants/addresses'
 import { getTokenSymbol } from 'components/LaunchpadOffer/OfferSidebar/OfferDetails'
+import { safeParseUnits } from 'utils/formatCurrencyAmount'
 
 interface Props {
   offer: Offer
   onClose: () => void
   investedData: InvestedDataRes
 }
+
+const AMOUNT_OUT_DECIMALS = 4
 
 export const ClosedStage: React.FC<Props> = (props) => {
   const theme = useTheme()
@@ -55,6 +57,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
   const claimRefund = useClaimOfferRefund(id)
   const { setHasClaimed, hasClaimed } = useCheckClaimed(id)
   const [claiming, setClaiming] = useState(false)
+  const formatedValue = useFormatOfferValue()
 
   const [contactFormOpen, setContactForm] = React.useState(false)
   const toggleContactForm = React.useCallback(() => setContactForm((state) => !state), [])
@@ -69,11 +72,8 @@ export const ClosedStage: React.FC<Props> = (props) => {
   const tokenCurrency = useCurrency(investingTokenAddress)
 
   const [approval, approveCallback] = useApproveCallback(
-    tokenCurrency
-      ? CurrencyAmount.fromRawAmount(
-        tokenCurrency,
-          ethers.utils.parseUnits(amount?.toString(), investingTokenDecimals) as any
-      )
+    tokenCurrency && amount
+      ? CurrencyAmount.fromRawAmount(tokenCurrency, safeParseUnits(amount, investingTokenDecimals) as any)
       : undefined,
     contractAddress || IXSALE_ADDRESS[chainId]
   )
@@ -129,7 +129,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
           {amountLoading && <Loader />}
           {!amountLoading && !amountError && (
             <MyInvestmentAmount>
-              {isSuccessfull ? amountClaim : amount}&nbsp;
+              {formatedValue(isSuccessfull ? amountClaim : amount, AMOUNT_OUT_DECIMALS)}&nbsp;
               {isSuccessfull ? getTokenSymbol(network, tokenSymbol) : getTokenSymbol(network, investingTokenSymbol)}
             </MyInvestmentAmount>
           )}
@@ -153,8 +153,8 @@ export const ClosedStage: React.FC<Props> = (props) => {
               ? `Upon the commencement of the token claim deal stage, the issuer will initiate a batch claim process for the
             tokens. The tokens will be automatically distributed to the investor&apos;s wallets.`
               : `You cannot claim any tokens yet. Please come back on the claim date, ${
-                claimTime ? `${dayjs(claimTime).format('DD/MM/YYYY')}.` : ''
-              }`}
+                  claimTime ? `${dayjs(claimTime).format('DD/MM/YYYY')}.` : ''
+                }`}
           </CantClaimNotice>
         </Row>
       )}
@@ -205,17 +205,19 @@ const Title = styled.div`
   ${text59}
   text-align: center;
   color: ${(props) => props.theme.launchpad.colors.text.title};
+
+  @media (max-width: 480px) {
+    display: none;
+  }
 `
 const CanClaimNotice = styled.div`
   ${text10}
   color: ${(props) => props.theme.launchpad.colors.text.title};
   opacity: 0.8;
-  max-width: 85%;
 `
 const CantClaimNotice = styled.div`
   ${text10}
   color: ${(props) => props.theme.launchpad.colors.text.title + 'cc'};
-  max-width: 70%;
 
   b {
     font-weight: 700;
@@ -249,6 +251,7 @@ const HelpButton = styled.div`
 const MyInvestmentLabel = styled.div`
   ${text10}
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
+  margin-bottom: 8px;
 `
 
 const MyInvestmentAmount = styled.div`
@@ -278,6 +281,11 @@ const ContactFormWrapper = styled.div`
   background: ${(props) => props.theme.launchpad.colors.background};
   border-radius: 8px;
   padding: 2rem;
+
+  @media (max-width: 480px) {
+    width: 100%;
+    min-width: 350px;
+  }
 `
 
 const ClaimedFilledButton = styled(FilledButton)`

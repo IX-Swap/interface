@@ -22,6 +22,7 @@ export enum OfferNetwork {
   base = 'base',
   ozean = 'ozean',
   kaia = 'kaia',
+  redBelly = 'redBelly',
 }
 
 export enum OfferCapitalStructure {
@@ -53,6 +54,7 @@ export enum OfferIndustry {
 export enum OfferTokenStandart {
   erc20 = 'ERC20',
   xtokenlite = 'xtokenlite',
+  rwaErc20 = 'RWAERC20',
 }
 
 export enum OfferType {
@@ -124,9 +126,8 @@ export enum IssunaceOfferStatus {
 
 export interface Asset {
   id: number
-  public: string
+  uuid: number
   name: string
-  publicUrl: string
   mimeType: string
 }
 
@@ -254,6 +255,7 @@ export interface Offer {
   tokenName: string
   tokenTicker: string
   tokenPrice: string
+  presaleTokenPrice: string
   tokenStandart: OfferTokenStandart
   tokenType: OfferTokenType
 

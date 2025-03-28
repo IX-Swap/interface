@@ -9,6 +9,7 @@ import { ReactComponent as Checked } from '../../../assets/images/check-2.svg'
 import { LBP_FACTORY_ADDRESS } from 'constants/addresses'
 import { useWeb3React } from 'hooks/useWeb3React'
 import useDecimals from 'hooks/useDecimals'
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
 
 const CardContainer = styled.div`
   display: flex;
@@ -137,8 +138,8 @@ export default function Approvals({
   )
 
   const renderLogo = (shareLogo: any) => {
-    return shareLogo && typeof shareLogo === 'object' && shareLogo.public ? (
-      <LogoIcon as="img" src={shareLogo.public} alt="Serenity Logo" />
+    return shareLogo && typeof shareLogo === 'object' && shareLogo.uuid ? (
+      <LogoIcon as="img" src={getPublicAssetUrl(shareLogo)} alt="Serenity Logo" />
     ) : shareLogo && (typeof shareLogo === 'string' || shareLogo instanceof File) ? (
       <LogoIcon
         as="img"

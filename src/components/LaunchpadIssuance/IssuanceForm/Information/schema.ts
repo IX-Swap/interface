@@ -13,6 +13,7 @@ import { isEthChainAddress } from 'utils'
 import { SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
 import { STRING_MIN, STRING_MAX, TEXT_MAX, TEXT_MIN } from 'components/LaunchpadIssuance/utils/TextField'
 import { truncate } from 'fs/promises'
+import { calculateSupplyForSale } from './util'
 
 const fileSchema = yup.mixed()
 const REQUIRED = 'Required'
@@ -94,7 +95,7 @@ export const createValidationSchema = (account: string | null | undefined) => {
       .string()
       .nullable()
       .required(REQUIRED)
-      .min(8, getLongerThanOrEqual('Identification number', 8))
+      .min(4, getLongerThanOrEqual('Identification number', 4))
       .max(64, getHaveAtMost('Identification number', 64)),
 
     tokenType: yup.string().nullable().oneOf(Object.values(OfferTokenType)).required(REQUIRED),
@@ -119,6 +120,30 @@ export const createValidationSchema = (account: string | null | undefined) => {
         return !originalValue || +originalValue > 0
       })
       .required(REQUIRED),
+    presaleTokenPrice: yup
+      .string()
+      .nullable()
+      .when('hasPresale', {
+        is: true,
+        then: yup
+          .string()
+          .nullable()
+          .required(REQUIRED)
+          .test('notZero', 'Pre-sale Token price should be bigger than 0!', function () {
+            const { originalValue } = this as any
+            return !originalValue || +originalValue > 0
+          })
+          .when('tokenPrice', {
+            is: (tokenPrice: string) => tokenPrice && +tokenPrice > 0,
+            then: yup
+              .string()
+              .test('presaleTokenPriceLessThanTokenPrice', 'Pre-sale Token price should be less than Public Token price!', function () {
+                const { originalValue } = this as any
+                return !originalValue || +originalValue <= +this.parent.tokenPrice
+              })
+          }),
+        otherwise: yup.string().nullable(),
+      }),
     tokenStandart: yup.string().nullable().oneOf(Object.values(OfferTokenStandart)).required(REQUIRED),
 
     tokenReceiverAddress: yup
@@ -148,6 +173,15 @@ export const createValidationSchema = (account: string | null | undefined) => {
             .string()
             .nullable()
             .matches(/[0-9]+/, 'Invalid value')
+            .test('totalSupplyConstraint', function (totalSupply): boolean | yup.ValidationError {
+              const requiredSupply = calculateSupplyForSale(this.parent)
+              if (+(totalSupply || '0') < +requiredSupply) {
+                return this.createError({
+                  message: `Total supply must be at least ${requiredSupply}. Adjust your input to continue.`,
+                })
+              }
+              return true
+            })
             .required(REQUIRED),
         }),
       })
@@ -302,7 +336,7 @@ export const createValidationSchema = (account: string | null | undefined) => {
           .required(REQUIRED)
           .test(
             'presaleAlocatedMax',
-            'Pre-sale allocated should be smaller or equal to total amount to raise',
+            'Pre-sale allocated should be smaller to total amount to raise',
             function () {
               return checkMinSmallerThanMaximum(this.parent.presaleAlocated, this.parent.hardCap)
             }

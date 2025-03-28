@@ -14,6 +14,7 @@ import { useHistory } from 'react-router-dom'
 import { useActiveWeb3React } from 'hooks/web3'
 import { CHAIN_INFO } from 'constants/chains'
 import { checkWrongChain } from 'utils/chains'
+import { TokenLogo } from 'components/TokenLogo'
 
 interface MiddleSectionProps {
   lbpShareLogo: any
@@ -35,14 +36,6 @@ const ImageSection = styled.div`
   display: flex;
   align-items: center;
   position: relative;
-`
-
-const LogoIcon = styled.img`
-  position: absolute;
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-  left: 0px;
 `
 
 const Description = styled(TYPE.description7)`
@@ -159,7 +152,7 @@ const AdminHeader: React.FC<MiddleSectionProps> = ({
   const handlePoolButtonClick = () => {
     if (contractAddress) {
       const lbpChainInfo = checkWrongChain(chainId, network)
-      const chain = lbpChainInfo?.expectChain ? CHAIN_INFO[lbpChainInfo?.expectChain] : chainInfo;
+      const chain = lbpChainInfo?.expectChain ? CHAIN_INFO[lbpChainInfo?.expectChain] : chainInfo
       window.open(`${chain?.blockExplorerUrls[0]}address/${contractAddress}`, '_blank')
     }
   }
@@ -204,13 +197,13 @@ const AdminHeader: React.FC<MiddleSectionProps> = ({
         updateStatus={updateStatus}
       />
       <ImageSection>
-        <LogoIcon src={lbpShareLogo?.public} alt="Serenity Logo" />
+        <TokenLogo logo={lbpShareLogo} width="50px" height="50px" />
         <Description style={{ minInlineSize: 'max-content', marginLeft: '60px' }} fontSize={'32px'}>
           {lbpShareName}
         </Description>
       </ImageSection>
       <TextSection>
-        <StatusButton style={{ minInlineSize: 'max-content'}} onClick={handleOpenModal} status={status}>
+        <StatusButton style={{ minInlineSize: 'max-content' }} onClick={handleOpenModal} status={status}>
           {statusIcon}
           <TYPE.subHeader1>{statusText}</TYPE.subHeader1>
         </StatusButton>

@@ -30,6 +30,7 @@ const WETH_ONLY: ChainTokenList = {
   [80002]: [WETH9[80002]],
   [8453]: [WETH9[8453]],
   [84532]: [WETH9[84532]],
+  [153]: [WETH9[153]],
 }
 
 // used only for testing multihop on kovan
@@ -43,16 +44,30 @@ const TEST_TOKENS = [
   new Token(42, '0x40Fe1CC36fA8dAabCf680B6742966344d209f9f2', 18, 'AA', 'AA'),
 ]
 
-// used to construct intermediary pairs for trading
-export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
+// used to construct the list of all pairs we consider by default in the frontend
+export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
   ...WETH_ONLY,
   [1]: [...WETH_ONLY[1], ...TRANSFORMED_DEFAULT_TOKEN_LIST[1], USDC[1], IXS[1]],
   [42]: [...WETH_ONLY[42], ...TEST_TOKENS, ...TRANSFORMED_DEFAULT_TOKEN_LIST[42], USDC[42], IXS[42]],
   [137]: [...WETH_ONLY[137], ...TRANSFORMED_DEFAULT_TOKEN_LIST[137], USDC[137], IXS[137]],
   [80001]: [...WETH_ONLY[80001], ...TRANSFORMED_DEFAULT_TOKEN_LIST[80001], USDC[80001], IXS[80001]],
-  [80002]: [...WETH_ONLY[80002], ...TRANSFORMED_DEFAULT_TOKEN_LIST[80002], USDC[80002], IXS[80002]],
-  [8453]: [...WETH_ONLY[8453], ...TRANSFORMED_DEFAULT_TOKEN_LIST[8453], USDC[8453], IXS[8453]],
-  [84532]: [...WETH_ONLY[84532], ...TRANSFORMED_DEFAULT_TOKEN_LIST[84532], USDC[84532], IXS[84532]],
+  [80002]: [...TRANSFORMED_DEFAULT_TOKEN_LIST[80002], USDC[80002], IXS[80002]],
+  [8453]: [...TRANSFORMED_DEFAULT_TOKEN_LIST[8453], USDC[8453], IXS[8453]],
+  [84532]: [...TRANSFORMED_DEFAULT_TOKEN_LIST[84532], USDC[84532], IXS[84532]],
+  [153]: [...TRANSFORMED_DEFAULT_TOKEN_LIST[153], USDC[153], IXS[153]],
+}
+
+// used to construct intermediary pairs for trading
+export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
+  ...WETH_ONLY,
+  [1]: BASES_TO_TRACK_LIQUIDITY_FOR[1],
+  [42]: BASES_TO_TRACK_LIQUIDITY_FOR[42],
+  [137]: BASES_TO_TRACK_LIQUIDITY_FOR[137],
+  [80001]: BASES_TO_TRACK_LIQUIDITY_FOR[80001],
+  [80002]: [...WETH_ONLY[80002], ...BASES_TO_TRACK_LIQUIDITY_FOR[80002]],
+  [8453]: [...WETH_ONLY[8453], ...BASES_TO_TRACK_LIQUIDITY_FOR[8453]],
+  [84532]: [...WETH_ONLY[84532], ...BASES_TO_TRACK_LIQUIDITY_FOR[84532]],
+  [153]: [...WETH_ONLY[153], ...BASES_TO_TRACK_LIQUIDITY_FOR[153]],
 }
 export const ADDITIONAL_BASES: { [chainId: number]: { [tokenAddress: string]: Token[] } } = {
   [1]: {},
@@ -73,6 +88,7 @@ export const ADDITIONAL_BASES: { [chainId: number]: { [tokenAddress: string]: To
   [80002]: {},
   [8453]: {},
   [84532]: {},
+  [153]: {},
 }
 /**
  * Some tokens can only be swapped via certain pairs, so we override the list of bases that are considered for these
@@ -90,33 +106,6 @@ export const CUSTOM_BASES: { [chainId: number]: { [tokenAddress: string]: Token[
   [84532]: {},
 }
 
-/**
- * Shows up in the currency select for swap and add liquidity
- */
-export const COMMON_BASES: ChainCurrencyList = {
-  [1]: [Ether.onChain(1), USDC[1], WETH9[1]],
-  [3]: [Ether.onChain(3), WETH9[3]],
-  [4]: [Ether.onChain(4), WETH9[4]],
-  [5]: [Ether.onChain(5), WETH9[5]],
-  [42]: [Ether.onChain(42), WETH9[42], USDC[42]],
-  [137]: [Ether.onChain(137), WETH9[137], USDC[137]],
-  [80001]: [Ether.onChain(80001), WETH9[80001], USDC[80001]],
-  [80002]: [Ether.onChain(80002), WETH9[80002], USDC[80002]],
-  [8453]: [Ether.onChain(8453), WETH9[8453]],
-  [84532]: [Ether.onChain(84532), WETH9[84532]],
-}
-
-// used to construct the list of all pairs we consider by default in the frontend
-export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
-  ...WETH_ONLY,
-  [1]: [...WETH_ONLY[1], ...TRANSFORMED_DEFAULT_TOKEN_LIST[1], USDC[1], IXS[1]],
-  [42]: [...WETH_ONLY[42], ...TEST_TOKENS, ...TRANSFORMED_DEFAULT_TOKEN_LIST[42], USDC[42], IXS[42]],
-  [137]: [...WETH_ONLY[137], ...TRANSFORMED_DEFAULT_TOKEN_LIST[137], USDC[137], IXS[137]],
-  [80001]: [...WETH_ONLY[80001], ...TRANSFORMED_DEFAULT_TOKEN_LIST[80001], USDC[80001], IXS[80001]],
-  [80002]: [...TRANSFORMED_DEFAULT_TOKEN_LIST[80002], USDC[80002], IXS[80002]],
-  [8453]: [...TRANSFORMED_DEFAULT_TOKEN_LIST[8453], USDC[8453], IXS[8453]],
-  [84532]: [...TRANSFORMED_DEFAULT_TOKEN_LIST[84532], USDC[84532], IXS[84532]],
-}
 export const PINNED_PAIRS: { readonly [chainId: number]: [Token, Token][] } = {
   [1]: [[USDC[1], IXS[1]]],
   [42]: [[USDC[42], IXS[42]]],
@@ -125,4 +114,5 @@ export const PINNED_PAIRS: { readonly [chainId: number]: [Token, Token][] } = {
   [80002]: [[USDC[80002], IXS[80002]]],
   [8453]: [[USDC[8453], IXS[8453]]],
   [84532]: [[USDC[84532], IXS[84532]]],
+  [153]: [[USDC[153], IXS[153]]],
 }

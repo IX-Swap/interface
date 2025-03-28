@@ -1,28 +1,22 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
-import Portal from '@reach/portal'
 import { useHistory } from 'react-router-dom'
-import { useConnectModal } from '@rainbow-me/rainbowkit'
 
-import { useCheckKYC } from 'state/launchpad/hooks'
 import { OFFER_STAGE_LABELS } from 'state/launchpad/constants'
 import { OfferStatus } from 'state/launchpad/types'
 import { Tooltip } from './Tooltip'
 import { InvestmentStatusBadge } from './InvestmentStatusBadge'
 import { InvestmentSaleStatusInfo } from './InvestmentSaleStatusInfo'
 import { ReactComponent as LockIcon } from 'assets/launchpad/svg/lock-icon.svg'
-import { KYCPrompt } from '../KYCPrompt'
 import { InvestmentTypeInfo } from './InvestmentTypeInfo'
 import { text1, text2, text4, text5, text58 } from 'components/LaunchpadMisc/typography'
-import { useActiveWeb3React } from 'hooks/web3'
 import { PreviewModal } from './PreviewModal'
-import { useKYCState } from 'state/kyc/hooks'
-import { KYCStatuses } from 'pages/KYC/enum'
 import { formatNumberWithDecimals } from 'state/lbp/hooks'
 import { NETWORK_LOGOS } from 'constants/chains'
 import { PinnedContentButton } from 'components/Button'
 import { MEDIA_WIDTHS } from 'theme'
 import { RaisedFund } from './RaisedFund'
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
 
 interface Props {
   offer: any
@@ -33,35 +27,21 @@ const getStageLabel = (stage: OfferStatus) => {
 }
 
 export const InvestmentCard: React.FC<Props> = ({ offer }) => {
-  const checkKYC = useCheckKYC()
   const history = useHistory()
   const theme = useTheme()
-  const { account } = useActiveWeb3React()
-  const { kyc } = useKYCState()
-  const { openConnectModal } = useConnectModal()
 
   const [showDetails, setShowDetails] = React.useState(false)
-  const [showKYCModal, setShowKYCModal] = React.useState(false)
   const [isModalOpen, handleIsModalOpen] = React.useState(false)
 
   const toggleShowDetails = React.useCallback(() => setShowDetails((state) => !state), [])
-  const toggleKYCModal = React.useCallback(() => setShowKYCModal((state) => !state), [])
 
   const network = offer?.network ?? ''
   const networkLogo = network ? NETWORK_LOGOS[network] : ''
-  const isKycApproved = kyc?.status === KYCStatuses.APPROVED
 
   const isClosed = React.useMemo(
     () => !!offer.status && [OfferStatus.closed, OfferStatus.claim].includes(offer.status),
     [offer?.status]
   )
-  const canOpen = React.useMemo(() => {
-    return (
-      checkKYC(offer.allowOnlyAccredited, isClosed) ||
-      account?.toLowerCase() === offer?.vetting?.issuance?.user?.ethAddress?.toLowerCase()
-    )
-  }, [checkKYC, isClosed, offer?.allowOnlyAccredited])
-
   const stage = React.useMemo(() => {
     if (offer?.hardCapReached) {
       return { label: 'Funded', color: '#1FBA66' }
@@ -74,19 +54,10 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
     return null
   }, [offer])
 
-  const onClick = React.useCallback(() => {
-    if (account) {
-      if (canOpen) {
-        history.push(`/offers/${offer.id}`)
-      } else {
-        toggleKYCModal()
-      }
-    } else {
-      openConnectModal && openConnectModal()
-    }
-  }, [account, canOpen, toggleKYCModal])
+  const onClick = () => {
+    history.push(`/offers/${offer.id}`)
+  }
 
-  const openModal = () => handleIsModalOpen(true)
   const closeModal = () => handleIsModalOpen(false)
 
   function capitalizeFirstLetter(offerType: string) {
@@ -97,7 +68,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
     <>
       <PreviewModal offer={offer} isModalOpen={isModalOpen} closeModal={closeModal} />
       <InvestmentCardContainer>
-        <InvestmentCardImage src={offer.cardPicture.public} />
+        <InvestmentCardImage src={getPublicAssetUrl(offer.cardPicture)} />
 
         <InvestmentCardHeader>
           <InvestmentCardTagsContainer>
@@ -110,7 +81,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
         <InvestmentCardInfoWrapper></InvestmentCardInfoWrapper>
 
         <InvestmentCardInfoContainer expanded={showDetails}>
-          <InvestmentCardIcon src={offer.profilePicture.public} />
+          <InvestmentCardIcon src={getPublicAssetUrl(offer.profilePicture)} />
 
           {networkLogo ? (
             <LogoWrap>
@@ -207,20 +178,9 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
                 Learn More
               </InvestButton>
             )}
-
-            {!isKycApproved && (
-              <InvestButton style={{ marginTop: '10px' }} type="button" onClick={openModal}>
-                Preview
-              </InvestButton>
-            )}
           </InvestmentCardFooter>
         </InvestmentCardInfoContainer>
       </InvestmentCardContainer>
-      {showKYCModal && (
-        <Portal>
-          <KYCPrompt offerId={offer.id} allowOnlyAccredited={offer.allowOnlyAccredited} />
-        </Portal>
-      )}
     </>
   )
 }

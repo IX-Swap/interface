@@ -97,6 +97,7 @@ const SubmitButton = styled.button<{ state: InvestSubmitState; disabled?: boolea
 export const InvestInfoMessage = styled.div<{ state: InvestSubmitState; disabled?: boolean }>`
   display: flex;
   justify-content: center;
+  text-align: center;
   align-items: center;
   gap: 0.5rem;
   padding-left: 1rem;

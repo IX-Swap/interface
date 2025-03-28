@@ -1,20 +1,18 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
-import Portal from '@reach/portal'
 import { useHistory } from 'react-router-dom'
+import { isMobile } from 'react-device-detect'
+
 import { Offer, OfferStatus } from 'state/launchpad/types'
 import { OFFER_STAGE_LABELS } from 'state/launchpad/constants'
-import { useGetPinnedOffer, useCheckKYC } from 'state/launchpad/hooks'
-import { KYCPrompt } from '../KYCPrompt'
+import { useGetPinnedOffer } from 'state/launchpad/hooks'
 import { InvestmentStatusBadge } from 'components/Launchpad/InvestmentCard/InvestmentStatusBadge'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import { InvestmentTypeInfo } from '../InvestmentCard/InvestmentTypeInfo'
-import { text12, text54, text59 } from 'components/LaunchpadMisc/typography'
+import { text1, text12, text54, text59 } from 'components/LaunchpadMisc/typography'
 import { MEDIA_WIDTHS } from 'theme'
-import { isMobile } from 'react-device-detect'
-import { useWeb3React } from 'hooks/useWeb3React'
-import { useConnectModal } from '@rainbow-me/rainbowkit'
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
 
 const getStageLabel = (stage: OfferStatus) => {
   return OFFER_STAGE_LABELS.find((x) => x.value === stage)?.label ?? ''
@@ -23,37 +21,25 @@ const getStageLabel = (stage: OfferStatus) => {
 export const Pinned: React.FC = () => {
   const history = useHistory()
   const getPinnedOffer = useGetPinnedOffer()
-  const checkKYC = useCheckKYC()
   const theme = useTheme()
-  const { account } = useWeb3React()
-  const { openConnectModal } = useConnectModal()
 
   const [offer, setOffer] = React.useState<Offer>()
   const [loading, setLoading] = React.useState(true)
-  const [showKYCModal, setShowKYCModal] = React.useState(false)
 
-  const toggleKYCModal = React.useCallback(() => setShowKYCModal((state) => !state), [])
+  const isClosed = React.useMemo(
+    () => !!offer?.status && [OfferStatus.closed, OfferStatus.claim].includes(offer?.status),
+    [offer?.status]
+  )
 
   React.useEffect(() => {
     getPinnedOffer()
       .then(setOffer)
       .finally(() => setLoading(false))
   }, [])
-  const onClick = React.useCallback(() => {
-    if (account) {
-      const canOpen = checkKYC(
-        offer?.allowOnlyAccredited || false,
-        !!offer?.status && [OfferStatus.closed, OfferStatus.claim].includes(offer.status)
-      )
-      if (canOpen) {
-        history.push(`/offers/${offer?.id ?? ''}`)
-      } else {
-        toggleKYCModal()
-      }
-    } else {
-      openConnectModal && openConnectModal()
-    }
-  }, [account, checkKYC, toggleKYCModal, offer])
+
+  const onClick = () => {
+    history.push(`/offers/${offer?.id ?? ''}`)
+  }
 
   const stage = React.useMemo(() => {
     if (offer?.hardCapReached) {
@@ -89,7 +75,7 @@ export const Pinned: React.FC = () => {
     <PinnedWrapper>
       <PinnedContainer>
         <PinnedImageContainer>
-          <PinnedImage src={offer.cardPicture.public} />
+          <PinnedImage src={getPublicAssetUrl(offer.cardPicture)} />
           <PinnedTags>
             {stage && <InvestmentStatusBadge label={stage.label} color={stage.color} />}
             {offer.status !== OfferStatus.claim && (
@@ -103,17 +89,15 @@ export const Pinned: React.FC = () => {
 
           <PinnedContentTitle>{offer.title}</PinnedContentTitle>
           <PinnedContentBody>{offer.shortDescription}</PinnedContentBody>
-          <PinnedContentButton type="button" onClick={onClick}>
-            Invest
-          </PinnedContentButton>
+
+          {isClosed ? <LearnMoreButton onClick={onClick}>Learn more</LearnMoreButton> : null}
+          {!isClosed ? (
+            <PinnedContentButton type="button" onClick={onClick}>
+              Invest
+            </PinnedContentButton>
+          ) : null}
         </PinnedContent>
       </PinnedContainer>
-
-      {showKYCModal && (
-        <Portal>
-          <KYCPrompt offerId={offer.id} allowOnlyAccredited={offer.allowOnlyAccredited} />
-        </Portal>
-      )}
     </PinnedWrapper>
   )
 }
@@ -223,4 +207,21 @@ const PinnedTags = styled.header`
   justify-content: flex-start;
   align-items: center;
   gap: 0.5rem;
+`
+const LearnMoreButton = styled.button`
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  background: ${(props) => props.theme.launchpad.colors.background};
+  color: ${(props) => props.theme.launchpad.colors.primary};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.primary};
+  border-radius: 6px;
+  padding: 0.75rem 3rem;
+  cursor: pointer;
+  width: fix-content;
+  text-align: center;
+  font-family: ${(props) => props.theme.launchpad.font};
+  ${text1}
 `

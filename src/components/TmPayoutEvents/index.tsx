@@ -173,7 +173,7 @@ const Row = ({ item }: IRow) => {
         </div>
         <TYPE.main1>{PAYOUT_TYPE_LABEL[type] || type}</TYPE.main1>
         <div style={{ gap: '8px' }}>
-          {secToken?.logo ? <TokenLogo logo={secToken.logo.public} width="32px" height="32px" /> : null}
+          <TokenLogo logo={secToken?.logo} width="32px" height="32px" />
           <TYPE.main1 color={'#8F8FB2'}>{secToken?.symbol || '-'}</TYPE.main1>
         </div>
         <div style={{ display: 'block' }}>

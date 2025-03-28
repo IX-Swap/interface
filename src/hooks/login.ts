@@ -13,6 +13,8 @@ export const login = async ({ hash, account }: Props) => {
       const result = await apiService.post<RawAuthPayload>(metamask.login, {
         address: account,
         hash,
+      }, {
+        withCredentials: true,
       })
       return result
     } catch (e) {

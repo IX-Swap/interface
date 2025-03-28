@@ -5,12 +5,14 @@ import polygonLogoUrl from 'assets/images/polygon.svg'
 import baseLogoUrl from 'assets/images/base.svg'
 import ozeanLogoUrl from 'assets/images/chains/ozean.png'
 import kaiaLogoUrl from 'assets/images/chains/kaia.png'
+import redBellyLogoUrl from 'assets/images/chains/redbelly.png'
 
 export enum NetworkName {
   BASE = 'base',
   POLYGON = 'polygon',
   OZEAN = 'ozean',
   KAIA = 'kaia',
+  REDBELLY = 'redbelly',
 }
 
 // chainIdToNetworkName covert chainId to network name regardless of whether it is testnet or mainnet
@@ -30,6 +32,7 @@ export const Chains = {
   [NetworkName.POLYGON]: [SupportedChainId.AMOY, SupportedChainId.MATIC],
   [NetworkName.OZEAN]: [SupportedChainId.OZEAN_TESTNET], // TODO: Add mainnet chain id
   [NetworkName.KAIA]: [SupportedChainId.KAIROS_TESTNET, SupportedChainId.KAIA],
+  [NetworkName.REDBELLY]: [SupportedChainId.REDBELLY_TESNET, SupportedChainId.REDBELLY],
 }
 
 export const findChainName = (chainId: number): string | null => {
@@ -79,6 +82,8 @@ export const getChainLogoUrl = (network: string | undefined) => {
     return ozeanLogoUrl
   } else if (network === NetworkName.KAIA) {
     return kaiaLogoUrl
+  } else if (network === NetworkName.REDBELLY) {
+    return redBellyLogoUrl
   }
 
   return null

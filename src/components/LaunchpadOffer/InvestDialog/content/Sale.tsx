@@ -24,8 +24,6 @@ import { text10, text11, text59 } from 'components/LaunchpadMisc/typography'
 import { useLaunchpadInvestmentContract } from 'hooks/useContract'
 import { ethers } from 'ethers'
 import { useAllowance } from 'hooks/useApproveCallback'
-import { useCurrency } from 'hooks/Tokens'
-import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { IXSALE_ADDRESS } from 'constants/addresses'
 import { useActiveWeb3React } from 'hooks/web3'
 import { IssuanceTooltip } from 'components/LaunchpadIssuance/IssuanceForm/shared/fields/IssuanceTooltip'
@@ -34,6 +32,8 @@ import { OfferStageStatus, getTokenSymbol } from 'components/LaunchpadOffer/Offe
 import { KYCPromptIconContainer } from 'components/Launchpad/KYCPrompt/styled'
 import { WalletEvent, INVEST_FLOW_EVENTS } from 'utils/event-logs'
 import usePostbackJumpTask from 'hooks/usePostbackJumpTask'
+import { MEDIA_WIDTHS } from 'theme'
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
 
 interface Props {
   offer: Offer
@@ -192,16 +192,14 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
       if (launchpadContract) {
         let transaction
         if (status === OfferStatus.preSale) {
-          const { data: preSaleProof } = await getPresaleProof(amount)
-          .catch(e => {
+          const { data: preSaleProof } = await getPresaleProof(amount).catch((e) => {
             submitState.setError(e.message)
             return { data: null }
           })
           if (!preSaleProof) return
           transaction = await launchpadContract.investPreSale(contractSaleId, parsedAmount, preSaleProof)
         } else if (status === OfferStatus.sale) {
-          const { data: investStructData } = await getInvestPublicSaleStructData(amount, account)
-          .catch(e => {
+          const { data: investStructData } = await getInvestPublicSaleStructData(amount, account).catch((e) => {
             submitState.setError(e.message)
             return { data: null }
           })
@@ -248,9 +246,9 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
           <Eye color={theme.launchpad.colors.primary} size="35" />
         </KYCPromptIconContainer>
         <WhitelistMessage>
-          <>
+          <PendingText>
             Thank you for your registration, we are still reviewing your registration to invest in the Pre-Sale stage.
-          </>
+          </PendingText>
         </WhitelistMessage>
       </InvestFormContainer>
     )
@@ -300,7 +298,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
                   textDecoration: 'none',
                   color: '#6667FF',
                 }}
-                href={purchaseAgreement.file?.public}
+                href={getPublicAssetUrl(purchaseAgreement.file)}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -325,7 +323,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
                   textDecoration: 'none',
                   color: '#6667FF',
                 }}
-                href={investmentMemorandum.file?.public}
+                href={getPublicAssetUrl(investmentMemorandum.file)}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -351,7 +349,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
                       textDecoration: 'none',
                       color: '#6667FF',
                     }}
-                    href={document.file?.public}
+                    href={getPublicAssetUrl(document.file)}
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -389,7 +387,9 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess, o
         )}
         {submitState.current === InvestSubmitState.error && (
           <Row justifyContent="space-between" alignItems="center" width="100%" padding="1rem">
-            <div style={{ flexGrow: 1, textAlign: 'left' }}>{submitState.errorMessage || 'Your order was not executed.'}</div>
+            <div style={{ flexGrow: 1, textAlign: 'left' }}>
+              {submitState.errorMessage || 'Your order was not executed.'}
+            </div>
             <Info size="18" color={theme.launchpad.colors.error} />
           </Row>
         )}
@@ -446,5 +446,17 @@ const WhitelistMessage = styled.div`
   color: ${(props) => props.theme.launchpad.colors.text.title};
   b {
     color: ${(props) => props.theme.launchpad.colors.primary};
+  }
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    max-width: 100%;
+  }
+`
+
+const PendingText = styled.div`
+  margin-bottom: 0;
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    margin-bottom: 50px;
   }
 `
