@@ -209,6 +209,17 @@ export const CHAIN_INFO: ChainInfoMap = {
     rpcUrls: ['https://governors.testnet.redbelly.network'],
     blockExplorerUrls: ['https://redbelly.testnet.routescan.io'],
   },
+  [SupportedChainId.REDBELLY]: {
+    chainName: 'RedBelly',
+    nativeCurrency: {
+      name: 'RBNT',
+      symbol: 'RBNT',
+      decimals: 18,
+    },
+    logoUrl: redBellyLogoUrl,
+    rpcUrls: ['https://governors.mainnet.redbelly.network'],
+    blockExplorerUrls: ['https://redbelly.routescan.io'],
+  },
 }
 
 export type SupportedInterfaceChainId = InterfaceChainId

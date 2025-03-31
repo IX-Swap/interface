@@ -33,7 +33,7 @@ const getAlchemyUrlFor = (network: string) =>
 
 export const CHAINS: [Chain, ...Chain[]] = isTestnet
   ? [baseSepolia, polygonAmoy, ozeanTestnet, kairos, redbellyTestnet]
-  : [base, polygon, kaia, redbellyMainnet]
+  : [base, polygon, kaia]
 
 export const customChains = {
   ozeanTestnet,
