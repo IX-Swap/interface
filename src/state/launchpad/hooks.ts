@@ -1213,10 +1213,10 @@ export const useSubmitOffer = () => {
       const findDoc = (prefix: 'member.photo' | 'document' | 'image' | 'otherExecutionDocument', idx: number) =>
         uploadedFiles.find((x) => x.name === `${prefix}.${idx}`)?.id
       const purchaseAgreementId =
-        uploadedFiles.find((x) => x.name === 'purchaseAgreement')?.id || payload.purchaseAgreement?.file?.id || null
+        uploadedFiles.find((x) => x.name === 'purchaseAgreement')?.id || payload.purchaseAgreement?.file?.file?.id || null
       const investmentMemorandumId =
         uploadedFiles.find((x) => x.name === 'investmentMemorandum')?.id ||
-        payload.investmentMemorandum?.file?.id ||
+        payload.investmentMemorandum?.file?.file?.id ||
         null
 
       const executionDocuments = []

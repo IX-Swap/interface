@@ -1,4 +1,4 @@
 export interface IssuanceFile {
   id?: number
-  file: File
+  file: File & { id: number }
 }
