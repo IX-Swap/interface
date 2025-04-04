@@ -32,7 +32,7 @@ const ConnectWalletCard = () => {
           While your wallet is not connected, you can see our New <br />
           <a
             style={{ color: '#6666FF', textDecoration: 'none' }}
-            href="https://staking.ixswap.io/"
+            href="https://staking.ixs.finance/"
             target="_blank"
             rel="noreferrer"
           >

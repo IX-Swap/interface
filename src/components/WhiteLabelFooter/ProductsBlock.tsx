@@ -69,7 +69,7 @@ export const ProductsBlock = () => {
           </NavLink>
         )}
         {isKycApproved && account && isWhitelisted && (
-          <ExternalLink target="_self" href="https://info.ixswap.io/home">
+          <ExternalLink target="_self" href="https://info.ixs.finance/home">
             <Trans>Charts</Trans>
           </ExternalLink>
         )}

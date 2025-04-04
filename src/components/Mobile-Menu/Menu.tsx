@@ -33,6 +33,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
 
   const isIxSwap = config?.isIxSwap ?? false
   const bridgeUrl = process.env.REACT_APP_BRIDGE_URL || ''
+  const stakingUrl = process.env.REACT_APP_STAKING_URL || ''
 
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -129,7 +130,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
         <MenuList style={!cookies.annoucementsSeen ? { marginTop: 130 } : {}}>
           {isIxSwap && isAllowed('charts') && isWhitelisted ? (
             <>
-              <ExternalListItem target="_self" href={'https://info.ixswap.io/home'}>
+              <ExternalListItem target="_self" href={'https://info.ixs.finance/home'}>
                 <Trans>Charts</Trans>
               </ExternalListItem>
 
@@ -260,7 +261,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
                     <MenuItem onClick={handleClose}>
                       <ExternalListItem
                         style={{ fontSize: '15px', margin: '0px', height: '10px', fontWeight: '400' }}
-                        href={`https://staking.ixswap.io/`}
+                        href={stakingUrl || ``}
                       >
                         <Trans>Staking on Base</Trans>
                       </ExternalListItem>
@@ -288,7 +289,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
                 <MenuItem onClick={handleClose}>
                   <ExternalListItem
                     style={{ fontSize: '15px', margin: '0px', height: '10px', fontWeight: '500' }}
-                    href={`https://staking.ixswap.io/`}
+                    href={`https://staking.ixs.finance/`}
                   >
                     <Trans>Liquidity Mining Program (Quickswap)</Trans>
                   </ExternalListItem>

@@ -334,8 +334,8 @@ export const VettingForm = (props: Props) => {
             optional
             label="Copy of Audited Financials"
             disabled={view}
-            hint="Document must cover the last 3 years or the most recent financials dated within the last 12 months. 
-                  Not applicable to licensed entities. 
+            hint="Document must cover the last 3 years or the most recent financials dated within the last 12 months.
+                  Not applicable to licensed entities.
                   Supported file formats are doc, docx, PNG, JPG, JPEG and PDF"
             field="document.auditedFinancials"
             value={values.document.auditedFinancials}
@@ -363,7 +363,7 @@ export const VettingForm = (props: Props) => {
                 <text>Supported file formats are doc, docx, PNG, JPG, JPEG and PDF.</text>
                 <br />
                 <ExampleLink
-                  href="https://s3.eu-central-1.amazonaws.com/static.ixswap.io/ownership-structure-example.pdf"
+                  href="https://s3.eu-central-1.amazonaws.com/static.ixs.finance/ownership-structure-example.pdf"
                   target="_blank"
                 >
                   See Examples
