@@ -124,47 +124,47 @@ export const Footer: React.FC<Props> = (props) => {
           <div>
             <DiscreteExternalLink
               style={{ display: 'flex', alignItems: 'center' }}
-              href="https://ixswap.io/terms-and-conditions/"
+              href="https://www.ixs.finance/terms-and-conditions/"
             >
               <UpdatedBox>Updated</UpdatedBox> Terms & Conditions
             </DiscreteExternalLink>
             <DotSeparator />
-            <DiscreteExternalLink href="https://ixswap.io/privacy-policy/">Privacy Policy</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/privacy-policy/">Cookie Settings</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://www.ixs.finance/privacy-policy/">Privacy Policy</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://www.ixs.finance/privacy-policy/">Cookie Settings</DiscreteExternalLink>
           </div>
         </Copyright>
         <Links>
           <div>
             <header style={{ marginTop: '0px' }}>Products</header>
-            <DiscreteExternalLink href="https://ixswap.io/blog/">What is IXS?</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/community/">IXS Token</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/blog/">IXS Launchpad </DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/community/">Exchange</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/community/">
+            <DiscreteExternalLink href="https://www.ixs.finance/blog/">What is IXS?</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://www.ixs.finance/community/">IXS Token</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://www.ixs.finance/blog/">IXS Launchpad </DiscreteExternalLink>
+            <DiscreteExternalLink href="https://www.ixs.finance/community/">Exchange</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://www.ixs.finance/community/">
               Staking and Liquidity Mining
             </DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/blog/">Borrowing and Lending</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/community/">IXS Custody</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://www.ixs.finance/blog/">Borrowing and Lending</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://www.ixs.finance/community/">IXS Custody</DiscreteExternalLink>
           </div>
 
           <div>
             <header>Company</header>
             {/* hide for now */}
-            {/* <DiscreteExternalLink href="https://ixswap.io/roadmap/">Roadmap</DiscreteExternalLink> */}
-            <DiscreteExternalLink href="https://ixswap.io/ecosystem/">Ecosystem</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/documentation/">Documents</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/team/">Team</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/community/">Community</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/ambassador-program/">Ambassador program</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/contact-us/">Contact Us</DiscreteExternalLink>
+            {/* <DiscreteExternalLink href="https://www.ixs.finance/roadmap/">Roadmap</DiscreteExternalLink> */}
+            <DiscreteExternalLink href="https://www.ixs.finance/ecosystem/">Ecosystem</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://www.ixs.finance/documentation/">Documents</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://www.ixs.finance/team/">Team</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://www.ixs.finance/community/">Community</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://www.ixs.finance/ambassador-program/">Ambassador program</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://www.ixs.finance/contact-us/">Contact Us</DiscreteExternalLink>
           </div>
 
           <div>
             <header>Explore</header>
 
-            <DiscreteExternalLink href="https://ixswap.io/contact-us/">Blog</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://www.ixs.finance/contact-us/">Blog</DiscreteExternalLink>
             <DiscreteExternalLink href="https://www.ixswap.io/academy/tutorials">Courses</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/contact-us/"> Articles</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://www.ixs.finance/contact-us/"> Articles</DiscreteExternalLink>
             <DiscreteExternalLink href="https://www.ixswap.io/faq/"> Videos</DiscreteExternalLink>
             <DiscreteExternalLink href="https://www.ixswap.io/academy/tutorials"> Glossary</DiscreteExternalLink>
             <DiscreteExternalLink href="https://www.ixswap.io/academy/tutorials">Tutorials</DiscreteExternalLink>

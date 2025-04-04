@@ -4,7 +4,7 @@
 [![Unit Tests](https://github.com/IX-Swap/interface/actions/workflows/unit-tests.yaml/badge.svg)](https://github.com/IX-Swap/interface/actions/workflows/unit-tests.yaml)
 [![Integration Tests](https://github.com/IX-Swap/interface/actions/workflows/integration-tests.yaml/badge.svg)](https://github.com/IX-Swap/interface/actions/workflows/integration-tests.yaml)
 ---------------------------------------------------------------------------------------------------------------------------
-- Website: [ixswap.io](https://ixswap.io)
+- Website: [ixswap.io](https://www.ixs.finance)
 - Interface: [app.ixswap.io](https://app.ixswap.io)
 - Telegram: [ixswapofficial](https://t.me/ixswapofficial)
 - X: [@IxSwap](https://x.com/IxSwap)
