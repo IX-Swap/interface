@@ -61,7 +61,7 @@ export const LiquidityTitle = () => {
           </div>
           <br />
           By accessing and utilizing Liquidity Pools, you acknowledge and accept the inherent risks involved, including
-          market volatility, impermanent loss, regulatory changes and/or smart contract vulnerabilities. {config?.name || 'IX Swap'} makes
+          market volatility, impermanent loss, regulatory changes and/or smart contract vulnerabilities. {config?.name || 'IXS'} makes
           no guarantees of profit and expressly disclaims responsibility for any losses you may suffer due to such
           risks. You acknowledge that your access and use of Liquidity Pools shall be at your own risk, and you should
           conduct independent research and are encouraged to seek professional advice before doing so.

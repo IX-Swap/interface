@@ -310,9 +310,9 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                       style={{ whiteSpace: 'pre-line' }}
                       text={`IXSgov is a tokenized asset representing your staked ${
                         currency?.symbol
-                      } on a 1:1 basis. ${config?.name || 'IX Swap'} distributes the IXSgov to your wallet.
+                      } on a 1:1 basis. ${config?.name || 'IXS'} distributes the IXSgov to your wallet.
                               ${'' ?? ''}
-                              You should swap your IXSgov back to ${currency?.symbol} during the unstaking process. 
+                              You should swap your IXSgov back to ${currency?.symbol} during the unstaking process.
                               ${'' ?? ''}
                               *Do note that ${
                                 currency?.symbol
@@ -339,9 +339,9 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 }
                 tooltipText={`IXSgov is a tokenized asset representing your staked ${
                   currency?.symbol
-                } on a 1:1 basis. ${config?.name || 'IX Swap'} distributes the IXSgov to your wallet.
+                } on a 1:1 basis. ${config?.name || 'IXS'} distributes the IXSgov to your wallet.
                               ${'' ?? ''}
-                              You should swap your IXSgov back to ${currency?.symbol} during the unstaking process. 
+                              You should swap your IXSgov back to ${currency?.symbol} during the unstaking process.
                               ${'' ?? ''}
                               *Do note that ${
                                 currency?.symbol
@@ -389,7 +389,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                   selectedTier?.period
                 }. In this case your APY will be ${selectedTier?.APY}%. If you partially or fully unstake your ${
                   currency?.symbol
-                } before the end date 5% APY will be applied to unstaked amount. 
+                } before the end date 5% APY will be applied to unstaked amount.
                   ${'' ?? ''}
                   Please note your rewards will vest over 10 weeks after unstaking.`}
               />

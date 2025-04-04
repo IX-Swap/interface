@@ -1,4 +1,4 @@
-export enum IssuanceFilter { 
+export enum IssuanceFilter {
   live = 'live',
   pending = 'pending',
   old = 'old'
@@ -36,12 +36,12 @@ export const statuses = [
 ]
 
 export enum SMART_CONTRACT_STRATEGIES {
-  original = 'original', //  IX Swap Originated Primary Offering
+  original = 'original', //  IXS Originated Primary Offering
   nonOriginalWithAccess = 'nonOriginalWithAccess', // Non-IXS Originated Primary Offering with Smart Contract Minting & Whitelisting Access
   nonOriginalWithNoAccess = 'nonOriginalWithNoAccess', // Non-IXS Originated Primary Offering with NO access to Token Smart Contract
 }
 
-export enum PublicDetails { 
+export enum PublicDetails {
   buy = 'buy',
   sell = 'sell',
 }

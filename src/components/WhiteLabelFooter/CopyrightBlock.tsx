@@ -13,7 +13,7 @@ export const CopyrightBlock = () => {
   return (
     <Flex flexDirection="column" mb={120} mt={16}>
       <CopyrightText>
-        <Trans>{`Copyright © IX Swap ${year}`}</Trans>
+        <Trans>{`Copyright © IXS ${year}`}</Trans>
       </CopyrightText>
       <Flex alignItems="center">
         <TermText

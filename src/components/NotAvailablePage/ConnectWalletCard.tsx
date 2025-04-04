@@ -14,7 +14,7 @@ const ConnectWalletCard = () => {
   return (
     <ConnectWalletContainer>
       <Text>
-        <Trans>Welcome to {config?.name || 'IX Swap'}</Trans>
+        <Trans>Welcome to {config?.name || 'IXS'}</Trans>
       </Text>
       <div>
         Please Connect <br /> your Wallet to use <br /> the Application.

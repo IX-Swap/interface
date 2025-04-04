@@ -180,7 +180,7 @@ export const ResendEmailModal = ({ isModalOpen, closeModal, kycType, referralCod
                 style={{ position: 'absolute', left: '55px', top: isMobile ? '94px' : '100px', cursor: 'pointer' }}
                 onClick={handleBackClick}
               />
-              <IXSTitle>Welcome to {config?.name || 'IX Swap'}</IXSTitle>
+              <IXSTitle>Welcome to {config?.name || 'IXS'}</IXSTitle>
             </FlexContainer>
           )}
 
