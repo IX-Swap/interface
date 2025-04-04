@@ -59,7 +59,7 @@ export const Footer: React.FC<Props> = (props) => {
       <SubscriptionFormContainer>
         <SubscriptionFormTitle>Subscribe for {props.offerId ? "the Deal's" : ''} Updates</SubscriptionFormTitle>
 
-        <SubscriptionFormSubtitle>Get the latest IX Swap news, all spam-free.</SubscriptionFormSubtitle>
+        <SubscriptionFormSubtitle>Get the latest IXS news, all spam-free.</SubscriptionFormSubtitle>
 
         <Formik initialValues={initialValues} validationSchema={schema} onSubmit={submit}>
           {({ errors, setFieldValue, submitForm }) => (
@@ -109,17 +109,17 @@ export const Footer: React.FC<Props> = (props) => {
         <About>
           <div className="header">
             <Box width={100}>
-              <img src={Logo} alt="IX Swap" style={{ width: '100%', height: 'auto' }} />
+              <img src={Logo} alt="IXS" style={{ width: '100%', height: 'auto' }} />
             </Box>
           </div>
 
           <main>
-            IX Swap is built by a global team of capital markets, legal and blockchain experts, bringing you the next
+            IXS is built by a global team of capital markets, legal and blockchain experts, bringing you the next
             generation of trading for Security tokens and tokenized stocks
           </main>
         </About>
         <Copyright>
-          Copyright © IX Swap 2024
+          Copyright © IXS 2024
           <br />
           <div>
             <DiscreteExternalLink
@@ -136,7 +136,7 @@ export const Footer: React.FC<Props> = (props) => {
         <Links>
           <div>
             <header style={{ marginTop: '0px' }}>Products</header>
-            <DiscreteExternalLink href="https://ixswap.io/blog/">What is IX Swap?</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://ixswap.io/blog/">What is IXS?</DiscreteExternalLink>
             <DiscreteExternalLink href="https://ixswap.io/community/">IXS Token</DiscreteExternalLink>
             <DiscreteExternalLink href="https://ixswap.io/blog/">IXS Launchpad </DiscreteExternalLink>
             <DiscreteExternalLink href="https://ixswap.io/community/">Exchange</DiscreteExternalLink>

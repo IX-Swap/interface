@@ -93,14 +93,14 @@ export default function Faucet() {
         <StyledPageHeader>
           <RowFixed>
             <TYPE.black fontWeight={600} fontSize={22} style={{ marginRight: '8px' }}>
-              <Trans>Get {config?.name || 'IX Swap'} Playground Test Tokens</Trans>
+              <Trans>Get {config?.name || 'IXS'} Playground Test Tokens</Trans>
             </TYPE.black>
           </RowFixed>
         </StyledPageHeader>
         <WarningCard
           style={{ padding: '15px 10px', marginBottom: '10px' }}
           message={`These tokens are fake, they were made only for testing ${
-            config?.name || 'IX Swap'
+            config?.name || 'IXS'
           } Playground on Kovan`}
         />
         <TYPE.body3>

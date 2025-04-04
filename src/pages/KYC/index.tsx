@@ -328,7 +328,7 @@ const KYC = () => {
               alignItems="center"
             >
               <TYPE.description6 fontWeight={'800'} marginTop={'30px'} marginBottom="15px">
-                <Trans>{config?.name || 'IX Swap'} KYC</Trans>
+                <Trans>{config?.name || 'IXS'} KYC</Trans>
               </TYPE.description6>
               <KYCStatus status={kyc?.status || KYCStatuses.NOT_SUBMITTED} />
               {referralCode && (

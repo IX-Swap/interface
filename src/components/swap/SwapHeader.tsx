@@ -59,7 +59,7 @@ export default function SwapHeader() {
           </div>
           By accessing and utilizing Swap/Trade, you acknowledge and accept the inherent risks involved, including
           market volatility, impermanent loss, regulatory changes and/or smart contract vulnerabilities.{' '}
-          {config?.name || 'IX Swap'} makes no guarantees of profit and expressly disclaims responsibility for any
+          {config?.name || 'IXS'} makes no guarantees of profit and expressly disclaims responsibility for any
           losses you may suffer due to such risks. You acknowledge that your access and use of Swap/Trade shall be at
           your own risk, and you should conduct independent research and are encouraged to seek professional advice
           before doing so.

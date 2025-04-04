@@ -87,7 +87,7 @@ export const InvestorDeclaration = ({ data }: Props) => {
           <Checkbox label={''} disabled checked={data.confirmStatusDeclaration} />
 
           <TYPE.description3>
-            I understand and acknowledge that any offer made to me via {config?.name || 'IX Swap'} is an exempt offer of securities in
+            I understand and acknowledge that any offer made to me via {config?.name || 'IXS'} is an exempt offer of securities in
             accordance with Section 275 of the Securities and Futures Act 2001 of Singapore and is not accompanied by a
             prospectus that is reviewed or vetted by the Monetary Authority of Singapore. I am interested in receiving and
             participating in such offers.
