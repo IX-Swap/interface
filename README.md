@@ -8,8 +8,8 @@
 - Interface: [app.ixswap.io](https://app.ixswap.io)
 - Telegram: [ixswapofficial](https://t.me/ixswapofficial)
 - X: [@IxSwap](https://x.com/IxSwap)
-- Linkedin: [IX Swap](https://www.linkedin.com/company/ixswap)
-- Mediun: [IX Swap](https://ixswap.medium.com/)
+- Linkedin: [IXS](https://www.linkedin.com/company/ixswap)
+- Mediun: [IXS](https://ixswap.medium.com/)
 
 # Development
 Environment: Machine on Linux or MacOS
