@@ -191,7 +191,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
             <ExternalListItem
               disabled={!isApproved}
               target="_self"
-              href={'https://ixswap.io/fractionalized-nfts-coming-soon-on-ix-swap/'}
+              href={'https://www.ixs.finance/fractionalized-nfts-coming-soon-on-ix-swap/'}
             >
               <Trans>FNFT</Trans>
             </ExternalListItem>
@@ -329,17 +329,17 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
         </MenuList>
       </Container>
       <StyledFooter>
-        <span>Copyright © IX Swap 2024</span>
+        <span>Copyright © IXS 2024</span>
         <div>
           <a
-            href={config?.termsAndConditionsUrl || 'https://ixswap.io/terms-and-conditions/'}
+            href={config?.termsAndConditionsUrl || 'https://www.ixs.finance/terms-and-conditions/'}
             target="_blank"
             rel="noreferrer"
           >
             Terms & Conditions
           </a>
 
-          <a href={config?.privacyPolicyUrl || 'https://ixswap.io/privacy-policy/'} target="_blank" rel="noreferrer">
+          <a href={config?.privacyPolicyUrl || 'https://www.ixs.finance/privacy-policy/'} target="_blank" rel="noreferrer">
             Privacy Policy
           </a>
         </div>
