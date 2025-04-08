@@ -163,12 +163,12 @@ export const Footer: React.FC<Props> = (props) => {
             <header>Explore</header>
 
             <DiscreteExternalLink href="https://www.ixs.finance/contact-us/">Blog</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://www.ixswap.io/academy/tutorials">Courses</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://www.ixs.finance/academy/tutorials">Courses</DiscreteExternalLink>
             <DiscreteExternalLink href="https://www.ixs.finance/contact-us/"> Articles</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://www.ixswap.io/faq/"> Videos</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://www.ixswap.io/academy/tutorials"> Glossary</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://www.ixswap.io/academy/tutorials">Tutorials</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://www.ixswap.io/faq/">FAQ</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://www.ixs.finance/faq/"> Videos</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://www.ixs.finance/academy/tutorials"> Glossary</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://www.ixs.finance/academy/tutorials">Tutorials</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://www.ixs.finance/faq/">FAQ</DiscreteExternalLink>
           </div>
         </Links>
       </FooterInfoContainer>

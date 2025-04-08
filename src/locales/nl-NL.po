@@ -176,8 +176,8 @@ msgid "Allow high price impact trades and skip the confirm screen. Use at your o
 msgstr "Hoog prijsimpact transacties toestaan en het bevestigingsscherm overslaan. Gebruik op eigen risico."
 
 #: src/components/Header/URLWarning.tsx
-msgid "Always make sure the URL is<0>app.ixswap.io</0> - bookmark it to be safe."
-msgstr "Zorg er altijd voor dat de URL <0>app.ixswap.io</0> is - maak er voor de zekerheid een bladwijzer voor."
+msgid "Always make sure the URL is<0>app.ixs.finance</0> - bookmark it to be safe."
+msgstr "Zorg er altijd voor dat de URL <0>app.ixs.finance</0> is - maak er voor de zekerheid een bladwijzer voor."
 
 #: src/components/AdminTransactionsTable/index.tsx
 #: src/components/Vault/HistoryTable.tsx
@@ -356,7 +356,7 @@ msgstr "Door deze lijst toe te voegen, vertrouwt u er impliciet op dat de gegeve
 msgid "By connecting a wallet, you agree to IXSwap’s <0>Terms and Conditions</0> and acknowledge that you have read and understood the <1>IXSwap Privacy Policy</1>."
 msgstr ""
 
-#: 
+#:
 
 
 #: src/components/Vault/enum.ts
@@ -403,7 +403,7 @@ msgstr "Claim"
 msgid "Claim IXS"
 msgstr "Claim IXS"
 
-#: 
+#:
 
 #: src/state/stake/hooks.ts
 msgid "Claim rewards {formattedAmount}"
@@ -421,7 +421,7 @@ msgstr ""
 msgid "Claimed"
 msgstr ""
 
-#: 
+#:
 
 #: src/pages/Farming/Staking/UnstakedTable.tsx
 msgid "Claimed rewards"
@@ -432,7 +432,7 @@ msgstr ""
 msgid "Claimed {0} {1}"
 msgstr ""
 
-#: 
+#:
 
 #: src/components/AccountDetails/index.tsx
 #: src/components/SearchModal/ManageTokens.tsx
@@ -843,7 +843,7 @@ msgstr ""
 msgid "Get Test Tokens"
 msgstr ""
 
-#: 
+#:
 
 #: src/pages/Farming/Staking/NoIXSTokens.tsx
 msgid "Go to Telegram"
@@ -886,7 +886,7 @@ msgstr ""
 msgid "IXS Farms"
 msgstr ""
 
-#: 
+#:
 
 
 
@@ -900,7 +900,7 @@ msgstr "IXS {0}/{1} verbrand"
 msgid "IXSGov to return"
 msgstr ""
 
-#: 
+#:
 
 
 
@@ -1105,8 +1105,8 @@ msgid "MAX"
 msgstr "MAX"
 
 #: src/components/Header/URLWarning.tsx
-msgid "Make sure the URL is<0>app.ixswap.io</0>"
-msgstr "Zorg ervoor dat de URL <0>app.ixswap.io</0> is"
+msgid "Make sure the URL is<0>app.ixs.finance</0>"
+msgstr "Zorg ervoor dat de URL <0>app.ixs.finance</0> is"
 
 
 #: src/components/SearchModal/CurrencySearch.tsx
@@ -1400,10 +1400,10 @@ msgstr "Gepoold {0}"
 msgid "Price"
 msgstr "Prijs"
 
-#: 
+#:
 
 
-#: 
+#:
 
 #: src/components/swap/AcceptChanges.tsx
 #: src/components/swap/SwapModalHeader.tsx
@@ -1680,9 +1680,9 @@ msgstr ""
 msgid "Stake"
 msgstr ""
 
-#: 
-#: 
-#: 
+#:
+#:
+#:
 
 #: src/state/stake/hooks.ts
 #: src/state/stake/hooks.ts
@@ -1882,7 +1882,7 @@ msgstr "Naar (ten minste)"
 msgid "To buy {0} click on swap below or find us on our Telegram channel to learn more."
 msgstr ""
 
-#: 
+#:
 
 #: src/components/Vault/WithdrawRequestForm.tsx
 msgid "To my {networkName} wallet"
@@ -1964,7 +1964,7 @@ msgstr "Zet Expert modus aan"
 msgid "Type"
 msgstr ""
 
-#: 
+#:
 
 
 #: src/hooks/useSwapCallback.ts
@@ -2053,7 +2053,7 @@ msgstr ""
 msgid "View list"
 msgstr "Lijst bekijken"
 
-#: 
+#:
 
 #: src/components/AccountDetails/index.tsx
 msgid "View on Explorer"
@@ -2126,7 +2126,7 @@ msgid "Withdraw"
 msgstr "Intrekken"
 
 
-#: 
+#:
 
 #: src/components/Vault/WithdrawPopup.tsx
 msgid "Withdraw from Custodian"

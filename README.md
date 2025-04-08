@@ -4,8 +4,8 @@
 [![Unit Tests](https://github.com/IX-Swap/interface/actions/workflows/unit-tests.yaml/badge.svg)](https://github.com/IX-Swap/interface/actions/workflows/unit-tests.yaml)
 [![Integration Tests](https://github.com/IX-Swap/interface/actions/workflows/integration-tests.yaml/badge.svg)](https://github.com/IX-Swap/interface/actions/workflows/integration-tests.yaml)
 ---------------------------------------------------------------------------------------------------------------------------
-- Website: [ixswap.io](https://www.ixs.finance)
-- Interface: [app.ixswap.io](https://app.ixswap.io)
+- Website: [ixs.finance](https://www.ixs.finance)
+- Interface: [app.ixs.finance](https://app.ixs.finance)
 - Telegram: [ixswapofficial](https://t.me/ixswapofficial)
 - X: [@IxSwap](https://x.com/IxSwap)
 - Linkedin: [IXS](https://www.linkedin.com/company/ixswap)
@@ -27,9 +27,9 @@ Steps:
 
 The IXswap App supports swapping, adding liquidity, removing liquidity.
 
-- Swap on IXswap: https://app.ixswap.io/swap
-- View IXswap liquidity: https://app.ixswap.io/pool
-- Add Liquidity: https://app.ixswap.io/add
+- Swap on IXswap: https://app.ixs.finance/swap
+- View IXswap liquidity: https://app.ixs.finance/pool
+- Add Liquidity: https://app.ixs.finance/add
 
 ## *(FIRST DEPLOY)*  Provision your infrastructure using `terraform`
 ```bash
