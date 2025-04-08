@@ -66,7 +66,7 @@ export const NewIssuanceForm = () => {
     },
     [history]
   )
-  const supportEmail = config?.supportEmail || 'c@ixs.finance'
+  const supportEmail = config?.supportEmail || 'c@ixswap.io'
 
   React.useEffect(() => {
     issuance.load(Number(issuanceId))
