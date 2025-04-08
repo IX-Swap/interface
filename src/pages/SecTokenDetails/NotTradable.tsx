@@ -19,7 +19,7 @@ export const NotTradable = ({ ticker }: Props) => {
         <TYPE.title6>Not tradable yet</TYPE.title6>
         <Box textAlign="center">
           <Trans>{`${ticker} token is not ready to be traded on ${
-            config?.name || 'IXS'
+            config?.name || 'IX Swap'
           } yet. Please check later.`}</Trans>
         </Box>
       </NotTradableContainer>

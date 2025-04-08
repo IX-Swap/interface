@@ -3,8 +3,8 @@ import { SMART_CONTRACT_STRATEGIES } from "components/LaunchpadIssuance/types";
 export const strategyOptions = [
     {
       option: SMART_CONTRACT_STRATEGIES.original,
-      text: "IXS Originated \n Primary Offering",
-      tooltipContent: "The smart contract was created by IXS and grants complete accessibility to the smart contract."
+      text: "IX Swap Originated \n Primary Offering",
+      tooltipContent: "The smart contract was created by IX Swap and grants complete accessibility to the smart contract."
     },
     {
       option: SMART_CONTRACT_STRATEGIES.nonOriginalWithAccess,
