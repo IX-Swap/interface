@@ -13,11 +13,11 @@ export const CopyrightBlock = () => {
   return (
     <Flex flexDirection="column" mb={120} mt={16}>
       <CopyrightText>
-        <Trans>{`Copyright © IXS ${year}`}</Trans>
+        <Trans>{`Copyright © IX Swap ${year}`}</Trans>
       </CopyrightText>
       <Flex alignItems="center">
         <TermText
-          href={config?.footerConfig?.termsLink || 'https://www.ixs.finance/terms-and-conditions/'}
+          href={config?.footerConfig?.termsLink || 'https://ixswap.io/terms-and-conditions/'}
           target="_blank"
           rel="noreferrer"
         >
@@ -25,7 +25,7 @@ export const CopyrightBlock = () => {
         </TermText>
         <Dot />
         <TermText
-          href={config?.footerConfig?.policyLink || 'https://www.ixs.finance/privacy-policy/'}
+          href={config?.footerConfig?.policyLink || 'https://ixswap.io/privacy-policy/'}
           target="_blank"
           rel="noreferrer"
         >

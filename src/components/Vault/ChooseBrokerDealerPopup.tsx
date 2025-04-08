@@ -51,7 +51,7 @@ const KycRow = styled.div`
   ${({ theme }) => theme.mediaWidth.upToSmall`
     overflow: scroll;
     -ms-overflow-style: none;
-    scrollbar-width: none;
+    scrollbar-width: none;  
     ::-webkit-scrollbar {
       display: none;
     }
@@ -126,7 +126,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
       case KYCStatuses.NOT_SUBMITTED:
         return `KYC: NOT_SUBMITTED`
       default:
-        return `Pass KYC on ${config?.name || 'IXS'}`
+        return `Pass KYC on ${config?.name || 'IX Swap'}`
     }
   }
 
@@ -162,7 +162,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
       <RowBetween onClick={() => onChange(KycSource.IXSwap)}>
         <div style={{ display: 'flex' }}>
           <TYPE.body1 style={{ marginRight: '5px', fontSize: isMobile ? '14px' : '16px' }} minWidth="auto">
-            My {config?.name || 'IXS'} KYC
+            My {config?.name || 'IX Swap'} KYC
           </TYPE.body1>
           <KycSourceTooltip text="Recommended" />
         </div>
@@ -185,7 +185,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
         </div>
 
         {kyc?.status !== KYCStatuses.APPROVED && (
-          <KycSourceTooltip text={`Pass KYC on ${config?.name || 'IXS'} to enable this option`}>
+          <KycSourceTooltip text={`Pass KYC on ${config?.name || 'IX Swap'} to enable this option`}>
             <IconWrapper size={16} style={{ marginLeft: 'auto', marginRight: 0 }}>
               <CheckmarkPlaceholder />
             </IconWrapper>
@@ -197,7 +197,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
             {selected === KycSource.IXSwap ? <CheckmarkPlaceholder /> : <CheckmarkPlaceholderEmpty />}
           </IconWrapper>
         ) : (
-          <KycSourceTooltip text={`Pass KYC on ${config?.name || 'IXS'} to enable this option`}>
+          <KycSourceTooltip text={`Pass KYC on ${config?.name || 'IX Swap'} to enable this option`}>
             <IconWrapper size={16} style={{ marginLeft: 'auto', marginRight: 0 }}>
               {selected === KycSource.IXSwap ? <CheckmarkPlaceholder /> : <CheckmarkPlaceholderEmpty />}
             </IconWrapper>
@@ -302,7 +302,7 @@ export const ChooseBrokerDealerPopup = ({
                 <div style={{ marginTop: '18px' }}>
                   <TYPE.title10>1. Choose source of KYC for accreditation</TYPE.title10>
                   <TYPE.description2 fontWeight={400}>
-                    <Trans>{`We recommend choosing IXS KYC. Pass it once and use for all future accreditations quick and easy.`}</Trans>
+                    <Trans>{`We recommend choosing IX Swap KYC. Pass it once and use for all future accreditations quick and easy.`}</Trans>
                   </TYPE.description2>
                 </div>
                 <Line style={{ marginTop: '10px' }} />

@@ -31,7 +31,7 @@ export const StakingTiers = () => {
           <TYPE.title5 color={'text2'}>
             <Trans>
               Staking will be opened soon. Wait for the official announcement on{' '}
-              <a style={{ color: '#EDCEFF' }} href="https://www.ixs.finance/community/" target="blank">
+              <a style={{ color: '#EDCEFF' }} href="https://ixswap.io/community/" target="blank">
                 our channels
               </a>
               .

@@ -586,7 +586,7 @@ export const InformationForm = (props: Props) => {
               }}
               disabled={edit}
               label={`I understand and agree that once I submit this form and it is approved, ${
-                config?.name || 'IXS'
+                config?.name || 'IX Swap'
               } will mint and deposit the tokens into a smart contract based on the information provided.`}
             />
             {touched.tokenomicsAgreement && errors.tokenomicsAgreement && (

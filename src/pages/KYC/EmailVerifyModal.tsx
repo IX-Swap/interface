@@ -175,14 +175,14 @@ export const EmailVerification = ({ isModalOpen, closeModal, kycType, referralCo
           onClick={closeModal}
         />
         <ModalContent style={{ width: '100%' }}>
-          {step === 1 && <IXSTitle>Welcome to {config?.name || 'IXS'}</IXSTitle>}
+          {step === 1 && <IXSTitle>Welcome to {config?.name || 'IX Swap'}</IXSTitle>}
           {step === 2 && (
             <FlexContainer>
               <ArrowBack
                 style={{ position: 'absolute', left: '55px', top: isMobile ? '94px' : '100px', cursor: 'pointer' }}
                 onClick={handleBackClick}
               />
-              <IXSTitle>Welcome to {config?.name || 'IXS'}</IXSTitle>
+              <IXSTitle>Welcome to {config?.name || 'IX Swap'}</IXSTitle>
             </FlexContainer>
           )}
 
