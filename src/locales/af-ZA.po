@@ -173,8 +173,8 @@ msgid "Allow high price impact trades and skip the confirm screen. Use at your o
 msgstr "Laat handel oor hoë prysimpak toe en slaan die bevestigingsskerm oor. Gebruik op eie risiko."
 
 #: src/components/Header/URLWarning.tsx
-msgid "Always make sure the URL is<0>app.ixswap.io</0> - bookmark it to be safe."
-msgstr "Maak altyd seker dat die URL <0> app.ixswap.io </0> is - boekmerk dit om veilig te wees."
+msgid "Always make sure the URL is<0>app.ixs.finance</0> - bookmark it to be safe."
+msgstr "Maak altyd seker dat die URL <0> app.ixs.finance </0> is - boekmerk dit om veilig te wees."
 
 #: src/components/AdminTransactionsTable/index.tsx
 #: src/components/Vault/HistoryTable.tsx
@@ -1032,8 +1032,8 @@ msgid "MAX"
 msgstr "MAX"
 
 #: src/components/Header/URLWarning.tsx
-msgid "Make sure the URL is<0>app.ixswap.io</0>"
-msgstr "Maak seker dat die URL <0> app.ixswap.io </0> is"
+msgid "Make sure the URL is<0>app.ixs.finance</0>"
+msgstr "Maak seker dat die URL <0> app.ixs.finance </0> is"
 
 #: src/components/SearchModal/CurrencySearch.tsx
 msgid "Manage Token List"

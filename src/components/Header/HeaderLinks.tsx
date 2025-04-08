@@ -24,6 +24,7 @@ const activeClassName = 'ACTIVE'
 
 const HeaderPopover = () => {
   const { config } = useWhitelabelState()
+  const stakingUrl = process.env.REACT_APP_STAKING_URL || ''
 
   const isAllowed = useCallback(
     (path: string): boolean => {
@@ -42,7 +43,7 @@ const HeaderPopover = () => {
       onMouseDown={(e: any) => (e ? e.stopPropagation() : null)}
     >
       <Column style={{ gap: 3 }}>
-        <SubMenuExternalLink style={{ fontSize: '13px' }} href={`https://staking.ixswap.io/`}>
+        <SubMenuExternalLink style={{ fontSize: '13px' }} href={stakingUrl || ``}>
           <Trans>Staking on Base</Trans>
         </SubMenuExternalLink>
       </Column>
@@ -93,7 +94,7 @@ export const HeaderLinks = () => {
     {
       condition: isAllowed('charts') && isWhitelisted,
       component: (
-        <MenuExternalLink key="charts" target="_self" href={config?.chartsUrl || 'https://info.ixswap.io/home'}>
+        <MenuExternalLink key="charts" target="_self" href={config?.chartsUrl || 'https://info.ixs.finance/home'}>
           <Trans>Charts</Trans>
         </MenuExternalLink>
       ),

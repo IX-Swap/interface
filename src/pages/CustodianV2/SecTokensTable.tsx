@@ -116,7 +116,7 @@ const Body: FC<BodyProps> = ({ tokens }: BodyProps) => {
               <MouseoverTooltip
                 style={{ padding: 8 }}
                 placement="top"
-                text={`${token?.token ? 'Ready' : 'Not ready'} for trading on ${config?.name || 'IX Swap'}`}
+                text={`${token?.token ? 'Ready' : 'Not ready'} for trading on ${config?.name || 'IXS'}`}
               >
                 {token.token ? (
                   <TYPE.small color="#6666FF">Trade Now</TYPE.small>

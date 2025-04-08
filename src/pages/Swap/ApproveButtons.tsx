@@ -82,7 +82,7 @@ export const ApproveButtons = ({
               ) : (
                 <span style={{ textAlign: 'center' }} color="#ffffff">
                   <Trans>
-                    Allow {config?.name || 'IX Swap'} to use your {currencies[Field.INPUT]?.symbol}
+                    Allow {config?.name || 'IXS'} to use your {currencies[Field.INPUT]?.symbol}
                   </Trans>
                 </span>
               )}

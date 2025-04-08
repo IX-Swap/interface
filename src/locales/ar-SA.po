@@ -175,7 +175,7 @@ msgid "Allow high price impact trades and skip the confirm screen. Use at your o
 msgstr "السماح بتداول تأثير الأسعار المرتفعة وتخطي شاشة التأكيد. استخدم على مسؤوليتك الخاصة."
 
 #: src/components/Header/URLWarning.tsx
-msgid "Always make sure the URL is<0>app.ixswap.io</0> - bookmark it to be safe."
+msgid "Always make sure the URL is<0>app.ixs.finance</0> - bookmark it to be safe."
 msgstr ""
 
 #: src/components/AdminTransactionsTable/index.tsx
@@ -355,7 +355,7 @@ msgstr "بإضافة هذه القائمة فإنك تثق ضمناً بأن ا�
 msgid "By connecting a wallet, you agree to IXSwap’s <0>Terms and Conditions</0> and acknowledge that you have read and understood the <1>IXSwap Privacy Policy</1>."
 msgstr ""
 
-#: 
+#:
 
 
 #: src/components/Vault/enum.ts
@@ -402,7 +402,7 @@ msgstr "Claim"
 msgid "Claim IXS"
 msgstr "Claim IXS"
 
-#: 
+#:
 
 #: src/state/stake/hooks.ts
 msgid "Claim rewards {formattedAmount}"
@@ -420,7 +420,7 @@ msgstr ""
 msgid "Claimed"
 msgstr ""
 
-#: 
+#:
 
 #: src/pages/Farming/Staking/UnstakedTable.tsx
 msgid "Claimed rewards"
@@ -431,7 +431,7 @@ msgstr ""
 msgid "Claimed {0} {1}"
 msgstr ""
 
-#: 
+#:
 
 #: src/components/AccountDetails/index.tsx
 #: src/components/SearchModal/ManageTokens.tsx
@@ -842,7 +842,7 @@ msgstr ""
 msgid "Get Test Tokens"
 msgstr ""
 
-#: 
+#:
 
 #: src/pages/Farming/Staking/NoIXSTokens.tsx
 msgid "Go to Telegram"
@@ -885,7 +885,7 @@ msgstr ""
 msgid "IXS Farms"
 msgstr ""
 
-#: 
+#:
 
 
 
@@ -899,7 +899,7 @@ msgstr "IXS {0}/{1} محروق"
 msgid "IXSGov to return"
 msgstr ""
 
-#: 
+#:
 
 
 
@@ -1104,7 +1104,7 @@ msgid "MAX"
 msgstr "الأعلى"
 
 #: src/components/Header/URLWarning.tsx
-msgid "Make sure the URL is<0>app.ixswap.io</0>"
+msgid "Make sure the URL is<0>app.ixs.finance</0>"
 msgstr ""
 
 
@@ -1399,10 +1399,10 @@ msgstr "الاطراف {0}"
 msgid "Price"
 msgstr "السعر"
 
-#: 
+#:
 
 
-#: 
+#:
 
 #: src/components/swap/AcceptChanges.tsx
 #: src/components/swap/SwapModalHeader.tsx
@@ -1679,9 +1679,9 @@ msgstr ""
 msgid "Stake"
 msgstr ""
 
-#: 
-#: 
-#: 
+#:
+#:
+#:
 
 #: src/state/stake/hooks.ts
 #: src/state/stake/hooks.ts
@@ -1881,7 +1881,7 @@ msgstr "إلى (على الأقل)"
 msgid "To buy {0} click on swap below or find us on our Telegram channel to learn more."
 msgstr ""
 
-#: 
+#:
 
 #: src/components/Vault/WithdrawRequestForm.tsx
 msgid "To my {networkName} wallet"
@@ -1963,7 +1963,7 @@ msgstr "تشغيل وضع الخبير"
 msgid "Type"
 msgstr ""
 
-#: 
+#:
 
 
 #: src/hooks/useSwapCallback.ts
@@ -2052,7 +2052,7 @@ msgstr ""
 msgid "View list"
 msgstr "عرض القائمة"
 
-#: 
+#:
 
 #: src/components/AccountDetails/index.tsx
 msgid "View on Explorer"
@@ -2125,7 +2125,7 @@ msgid "Withdraw"
 msgstr "سحب"
 
 
-#: 
+#:
 
 #: src/components/Vault/WithdrawPopup.tsx
 msgid "Withdraw from Custodian"

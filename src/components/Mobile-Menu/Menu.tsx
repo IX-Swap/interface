@@ -33,6 +33,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
 
   const isIxSwap = config?.isIxSwap ?? false
   const bridgeUrl = process.env.REACT_APP_BRIDGE_URL || ''
+  const stakingUrl = process.env.REACT_APP_STAKING_URL || ''
 
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -129,7 +130,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
         <MenuList style={!cookies.annoucementsSeen ? { marginTop: 130 } : {}}>
           {isIxSwap && isAllowed('charts') && isWhitelisted ? (
             <>
-              <ExternalListItem target="_self" href={'https://info.ixswap.io/home'}>
+              <ExternalListItem target="_self" href={'https://info.ixs.finance/home'}>
                 <Trans>Charts</Trans>
               </ExternalListItem>
 
@@ -191,7 +192,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
             <ExternalListItem
               disabled={!isApproved}
               target="_self"
-              href={'https://ixswap.io/fractionalized-nfts-coming-soon-on-ix-swap/'}
+              href={'https://www.ixs.finance/fractionalized-nfts-coming-soon-on-ix-swap/'}
             >
               <Trans>FNFT</Trans>
             </ExternalListItem>
@@ -260,7 +261,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
                     <MenuItem onClick={handleClose}>
                       <ExternalListItem
                         style={{ fontSize: '15px', margin: '0px', height: '10px', fontWeight: '400' }}
-                        href={`https://staking.ixswap.io/`}
+                        href={stakingUrl || ``}
                       >
                         <Trans>Staking on Base</Trans>
                       </ExternalListItem>
@@ -288,7 +289,7 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
                 <MenuItem onClick={handleClose}>
                   <ExternalListItem
                     style={{ fontSize: '15px', margin: '0px', height: '10px', fontWeight: '500' }}
-                    href={`https://staking.ixswap.io/`}
+                    href={`https://staking.ixs.finance/`}
                   >
                     <Trans>Liquidity Mining Program (Quickswap)</Trans>
                   </ExternalListItem>
@@ -329,17 +330,17 @@ export const Menu = ({ close, isAdminMenu }: Props) => {
         </MenuList>
       </Container>
       <StyledFooter>
-        <span>Copyright © IX Swap 2024</span>
+        <span>Copyright © IXS 2024</span>
         <div>
           <a
-            href={config?.termsAndConditionsUrl || 'https://ixswap.io/terms-and-conditions/'}
+            href={config?.termsAndConditionsUrl || 'https://www.ixs.finance/terms-and-conditions/'}
             target="_blank"
             rel="noreferrer"
           >
             Terms & Conditions
           </a>
 
-          <a href={config?.privacyPolicyUrl || 'https://ixswap.io/privacy-policy/'} target="_blank" rel="noreferrer">
+          <a href={config?.privacyPolicyUrl || 'https://www.ixs.finance/privacy-policy/'} target="_blank" rel="noreferrer">
             Privacy Policy
           </a>
         </div>

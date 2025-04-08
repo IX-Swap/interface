@@ -51,7 +51,7 @@ export default function PlaygroundModal() {
           <ModalTop>
             <RowBetween>
               <TYPE.title5>
-                <Trans>Welcome to the {config?.name || 'IX Swap'} Playground</Trans>
+                <Trans>Welcome to the {config?.name || 'IXS'} Playground</Trans>
               </TYPE.title5>
               <CloseIcon onClick={onClose} />
             </RowBetween>
