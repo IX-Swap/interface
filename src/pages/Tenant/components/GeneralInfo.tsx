@@ -101,7 +101,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ formik }) => {
                 onBlur={formik.handleBlur}
               />
             }
-            label="IX Swap Tenant"
+            label="IXS Tenant"
           />
         </div>
       </FormWrapper>

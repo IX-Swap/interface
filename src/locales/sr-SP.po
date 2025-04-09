@@ -176,8 +176,8 @@ msgid "Allow high price impact trades and skip the confirm screen. Use at your o
 msgstr "Омогућите трговање са утицајем високе цене и прескочите екран за потврду. Користите на властиту одговорност."
 
 #: src/components/Header/URLWarning.tsx
-msgid "Always make sure the URL is<0>app.ixswap.io</0> - bookmark it to be safe."
-msgstr "Увек се уверите да је URL <0>app.ixswap.io</0> - означите га да би био безбедан."
+msgid "Always make sure the URL is<0>app.ixs.finance</0> - bookmark it to be safe."
+msgstr "Увек се уверите да је URL <0>app.ixs.finance</0> - означите га да би био безбедан."
 
 #: src/components/AdminTransactionsTable/index.tsx
 #: src/components/Vault/HistoryTable.tsx
@@ -356,7 +356,7 @@ msgstr "Додавањем ове листе имплицитно верујет
 msgid "By connecting a wallet, you agree to IXSwap’s <0>Terms and Conditions</0> and acknowledge that you have read and understood the <1>IXSwap Privacy Policy</1>."
 msgstr ""
 
-#: 
+#:
 
 
 #: src/components/Vault/enum.ts
@@ -403,7 +403,7 @@ msgstr "Потраживање"
 msgid "Claim IXS"
 msgstr "Преузми УНИ"
 
-#: 
+#:
 
 #: src/state/stake/hooks.ts
 msgid "Claim rewards {formattedAmount}"
@@ -421,7 +421,7 @@ msgstr ""
 msgid "Claimed"
 msgstr ""
 
-#: 
+#:
 
 #: src/pages/Farming/Staking/UnstakedTable.tsx
 msgid "Claimed rewards"
@@ -432,7 +432,7 @@ msgstr ""
 msgid "Claimed {0} {1}"
 msgstr ""
 
-#: 
+#:
 
 #: src/components/AccountDetails/index.tsx
 #: src/components/SearchModal/ManageTokens.tsx
@@ -843,7 +843,7 @@ msgstr ""
 msgid "Get Test Tokens"
 msgstr ""
 
-#: 
+#:
 
 #: src/pages/Farming/Staking/NoIXSTokens.tsx
 msgid "Go to Telegram"
@@ -886,7 +886,7 @@ msgstr ""
 msgid "IXS Farms"
 msgstr ""
 
-#: 
+#:
 
 
 
@@ -900,7 +900,7 @@ msgstr "УНИ {0}/{1} Бурнед"
 msgid "IXSGov to return"
 msgstr ""
 
-#: 
+#:
 
 
 
@@ -1105,8 +1105,8 @@ msgid "MAX"
 msgstr "МАКС"
 
 #: src/components/Header/URLWarning.tsx
-msgid "Make sure the URL is<0>app.ixswap.io</0>"
-msgstr "Уверите се да је URL <0>app.ixswap.io</0>"
+msgid "Make sure the URL is<0>app.ixs.finance</0>"
+msgstr "Уверите се да је URL <0>app.ixs.finance</0>"
 
 
 #: src/components/SearchModal/CurrencySearch.tsx
@@ -1400,10 +1400,10 @@ msgstr "Скупљено {0}"
 msgid "Price"
 msgstr "Цена"
 
-#: 
+#:
 
 
-#: 
+#:
 
 #: src/components/swap/AcceptChanges.tsx
 #: src/components/swap/SwapModalHeader.tsx
@@ -1680,9 +1680,9 @@ msgstr ""
 msgid "Stake"
 msgstr ""
 
-#: 
-#: 
-#: 
+#:
+#:
+#:
 
 #: src/state/stake/hooks.ts
 #: src/state/stake/hooks.ts
@@ -1882,7 +1882,7 @@ msgstr "До (најмање)"
 msgid "To buy {0} click on swap below or find us on our Telegram channel to learn more."
 msgstr ""
 
-#: 
+#:
 
 #: src/components/Vault/WithdrawRequestForm.tsx
 msgid "To my {networkName} wallet"
@@ -1964,7 +1964,7 @@ msgstr "Укључите експертни режим"
 msgid "Type"
 msgstr ""
 
-#: 
+#:
 
 
 #: src/hooks/useSwapCallback.ts
@@ -2053,7 +2053,7 @@ msgstr ""
 msgid "View list"
 msgstr "Погледајте листу"
 
-#: 
+#:
 
 #: src/components/AccountDetails/index.tsx
 msgid "View on Explorer"
@@ -2126,7 +2126,7 @@ msgid "Withdraw"
 msgstr "Повуците"
 
 
-#: 
+#:
 
 #: src/components/Vault/WithdrawPopup.tsx
 msgid "Withdraw from Custodian"

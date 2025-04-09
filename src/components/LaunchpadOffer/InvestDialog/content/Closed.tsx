@@ -5,10 +5,9 @@ import { CheckCircle, Clock, Info } from 'react-feather'
 import _get from 'lodash/get'
 import dayjs from 'dayjs'
 import { CurrencyAmount } from '@ixswap1/sdk-core'
-import { ethers } from 'ethers'
 
 import { ReactComponent as CrossIcon } from 'assets/launchpad/svg/close.svg'
-import { useCheckClaimed, useClaimOfferRefund } from 'state/launchpad/hooks'
+import { useCheckClaimed, useClaimOfferRefund, useFormatOfferValue } from 'state/launchpad/hooks'
 import { InvestedDataRes, Offer, OfferStatus } from 'state/launchpad/types'
 import { InvestFormContainer } from './styled'
 import { Column, Row, Separator } from 'components/LaunchpadMisc/styled'
@@ -26,6 +25,7 @@ import { ApprovalState, useApproveCallback } from 'hooks/useApproveCallback'
 import { useCurrency } from 'hooks/Tokens'
 import { IXSALE_ADDRESS } from 'constants/addresses'
 import { getTokenSymbol } from 'components/LaunchpadOffer/OfferSidebar/OfferDetails'
+import { safeParseUnits } from 'utils/formatCurrencyAmount'
 
 interface Props {
   offer: Offer
@@ -37,6 +37,7 @@ const transactionHash: any = {
   '40e1ce66-1532-4794-86c4-af465bf22a57': 'https://polygonscan.com/tx/0x067fd00b4cb1b4816cdbd148d546a8e26a0cd6e4774b4ac7be6744c5208563ec',
   '16e9891c-0092-4879-b11e-05a7ec84336b': 'https://polygonscan.com/tx/0x600090b79291fb303618ce98ec1568fd88f2dc5c68da32079e77e698b8242167',
 }
+const AMOUNT_OUT_DECIMALS = 4
 
 export const ClosedStage: React.FC<Props> = (props) => {
   const theme = useTheme()
@@ -61,6 +62,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
   const claimRefund = useClaimOfferRefund(id)
   const { setHasClaimed, hasClaimed } = useCheckClaimed(id)
   const [claiming, setClaiming] = useState(false)
+  const formatedValue = useFormatOfferValue()
 
   const [contactFormOpen, setContactForm] = React.useState(false)
   const toggleContactForm = React.useCallback(() => setContactForm((state) => !state), [])
@@ -75,11 +77,8 @@ export const ClosedStage: React.FC<Props> = (props) => {
   const tokenCurrency = useCurrency(investingTokenAddress)
 
   const [approval, approveCallback] = useApproveCallback(
-    tokenCurrency
-      ? CurrencyAmount.fromRawAmount(
-          tokenCurrency,
-          ethers.utils.parseUnits(amount?.toString(), investingTokenDecimals) as any
-        )
+    tokenCurrency && amount
+      ? CurrencyAmount.fromRawAmount(tokenCurrency, safeParseUnits(amount, investingTokenDecimals) as any)
       : undefined,
     contractAddress || IXSALE_ADDRESS[chainId]
   )
@@ -135,7 +134,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
           {amountLoading && <Loader />}
           {!amountLoading && !amountError && (
             <MyInvestmentAmount>
-              {isSuccessfull ? amountClaim : amount}&nbsp;
+              {formatedValue(isSuccessfull ? amountClaim : amount, AMOUNT_OUT_DECIMALS)}&nbsp;
               {isSuccessfull ? getTokenSymbol(network, tokenSymbol) : getTokenSymbol(network, investingTokenSymbol)}
             </MyInvestmentAmount>
           )}

@@ -176,8 +176,8 @@ msgid "Allow high price impact trades and skip the confirm screen. Use at your o
 msgstr "価格への大きな影響がある取引を許可し、確認画面をスキップします。自己責任で使用してください。"
 
 #: src/components/Header/URLWarning.tsx
-msgid "Always make sure the URL is<0>app.ixswap.io</0> - bookmark it to be safe."
-msgstr "URLが<0> app.ixswap.io </ 0>であることを常に確認してください-安全のためにブックマークしてください。"
+msgid "Always make sure the URL is<0>app.ixs.finance</0> - bookmark it to be safe."
+msgstr "URLが<0> app.ixs.finance </ 0>であることを常に確認してください-安全のためにブックマークしてください。"
 
 #: src/components/AdminTransactionsTable/index.tsx
 #: src/components/Vault/HistoryTable.tsx
@@ -356,7 +356,7 @@ msgstr "このリストを追加することで、データが正しいことを
 msgid "By connecting a wallet, you agree to IXSwap’s <0>Terms and Conditions</0> and acknowledge that you have read and understood the <1>IXSwap Privacy Policy</1>."
 msgstr ""
 
-#: 
+#:
 
 
 #: src/components/Vault/enum.ts
@@ -403,7 +403,7 @@ msgstr "Claim"
 msgid "Claim IXS"
 msgstr "Claim IXS"
 
-#: 
+#:
 
 #: src/state/stake/hooks.ts
 msgid "Claim rewards {formattedAmount}"
@@ -421,7 +421,7 @@ msgstr ""
 msgid "Claimed"
 msgstr ""
 
-#: 
+#:
 
 #: src/pages/Farming/Staking/UnstakedTable.tsx
 msgid "Claimed rewards"
@@ -432,7 +432,7 @@ msgstr ""
 msgid "Claimed {0} {1}"
 msgstr ""
 
-#: 
+#:
 
 #: src/components/AccountDetails/index.tsx
 #: src/components/SearchModal/ManageTokens.tsx
@@ -843,7 +843,7 @@ msgstr ""
 msgid "Get Test Tokens"
 msgstr ""
 
-#: 
+#:
 
 #: src/pages/Farming/Staking/NoIXSTokens.tsx
 msgid "Go to Telegram"
@@ -886,7 +886,7 @@ msgstr ""
 msgid "IXS Farms"
 msgstr ""
 
-#: 
+#:
 
 
 
@@ -900,7 +900,7 @@ msgstr "IXS {0}/{1} が消費されました"
 msgid "IXSGov to return"
 msgstr ""
 
-#: 
+#:
 
 
 
@@ -1105,8 +1105,8 @@ msgid "MAX"
 msgstr "MAX"
 
 #: src/components/Header/URLWarning.tsx
-msgid "Make sure the URL is<0>app.ixswap.io</0>"
-msgstr "URLが<0> app.ixswap.io </ 0>であることを確認してください"
+msgid "Make sure the URL is<0>app.ixs.finance</0>"
+msgstr "URLが<0> app.ixs.finance </ 0>であることを確認してください"
 
 
 #: src/components/SearchModal/CurrencySearch.tsx
@@ -1400,10 +1400,10 @@ msgstr "プールされた{0}"
 msgid "Price"
 msgstr "価格"
 
-#: 
+#:
 
 
-#: 
+#:
 
 #: src/components/swap/AcceptChanges.tsx
 #: src/components/swap/SwapModalHeader.tsx
@@ -1680,9 +1680,9 @@ msgstr ""
 msgid "Stake"
 msgstr ""
 
-#: 
-#: 
-#: 
+#:
+#:
+#:
 
 #: src/state/stake/hooks.ts
 #: src/state/stake/hooks.ts
@@ -1882,7 +1882,7 @@ msgstr "宛先（少なくとも）"
 msgid "To buy {0} click on swap below or find us on our Telegram channel to learn more."
 msgstr ""
 
-#: 
+#:
 
 #: src/components/Vault/WithdrawRequestForm.tsx
 msgid "To my {networkName} wallet"
@@ -1964,7 +1964,7 @@ msgstr "エキスパートモードをオンにする"
 msgid "Type"
 msgstr ""
 
-#: 
+#:
 
 
 #: src/hooks/useSwapCallback.ts
@@ -2053,7 +2053,7 @@ msgstr ""
 msgid "View list"
 msgstr "リストを表示"
 
-#: 
+#:
 
 #: src/components/AccountDetails/index.tsx
 msgid "View on Explorer"
@@ -2126,7 +2126,7 @@ msgid "Withdraw"
 msgstr "出金する"
 
 
-#: 
+#:
 
 #: src/components/Vault/WithdrawPopup.tsx
 msgid "Withdraw from Custodian"

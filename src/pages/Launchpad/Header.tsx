@@ -45,7 +45,7 @@ export const Header = () => {
             <HeaderLink to={routes.pool}>Liquidity Pools</HeaderLink>
             <HeaderLink to={routes.launchpad}>IXS Launchpad</HeaderLink>
             <HeaderLink to={'#'}>Staking</HeaderLink>
-            <HeaderExternalLink href="https://info.ixswap.io/home">Charts</HeaderExternalLink>
+            <HeaderExternalLink href="https://info.ixs.finance/home">Charts</HeaderExternalLink>
             {isAdmin && <HeaderLink to={routes.newAdmin}>Admin</HeaderLink>}
           </HeaderLinks>
 

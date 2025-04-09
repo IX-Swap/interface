@@ -5,6 +5,7 @@ import { getData } from 'country-list'
 import { useHistory } from 'react-router-dom'
 import Portal from '@reach/portal'
 import { FormikProps, setNestedObjectValues } from 'formik'
+import Big from 'big.js'
 
 import { useShowError } from 'state/application/hooks'
 import { OfferReview } from '../Review'
@@ -32,6 +33,7 @@ import {
   investmentStructureOptions,
   isDefinedNumber,
   ERC20Option,
+  calculateSupplyForSale,
 } from './util'
 
 import { InformationFormValues } from './types'
@@ -50,8 +52,7 @@ import { DateRangeField } from '../shared/fields/DateRangeField'
 import { RejectInfo } from '../shared/RejectInfo'
 import { FormSideBar, FormBody } from '../shared/styled'
 import { IssuanceTooltip } from '../shared/fields/IssuanceTooltip'
-import { text11 } from 'components/LaunchpadMisc/typography'
-import { useFormatOfferValue } from 'state/launchpad/hooks'
+import { text10 } from 'components/LaunchpadMisc/typography'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 interface Props {
@@ -89,23 +90,12 @@ export const InformationForm = (props: Props) => {
     initialValues,
     smartContractStrategy,
   } = props
-  const {
-    values,
-    errors,
-    touched,
-    setFieldValue,
-    setFieldTouched,
-    submitForm,
-    resetForm,
-    validateForm,
-    setTouched,
-    setFieldError,
-  } = formikProps
+  const { values, errors, touched, setFieldValue, setFieldTouched, submitForm, resetForm, validateForm, setTouched } =
+    formikProps
 
   // hooks
   const history = useHistory()
   const showError = useShowError()
-  const formatedValue = useFormatOfferValue()
 
   // memos
   const draftDisabled = useMemo(() => isDraftDisabled(errors, touched), [errors, touched])
@@ -115,18 +105,20 @@ export const InformationForm = (props: Props) => {
   }, [])
   const showSupplyHint = useMemo(
     () =>
-      smartContractStrategy === SMART_CONTRACT_STRATEGIES.original &&
-      values.tokenStandart === OfferTokenStandart.xtokenlite,
+      smartContractStrategy === SMART_CONTRACT_STRATEGIES.original && values.tokenStandart === OfferTokenStandart.erc20,
     [smartContractStrategy, values.tokenStandart]
   )
-  const supplyHintValue = useMemo(() => {
-    if (showSupplyHint && values.tokenPrice && values.hardCap) {
-      const supplyForSale = Number(values.hardCap) / Number(values.tokenPrice)
-      return formatedValue(Math.ceil(supplyForSale).toString())
-    } else {
-      return '0'
-    }
-  }, [showSupplyHint, values.tokenPrice, values.hardCap])
+  const supplyHintValue = useMemo(
+    () => calculateSupplyForSale(values),
+    [
+      showSupplyHint,
+      values.tokenPrice,
+      values.hasPresale,
+      values.presaleTokenPrice,
+      values.presaleAlocated,
+      values.hardCap,
+    ]
+  )
   const filteredStandardOptions = useMemo(() => {
     return smartContractStrategy === SMART_CONTRACT_STRATEGIES.nonOriginalWithNoAccess ? [ERC20Option] : standardOptions
   }, [smartContractStrategy])
@@ -489,8 +481,8 @@ export const InformationForm = (props: Props) => {
             field="tokenPrice"
             setter={setFieldValue}
             touch={setFieldTouched}
-            label="Price per Token"
-            placeholder="Price per Token"
+            label="Public sale Price"
+            placeholder="Public sale Price"
             inputFilter={numberFilter}
             disabled={edit}
             value={values.tokenPrice?.toString()}
@@ -573,11 +565,6 @@ export const InformationForm = (props: Props) => {
           />
 
           <Column gap="1rem">
-            {showSupplyHint && (
-              <SupplyHintText>
-                {supplyHintValue} tokens will be issued based on the price per token and total fundraising amount.
-              </SupplyHintText>
-            )}
             <BaseCheckboxWithLabel
               state={Boolean(values.tokenomicsAgreement)}
               toggle={() => {
@@ -586,7 +573,7 @@ export const InformationForm = (props: Props) => {
               }}
               disabled={edit}
               label={`I understand and agree that once I submit this form and it is approved, ${
-                config?.name || 'IX Swap'
+                config?.name || 'IXS'
               } will mint and deposit the tokens into a smart contract based on the information provided.`}
             />
             {touched.tokenomicsAgreement && errors.tokenomicsAgreement && (
@@ -652,7 +639,34 @@ export const InformationForm = (props: Props) => {
             padding={'1rem 4px 1rem 1.25rem'}
             maxLength={64}
           />
+
+          <FormField
+            span={2}
+            disabled={edit || !values.hasPresale}
+            field="presaleTokenPrice"
+            setter={setFieldValue}
+            touch={setFieldTouched}
+            label="Pre-sale Price"
+            placeholder="Pre-sale Price"
+            inputFilter={numberFilter}
+            value={values.presaleTokenPrice?.toString()}
+            error={(touched.presaleTokenPrice && errors.presaleTokenPrice) as string}
+            trailing={
+              <IssuanceTooltip
+                tooltipContent={
+                  'The price input is based on the denominated currency selected under "Investment Currency".\nFor example, if you select USDC as the base currency, the price input will be in USDC.'
+                }
+              />
+            }
+            maxLength={64}
+          />
         </FormGrid>
+
+        {showSupplyHint && (
+          <SupplyHintText>
+            {supplyHintValue} tokens will be issued based on the price per token and total fundraising amount.
+          </SupplyHintText>
+        )}
 
         <Separator />
 
@@ -947,9 +961,11 @@ const ErrorText = styled.div`
   font-size: 10px;
 `
 
-const SupplyHintText = styled.div`
-  ${text11}
-  color: ${(props) => props.theme.launchpad.colors.primary};
-  margin-bottom: 6px;
-  margin-top: -26px;
+const SupplyHintText = styled(Column)`
+  ${text10}
+  color: ${(props) => props.theme.text5};
+  grid-column: span 2;
+  background: ${(props) => props.theme.launchpad.colors.foreground};
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
 `

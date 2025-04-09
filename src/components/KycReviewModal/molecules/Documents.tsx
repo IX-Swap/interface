@@ -8,6 +8,7 @@ import pdfIcon from 'assets/images/pdf.svg'
 import { EllipsisText, MEDIA_WIDTHS } from 'theme'
 import { Document } from 'state/admin/actions'
 import { KycDocPreviewModal } from 'components/KycDocPreviewModal'
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
 
 const headerCells = [`File`, `Type`, `Uploaded At`]
 
@@ -75,7 +76,7 @@ const Row = ({
   kycKey: any
 }) => {
   const name = asset?.name || ''
-  const publicUrl = asset?.public || ''
+  const publicUrl = getPublicAssetUrl(asset) || ''
   const mimeType = asset?.mimeType || ''
 
   const openModal = () => {

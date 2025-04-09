@@ -1,7 +1,7 @@
 {
   "background_color": "#fff",
   "display": "standalone",
-  "homepage_url": "https://app.ixswap.io",
+  "homepage_url": "https://app.ixs.finance",
   "icons": [
     {
       "src": "./images/192x192_App_Icon_rounded.png",
@@ -17,7 +17,7 @@
     }
   ],
   "orientation": "portrait",
-  "name": "IX Swap",
+  "name": "IXS",
   "short_name": "IXS",
   "start_url": ".",
   "theme_color": "#170626"

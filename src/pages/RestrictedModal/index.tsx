@@ -41,11 +41,11 @@ export const RestrictedModal: FC = () => {
             <br />
           </TYPE.description2>
 
-          <StyledButton type="button" onClick={() => location.replace('https://www.ixswap.io/learning-hub')}>
+          <StyledButton type="button" onClick={() => location.replace('https://www.ixs.finance/learning-hub')}>
             <ButtonImage src={home} alt="homeImg" />
             IXSwap Home
           </StyledButton>
-          <StyledButton type="button" onClick={() => location.replace('https://www.ixswap.io/faq')}>
+          <StyledButton type="button" onClick={() => location.replace('https://www.ixs.finance/faq')}>
             <ButtonImage src={group} alt="groupImg" />
             Learn More
           </StyledButton>

@@ -1,9 +1,0 @@
-# env data
-.env
-
-# extensions data
-/extensions
-!extensions/exensionsHelpers.ts
-
-# test results
-/test-results

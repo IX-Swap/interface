@@ -14,6 +14,7 @@ import { KYCPrompt } from 'components/Launchpad/KYCPrompt'
 import { useWeb3React } from 'hooks/useWeb3React'
 import { MEDIA_WIDTHS } from 'theme'
 import { NETWORK_LOGOS } from 'constants/chains'
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
 
 interface Props {
   lbp: any
@@ -80,7 +81,7 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
         </Portal>
       )}
       <LbpCardContainer>
-        <LbpCardImage src={lbp.banner?.public} />
+        <LbpCardImage src={getPublicAssetUrl(lbp.banner)} />
 
         <LbpCardHeader>
           <LbpCardTagsContainer>
@@ -91,7 +92,7 @@ export const LbpCard: React.FC<Props> = ({ lbp }) => {
         <LbpCardInfoWrapper></LbpCardInfoWrapper>
 
         <LbpCardInfoContainer expanded={showDetails}>
-          <LbpCardIcon src={lbp.logo?.public} />
+          <LbpCardIcon src={getPublicAssetUrl(lbp.logo)} />
           {networkLogo ? (
             <LogoWrap>
               <NetworkLogo src={networkLogo} alt="network logo" />

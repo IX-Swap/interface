@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import _get from 'lodash/get'
 import { ethers } from 'ethers'
@@ -14,6 +14,7 @@ import { useAddPopup } from 'state/application/hooks'
 import { useSubgraphQueryWithCallback } from 'hooks/useSubgraphQuery'
 
 import { ReactComponent as Checked } from 'assets/images/checked-green.svg'
+import { TokenLogo } from 'components/TokenLogo'
 
 interface RedeemedProps {
   contractAddress: string | null
@@ -109,7 +110,7 @@ const RedeemedSideBar: React.FC<RedeemedProps> = ({ contractAddress, shareLogo, 
           </RedeemedText>
           <RedeemedText>
             <ShareTokenWrapper>
-              <img style={{ borderRadius: '100%' }} width="25px" height="25px" src={shareLogo?.public} />
+              <TokenLogo logo={shareLogo} width="25px" height="25px" />
               <TYPE.label style={{ inlineSize: 'max-content', alignSelf: 'center' }} fontSize={'14px'}>
                 {shareName}
               </TYPE.label>

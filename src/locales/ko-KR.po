@@ -176,8 +176,8 @@ msgid "Allow high price impact trades and skip the confirm screen. Use at your o
 msgstr "높은 가격 영향 거래를 허용하고 확인 화면을 건너 뜁니다. 자신의 책임하에 사용하십시오."
 
 #: src/components/Header/URLWarning.tsx
-msgid "Always make sure the URL is<0>app.ixswap.io</0> - bookmark it to be safe."
-msgstr "항상 URL이 <0> app.ixswap.io </ 0>인지 확인하고 안전을 위해 북마크하십시오."
+msgid "Always make sure the URL is<0>app.ixs.finance</0> - bookmark it to be safe."
+msgstr "항상 URL이 <0> app.ixs.finance </ 0>인지 확인하고 안전을 위해 북마크하십시오."
 
 #: src/components/AdminTransactionsTable/index.tsx
 #: src/components/Vault/HistoryTable.tsx
@@ -356,7 +356,7 @@ msgstr "이 목록을 추가하면 데이터가 정확하다는 것을 암시 �
 msgid "By connecting a wallet, you agree to IXSwap’s <0>Terms and Conditions</0> and acknowledge that you have read and understood the <1>IXSwap Privacy Policy</1>."
 msgstr ""
 
-#: 
+#:
 
 
 #: src/components/Vault/enum.ts
@@ -403,7 +403,7 @@ msgstr "청구"
 msgid "Claim IXS"
 msgstr "IXS 청구"
 
-#: 
+#:
 
 #: src/state/stake/hooks.ts
 msgid "Claim rewards {formattedAmount}"
@@ -421,7 +421,7 @@ msgstr ""
 msgid "Claimed"
 msgstr ""
 
-#: 
+#:
 
 #: src/pages/Farming/Staking/UnstakedTable.tsx
 msgid "Claimed rewards"
@@ -432,7 +432,7 @@ msgstr ""
 msgid "Claimed {0} {1}"
 msgstr ""
 
-#: 
+#:
 
 #: src/components/AccountDetails/index.tsx
 #: src/components/SearchModal/ManageTokens.tsx
@@ -843,7 +843,7 @@ msgstr ""
 msgid "Get Test Tokens"
 msgstr ""
 
-#: 
+#:
 
 #: src/pages/Farming/Staking/NoIXSTokens.tsx
 msgid "Go to Telegram"
@@ -886,7 +886,7 @@ msgstr ""
 msgid "IXS Farms"
 msgstr ""
 
-#: 
+#:
 
 
 
@@ -900,7 +900,7 @@ msgstr "IXS {0}/{1} 버닝"
 msgid "IXSGov to return"
 msgstr ""
 
-#: 
+#:
 
 
 
@@ -1105,8 +1105,8 @@ msgid "MAX"
 msgstr "MAX"
 
 #: src/components/Header/URLWarning.tsx
-msgid "Make sure the URL is<0>app.ixswap.io</0>"
-msgstr "URL이 <0> app.ixswap.io </ 0>인지 확인하세요."
+msgid "Make sure the URL is<0>app.ixs.finance</0>"
+msgstr "URL이 <0> app.ixs.finance </ 0>인지 확인하세요."
 
 
 #: src/components/SearchModal/CurrencySearch.tsx
@@ -1400,10 +1400,10 @@ msgstr "{0} 풀링 됨"
 msgid "Price"
 msgstr "가격"
 
-#: 
+#:
 
 
-#: 
+#:
 
 #: src/components/swap/AcceptChanges.tsx
 #: src/components/swap/SwapModalHeader.tsx
@@ -1680,9 +1680,9 @@ msgstr ""
 msgid "Stake"
 msgstr ""
 
-#: 
-#: 
-#: 
+#:
+#:
+#:
 
 #: src/state/stake/hooks.ts
 #: src/state/stake/hooks.ts
@@ -1882,7 +1882,7 @@ msgstr "(적어도)"
 msgid "To buy {0} click on swap below or find us on our Telegram channel to learn more."
 msgstr ""
 
-#: 
+#:
 
 #: src/components/Vault/WithdrawRequestForm.tsx
 msgid "To my {networkName} wallet"
@@ -1964,7 +1964,7 @@ msgstr "전문가 모드 켜기"
 msgid "Type"
 msgstr ""
 
-#: 
+#:
 
 
 #: src/hooks/useSwapCallback.ts
@@ -2053,7 +2053,7 @@ msgstr ""
 msgid "View list"
 msgstr "목록보기"
 
-#: 
+#:
 
 #: src/components/AccountDetails/index.tsx
 msgid "View on Explorer"
@@ -2126,7 +2126,7 @@ msgid "Withdraw"
 msgstr "빼다"
 
 
-#: 
+#:
 
 #: src/components/Vault/WithdrawPopup.tsx
 msgid "Withdraw from Custodian"

@@ -16,6 +16,7 @@ import { NETWORK_LOGOS } from 'constants/chains'
 import { PinnedContentButton } from 'components/Button'
 import { MEDIA_WIDTHS } from 'theme'
 import { RaisedFund } from './RaisedFund'
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
 
 interface Props {
   offer: any
@@ -67,7 +68,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
     <>
       <PreviewModal offer={offer} isModalOpen={isModalOpen} closeModal={closeModal} />
       <InvestmentCardContainer>
-        <InvestmentCardImage src={offer.cardPicture.public} />
+        <InvestmentCardImage src={getPublicAssetUrl(offer.cardPicture)} />
 
         <InvestmentCardHeader>
           <InvestmentCardTagsContainer>
@@ -80,7 +81,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
         <InvestmentCardInfoWrapper></InvestmentCardInfoWrapper>
 
         <InvestmentCardInfoContainer expanded={showDetails}>
-          <InvestmentCardIcon src={offer.profilePicture.public} />
+          <InvestmentCardIcon src={getPublicAssetUrl(offer.profilePicture)} />
 
           {networkLogo ? (
             <LogoWrap>

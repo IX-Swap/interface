@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { OfferTeamMember } from 'state/launchpad/types'
 import { text34, text56, text7 } from 'components/LaunchpadMisc/typography'
 import { MEDIA_WIDTHS } from 'theme'
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
 
 interface Props {
   team: OfferTeamMember[]
@@ -16,7 +17,7 @@ export const OfferTeamMembers: React.FC<Props> = (props) => {
 
       {props.team.map((member, idx) => (
         <TeamMemberCard key={`team-member-${idx}`}>
-          <TeamMemberPhoto src={member.avatar?.public} />
+          <TeamMemberPhoto src={getPublicAssetUrl(member.avatar)} />
           <TeamMemberName>{member.name}</TeamMemberName>
           <TeamMemberRole>{member.title}</TeamMemberRole>
           <TeamMemberSummary>{member.description}</TeamMemberSummary>
@@ -35,7 +36,7 @@ const TeamMemberList = styled.div`
   white-space: pre-line;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     padding: 0px 20px;
-   }
+  }
 `
 
 const TeamMemberListTitle = styled.div`
@@ -62,7 +63,7 @@ const TeamMemberCard = styled.div`
   border-radius: 8px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     padding: 1rem 0rem;
-   }
+  }
 `
 
 const TeamMemberPhoto = styled.img`

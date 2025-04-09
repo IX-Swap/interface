@@ -32,6 +32,7 @@ export const vesting = {
 export const metamask = {
   challenge: `metamask/challenge`,
   login: `metamask/login`,
+  logout: `metamask/logout`,
   hasLogged: (hash: string) => `/metamask/hasLogged/${hash}`,
 }
 

@@ -3,6 +3,7 @@ import polygonLogoUrl from 'assets/images/polygon.svg'
 import baseLogoUrl from 'assets/images/base.svg'
 import ozeanLogoUrl from 'assets/images/chains/ozean.png'
 import kaiaLogoUrl from 'assets/images/chains/kaia.png'
+import redBellyLogoUrl from 'assets/images/chains/redbelly.png'
 import { InterfaceChainId } from 'types/chains'
 
 export enum SupportedChainId {
@@ -16,6 +17,8 @@ export enum SupportedChainId {
   OZEAN_TESTNET = 7849306,
   KAIROS_TESTNET = 1001,
   KAIA = 8217,
+  REDBELLY = 151,
+  REDBELLY_TESNET = 153,
 }
 
 export const NETWORK_LOGOS: { [chainName: string]: string } = {
@@ -24,6 +27,7 @@ export const NETWORK_LOGOS: { [chainName: string]: string } = {
   base: baseLogoUrl,
   ozean: ozeanLogoUrl,
   kaia: kaiaLogoUrl,
+  redbelly: redBellyLogoUrl,
 }
 
 export const NETWORK_LABELS: { [chainId: number]: string } = {
@@ -40,6 +44,8 @@ export const NETWORK_LABELS: { [chainId: number]: string } = {
   [7849306]: 'Ozean Testnet',
   [1001]: 'Kairos Testnet',
   [8217]: 'Kaia',
+  [151]: 'RedBelly',
+  [153]: 'RedBelly Testnet',
 }
 
 export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
@@ -47,6 +53,7 @@ export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
   SupportedChainId.KOVAN,
   SupportedChainId.MATIC,
   SupportedChainId.MUMBAI,
+  SupportedChainId.REDBELLY_TESNET,
 ]
 
 export interface ChainInfo {
@@ -77,6 +84,7 @@ export const getChainFromName = (name: string, isTestnet = false): SupportedChai
     base: isTestnet ? SupportedChainId.BASE_SEPOLIA : SupportedChainId.BASE,
     kaia: isTestnet ? SupportedChainId.KAIROS_TESTNET : SupportedChainId.KAIA,
     ozean: isTestnet ? SupportedChainId.OZEAN_TESTNET : SupportedChainId.OZEAN_TESTNET,
+    redBelly: isTestnet ? SupportedChainId.REDBELLY_TESNET : SupportedChainId.REDBELLY,
   } as any
 
   return chainByName[name]
@@ -189,6 +197,28 @@ export const CHAIN_INFO: ChainInfoMap = {
     logoUrl: kaiaLogoUrl,
     rpcUrls: ['https://public-en.node.kaia.io'],
     blockExplorerUrls: ['https://kaiascan.io'],
+  },
+  [SupportedChainId.REDBELLY_TESNET]: {
+    chainName: 'RedBelly Testnet',
+    nativeCurrency: {
+      name: 'RBNT',
+      symbol: 'RBNT',
+      decimals: 18,
+    },
+    logoUrl: redBellyLogoUrl,
+    rpcUrls: ['https://governors.testnet.redbelly.network'],
+    blockExplorerUrls: ['https://redbelly.testnet.routescan.io'],
+  },
+  [SupportedChainId.REDBELLY]: {
+    chainName: 'RedBelly',
+    nativeCurrency: {
+      name: 'RBNT',
+      symbol: 'RBNT',
+      decimals: 18,
+    },
+    logoUrl: redBellyLogoUrl,
+    rpcUrls: ['https://governors.mainnet.redbelly.network'],
+    blockExplorerUrls: ['https://redbelly.routescan.io'],
   },
 }
 

@@ -10,6 +10,8 @@ import { routes } from 'utils/routes'
 import { FeaturedTokenCard } from './styleds'
 import { NewApproveButton } from 'components/Button'
 import { NETWORK_LOGOS } from 'constants/chains'
+import { TokenLogo } from 'components/TokenLogo'
+import { Box } from '@mui/material'
 
 interface Props {
   token: any
@@ -57,13 +59,7 @@ export const FeaturedToken: FC<Props> = ({ token }: Props) => {
       <FeaturedTokenCard>
         <Flex alignItems="center">
           {token.logo ? (
-            <img
-              style={{ margin: '10px', borderRadius: '50%' }}
-              width="64px"
-              height="64px"
-              src={token.logo.public}
-              alt="Token Logo"
-            />
+            <TokenLogo logo={token.logo} width="64px" height="64px" />
           ) : (
             <CurrencyLogo currency={undefined} size={'64px'} style={{ margin: '10px' }} />
           )}
