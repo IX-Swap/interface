@@ -1,3 +1,5 @@
+import { Asset } from 'state/launchpad/types'
+
 export enum LbpStatus {
   draft = 'draft',
   pending = 'pending',
@@ -46,9 +48,10 @@ export interface DashboardLbp {
 export interface LbpFile {
   mimeType: string | undefined
   name: string
-  public?: string
-  id?: number
+  id: number
   file?: File
+  uuid: number
+  createdAt: string
 }
 
 export interface LbpFormValues {
@@ -62,7 +65,7 @@ export interface LbpFormValues {
   logoId?: number
   bannerId?: number
   additionalDocumentIds: number[]
-  LBPLogo: LbpFile
+  LBPLogo: Asset
   LBPBanner: LbpFile
   uploadDocs: LbpFile[]
   contractAddress?: string
@@ -115,7 +118,7 @@ export interface ProjectInfoProps {
 }
 
 export interface BrandingProps {
-  LBPLogo: LbpFile
+  LBPLogo: Asset
   LBPBanner: LbpFile
 }
 

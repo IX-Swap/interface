@@ -5,11 +5,7 @@ import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 import { useUSDCValue } from 'hooks/useUSDCPrice'
 import { useSubmitApproval, useSwapActionHandlers, useSwapState } from 'state/swap/hooks'
 import { computeFiatValuePriceImpact } from 'utils/computeFiatValuePriceImpact'
-import useTheme from 'hooks/useTheme'
-
-import { ReactComponent as ArrowDown } from '../../assets/images/arrow.svg'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
-import { ArrowWrapper } from '../../components/swap/styleds'
 import { Field } from '../../state/swap/actions'
 import { ColumnCenter } from 'components/Column'
 import { ReactComponent as DownArrow } from '../../assets/images/downArrowNew.svg'
@@ -41,7 +37,6 @@ const plusIconStyle = {
 }
 
 export const CurrencyInput = ({ parsedAmounts, maxInputAmount, showWrap, currencies, handleHideConfirm }: Props) => {
-  const theme = useTheme()
   const { onSwitchTokens, onCurrencySelection, onUserInput } = useSwapActionHandlers()
   const { independentField, typedValue } = useSwapState()
   const setApprovalSubmitted = useSubmitApproval()

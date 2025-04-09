@@ -52,7 +52,7 @@ export const pagesGroup: PagesGroup = {
   defaults,
 }
 
-export function getActiveRoutes(pages: PagesConfig): string {
+export function getActiveRoutes(pages: PagesConfig): string | null {
   // Filter out keys with true values
   const activeKeys = Object.keys(pages).filter((key: string) => pages[key as keyof PagesConfig])
 
@@ -65,7 +65,9 @@ export function getActiveRoutes(pages: PagesConfig): string {
     return acc
   }, [])
 
-  activeRoutes.push(...defaults)
+  if (activeRoutes.length === 0) {
+    return null
+  }
 
   return JSON.stringify(activeRoutes)
 }

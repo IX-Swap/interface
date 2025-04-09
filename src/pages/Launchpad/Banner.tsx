@@ -19,7 +19,7 @@ export const Banner = () => {
     ? config.launchpadBannerTitle
     : 'Invest in Startups <br /> and Other Unicorn <br /> Like Opportunities'
   const launchpadBannerInfoRedirectTitle = config?.launchpadBannerInfoRedirectTitle ?? 'How does IXS Launchpad work?'
-  const launchpadBannerInfoRedirectUrl = config?.launchpadBannerInfoRedirectUrl ?? 'https://www.ixswap.io/academy'
+  const launchpadBannerInfoRedirectUrl = config?.launchpadBannerInfoRedirectUrl ?? 'https://www.ixs.finance/academy'
   const isIxswap = config?.isIxSwap ?? false
 
   const getTotalRaised = async () => {

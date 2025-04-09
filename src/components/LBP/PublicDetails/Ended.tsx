@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ColumnCenter } from 'components/Column'
 import { ReactComponent as ComingSoonIcon } from '../../../assets/images/ended.svg'
 import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { Line } from 'components/Line'
@@ -8,6 +7,7 @@ import { PinnedContentButton } from 'components/Button'
 import { useLBPPurchasedShares } from 'state/lbp/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
 import { formatNumberWithDecimals } from 'state/lbp/hooks'
+import { TokenLogo } from 'components/TokenLogo'
 
 interface EndedSideBarProps {
   contractAddress: string | null
@@ -37,7 +37,7 @@ const EndedSideBar: React.FC<EndedSideBarProps> = ({ contractAddress, shareLogo,
         <ShareWrapper>
           <TYPE.description2 color={'#8F8FB2'}>Purchased Project Tokens:</TYPE.description2>
           <ShareTokenWrapper>
-            <img style={{ borderRadius: '100%' }} width="25px" height="25px" src={shareLogo?.public} />
+            <TokenLogo logo={shareLogo} width="25px" height="25px" />
             <TYPE.label style={{ inlineSize: 'max-content', alignSelf: 'center' }} fontSize={'14px'}>
               {shareName}
             </TYPE.label>

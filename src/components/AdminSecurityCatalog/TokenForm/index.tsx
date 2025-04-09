@@ -25,6 +25,7 @@ import { validationSchema } from './schema'
 import SuccessContent from 'components/ToastContent/Success'
 import ErrorContent from 'components/ToastContent/Error'
 import { formatAmount } from 'utils/formatCurrencyAmount'
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
 
 interface Props {
   token: any | null
@@ -110,8 +111,8 @@ const TokenForm: FC<Props> = ({ token: editableToken, tokenData, currentIssuer, 
 
   const fetchFileData = async (fileInfo: any, key: string) => {
     try {
-      if (fileInfo && fileInfo.public) {
-        const response = await fetch(fileInfo.public)
+      if (fileInfo && fileInfo.uuid) {
+        const response = await fetch(getPublicAssetUrl(fileInfo))
         if (response.ok) {
           const blob = await response.blob()
           formik.setFieldValue(key, new File([blob], fileInfo.name || key, { type: fileInfo.mimeType }))

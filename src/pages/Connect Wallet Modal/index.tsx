@@ -22,7 +22,7 @@ export const ConnectWalletModal: FC = () => {
           <TYPE.mediumHeader>Connect A Wallet</TYPE.mediumHeader>
           <br />
           <TYPE.description2>
-            You are accessing {config?.name || 'IX Swap'} through a mobile phone. To connect a wallet, we recommend using browsers from
+            You are accessing {config?.name || 'IXS'} through a mobile phone. To connect a wallet, we recommend using browsers from
             Metamask, Trust Wallet, Coinbase Wallet. See links below for more information:
             <br />
           </TYPE.description2>

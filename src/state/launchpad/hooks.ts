@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import lodash from 'lodash'
 import React from 'react'
 
@@ -54,7 +55,7 @@ import apiService from 'services/apiService'
 import { useKyc } from 'state/user/hooks'
 import { PaginateResponse } from 'types/pagination'
 import { useActiveWeb3React } from 'hooks/web3'
-import { useQuery } from '@tanstack/react-query'
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
 import { useWeb3React } from 'hooks/useWeb3React'
 
 interface OfferPagination {
@@ -147,12 +148,12 @@ export const useGetPinnedOffer = () => {
 }
 
 export const useFormatOfferValue = (addComa = true) => {
-  return React.useCallback((value?: string, decimalsLimit?: number) => {
+  return React.useCallback((value?: string | number, decimalsLimit?: number) => {
     if (!value) {
       return ''
     }
 
-    let result = value
+    let result = value.toString()
 
     if (result) {
       const [wholeNumber, decimals] = result.split('.')
@@ -445,7 +446,7 @@ export const useGetFile = () => {
       return
     }
 
-    return fetch(asset.public)
+    return fetch(getPublicAssetUrl(asset))
       .then((res) => res.blob())
       .then((res) => ({ id: asset.id, file: new File([res], asset.name) }))
   }, [])
@@ -1125,8 +1126,8 @@ export const useOfferFormInitialValues = (
             })
           : initialValues.additionalDocuments,
 
-        purchaseAgreement,
-        investmentMemorandum,
+        purchaseAgreement: { file: purchaseAgreement },
+        investmentMemorandum: { file: investmentMemorandum },
         otherExecutionDocuments: otherExecutionDocuments.length
           ? otherExecutionDocuments.map((document: any) => {
               const file = files.find((x) => x.id === document.file?.id)
@@ -1164,6 +1165,7 @@ export const useOfferFormInitialValues = (
         decimals: payload.decimals,
         trusteeAddress: payload.trusteeAddress,
         tokenPrice: isDefinedNumber(payload.tokenPrice) ? Number(payload.tokenPrice) : null,
+        presaleTokenPrice: isDefinedNumber(payload.presaleTokenPrice) ? Number(payload.presaleTokenPrice) : null,
         tokenStandart: payload.tokenStandart,
         totalSupply: payload.totalSupply ?? '',
         tokenReceiverAddress: payload.tokenReceiverAddress ?? '',
@@ -1212,10 +1214,10 @@ export const useSubmitOffer = () => {
       const findDoc = (prefix: 'member.photo' | 'document' | 'image' | 'otherExecutionDocument', idx: number) =>
         uploadedFiles.find((x) => x.name === `${prefix}.${idx}`)?.id
       const purchaseAgreementId =
-        uploadedFiles.find((x) => x.name === 'purchaseAgreement')?.id || payload.purchaseAgreement?.file?.id || null
+        uploadedFiles.find((x) => x.name === 'purchaseAgreement')?.id || payload.purchaseAgreement?.file?.file?.id || null
       const investmentMemorandumId =
         uploadedFiles.find((x) => x.name === 'investmentMemorandum')?.id ||
-        payload.investmentMemorandum?.file?.id ||
+        payload.investmentMemorandum?.file?.file?.id ||
         null
 
       const executionDocuments = []
@@ -1276,6 +1278,7 @@ export const useSubmitOffer = () => {
         maxInvestment: payload.maxInvestment,
 
         hasPresale: payload.hasPresale,
+        presaleTokenPrice: payload.presaleTokenPrice?.toString(),
         presaleMinInvestment: payload.presaleMinInvestment,
         presaleMaxInvestment: payload.presaleMaxInvestment,
         presaleAlocated: payload.presaleAlocated,

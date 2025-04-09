@@ -11,7 +11,7 @@ import { OfferStage } from 'components/LaunchpadOffer/OfferSidebar/OfferStage'
 import { isMobile } from 'react-device-detect'
 import { OfferTerms } from 'components/LaunchpadOffer/OfferSidebar/OfferTerms'
 import { PinnedContentButton } from 'components/Button'
-
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
 
 interface Props {
   isModalOpen: boolean
@@ -20,8 +20,8 @@ interface Props {
 }
 
 const handleRedirect = () => {
-    window.location.href = '/#/kyc';
-  };
+  window.location.href = '/#/kyc'
+}
 
 export const PreviewModal = ({ isModalOpen, closeModal, offer }: Props) => {
   return (
@@ -36,7 +36,7 @@ export const PreviewModal = ({ isModalOpen, closeModal, offer }: Props) => {
           <SummaryContainer>
             <TitleRow>
               <div>
-                <ProfilePicture src={offer?.profilePicture?.public} />
+                <ProfilePicture src={getPublicAssetUrl(offer?.profilePicture)} />
               </div>
               <div>
                 <SummaryTitle>{offer?.title}</SummaryTitle>
@@ -50,9 +50,11 @@ export const PreviewModal = ({ isModalOpen, closeModal, offer }: Props) => {
             <OverviewContent>{offer?.longDescription}</OverviewContent>
           </OverviewContainer>
           <div style={{ display: isMobile ? 'block' : 'flex' }}>
-            <div style={{ marginRight: isMobile? '0px' : '30px' }}>
+            <div style={{ marginRight: isMobile ? '0px' : '30px' }}>
               <div style={{ marginTop: '0px', border: '1px solid #E6E6FF', padding: isMobile ? '20px 0px' : '20px' }}>
-                <SaleAllocationTitle style={{marginLeft: isMobile ? '20px' : '0px', marginBottom: '20px'}}>Main Information</SaleAllocationTitle>
+                <SaleAllocationTitle style={{ marginLeft: isMobile ? '20px' : '0px', marginBottom: '20px' }}>
+                  Main Information
+                </SaleAllocationTitle>
                 <OfferGeneralInfo {...offer} />
               </div>
               <div style={{ marginTop: '15px', border: '1px solid #E6E6FF', padding: isMobile ? '20px 0px ' : '20px' }}>
@@ -63,14 +65,13 @@ export const PreviewModal = ({ isModalOpen, closeModal, offer }: Props) => {
               <div style={{ marginBottom: '10px', marginTop: isMobile ? '15px' : '' }}>
                 <OfferSaleAllocation {...offer} />
               </div>
-     
 
               {offer.hasPresale && (
                 <div style={{ marginTop: '10px' }}>
                   <OfferPreSaleInfo {...offer} />
                 </div>
               )}
-                       <div style={{ marginTop: '15px', border: '1px solid #E6E6FF', padding: isMobile ? '20px 0px ' : '20px' }}>
+              <div style={{ marginTop: '15px', border: '1px solid #E6E6FF', padding: isMobile ? '20px 0px ' : '20px' }}>
                 <OfferTerms terms={offer?.terms} />
               </div>
             </div>
@@ -83,22 +84,29 @@ export const PreviewModal = ({ isModalOpen, closeModal, offer }: Props) => {
               border: '1px solid #E6E6FF',
               marginTop: '20px',
               borderRadius: '8px',
-              marginBottom: isMobile ? '150px' : '30px'
+              marginBottom: isMobile ? '150px' : '30px',
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: '16px', fontWeight: '800', color: '#292933',  width: isMobile ? '100%' : '60%' }}>
+              <span style={{ fontSize: '16px', fontWeight: '800', color: '#292933', width: isMobile ? '100%' : '60%' }}>
                 This deal is only available to KYC-ed users
               </span>
-             {!isMobile && <PinnedContentButton onClick={handleRedirect} style={{ width: '190px' }}>Complete KYC</PinnedContentButton>} 
+              {!isMobile && (
+                <PinnedContentButton onClick={handleRedirect} style={{ width: '190px' }}>
+                  Complete KYC
+                </PinnedContentButton>
+              )}
             </div>
             <div>
               <span style={{ color: '#666680', fontSize: '13px', fontWeight: '600' }}>
                 Become a KYC-ed user by connecting your wallet and completing your KYC.
               </span>
-
             </div>
-            {isMobile && <PinnedContentButton onClick={handleRedirect} style={{ marginTop: '18px' }}>Complete KYC</PinnedContentButton>} 
+            {isMobile && (
+              <PinnedContentButton onClick={handleRedirect} style={{ marginTop: '18px' }}>
+                Complete KYC
+              </PinnedContentButton>
+            )}
           </div>
         </ModalContent>
       </ModalContainer>

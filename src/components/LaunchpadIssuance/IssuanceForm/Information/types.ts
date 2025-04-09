@@ -62,6 +62,7 @@ export interface InformationFormValues {
   tokenType: OfferTokenType
   tokenStandart: OfferTokenStandart
   tokenPrice: number | null
+  presaleTokenPrice: number | null
   totalSupply: string
   tokenReceiverAddress: string
 

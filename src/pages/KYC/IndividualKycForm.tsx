@@ -1346,7 +1346,7 @@ export default function IndividualKycForm() {
                                     US to report customers who are US tax residents to the US tax authorities.
                                     <br />
                                     <br />
-                                    {config?.name || 'IX Swap'} is collecting information regarding tax residency status of each Account
+                                    {config?.name || 'IXS'} is collecting information regarding tax residency status of each Account
                                     holder in order to comply with Income Tax Act and Singapore Income Tax
                                     (International Tax Compliance Agreements) (Common Reporting Standard) Regulations
                                     2016.

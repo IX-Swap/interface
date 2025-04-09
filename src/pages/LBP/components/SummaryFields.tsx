@@ -12,6 +12,7 @@ import { getTokenOption } from 'pages/LBP/components/Tokenomics'
 import { useTokenContract } from 'hooks/useContract'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import Countdown, { renderer } from 'components/Countdown'
+import { TokenLogo } from 'components/TokenLogo'
 
 interface SummaryFieldsProps {
   noOfParticipants: number
@@ -100,7 +101,7 @@ const SummaryFields: React.FC<SummaryFieldsProps> = ({ lbpData, noOfParticipants
           <TYPE.subHeader1 color={'#555566'}>Start Quantities</TYPE.subHeader1>
           <TokenWrapper>
             <>
-              <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
+              <TokenLogo logo={lbpData?.logo} width="25px" height="25px" />
               <TYPE.label fontSize={'14px'}>{lbpData?.shareAmount}</TYPE.label>
               <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
                 {shareSymbol || lbpData?.title}
@@ -108,7 +109,7 @@ const SummaryFields: React.FC<SummaryFieldsProps> = ({ lbpData, noOfParticipants
             </>
             <VerticalLine />
             <>
-              <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
+              <TokenLogo logo={tokenOption?.logo} width="25px" height="25px" />
               <TYPE.label fontSize={'14px'}>{lbpData?.assetTokenAmount}</TYPE.label>
               <TYPE.body3 color={'#8F8FB2'} fontWeight={'700'}>
                 {lbpData?.assetTokenSymbol}
@@ -122,7 +123,7 @@ const SummaryFields: React.FC<SummaryFieldsProps> = ({ lbpData, noOfParticipants
             <TYPE.subHeader1 color={'#555566'}>Current Quantities</TYPE.subHeader1>
             <TokenWrapper>
               <>
-                <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
+                <TokenLogo logo={lbpData?.logo} width="25px" height="25px" />
                 <TYPE.label fontSize={'14px'}>
                   {useFormatNumberWithDecimal(statsData?.currentShareReserve || '', 2)}{' '}
                 </TYPE.label>
@@ -132,7 +133,7 @@ const SummaryFields: React.FC<SummaryFieldsProps> = ({ lbpData, noOfParticipants
               </>
               <VerticalLine />
               <>
-                <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
+                <TokenLogo logo={tokenOption?.logo} width="25px" height="25px" />
                 <TYPE.label fontSize={'14px'}>
                   {useFormatNumberWithDecimal(statsData?.currentAssetReserve || '', 2)}{' '}
                 </TYPE.label>
@@ -150,12 +151,12 @@ const SummaryFields: React.FC<SummaryFieldsProps> = ({ lbpData, noOfParticipants
           <TYPE.subHeader1 color={'#555566'}>Start Weight</TYPE.subHeader1>
           <TokenWrapper>
             <>
-              <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
+              <TokenLogo logo={lbpData?.logo} width="25px" height="25px" />
               <TYPE.label fontSize={'14px'}>{lbpData?.startWeight}% </TYPE.label>
             </>
             <VerticalLine />
             <>
-              <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
+              <TokenLogo logo={tokenOption?.logo} width="25px" height="25px" />
               <TYPE.label fontSize={'14px'}>{calculateSharedWeight(lbpData?.startWeight || 0)}% </TYPE.label>
             </>
           </TokenWrapper>
@@ -166,14 +167,14 @@ const SummaryFields: React.FC<SummaryFieldsProps> = ({ lbpData, noOfParticipants
             <TYPE.subHeader1 color={'#555566'}>Current Weight</TYPE.subHeader1>
             <TokenWrapper>
               <>
-                <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
+                <TokenLogo logo={lbpData?.logo} width="25px" height="25px" />
                 <TYPE.label fontSize={'14px'}>
                   {useFormatNumberWithDecimal(statsData?.currentShareWeight || '', 2)}%{' '}
                 </TYPE.label>
               </>
               <VerticalLine />
               <>
-                <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
+                <TokenLogo logo={tokenOption?.logo} width="25px" height="25px" />
                 <TYPE.label fontSize={'14px'}>
                   {useFormatNumberWithDecimal(statsData?.currentAssetWeight || '', 2)}%{' '}
                 </TYPE.label>
@@ -186,12 +187,12 @@ const SummaryFields: React.FC<SummaryFieldsProps> = ({ lbpData, noOfParticipants
           <TYPE.subHeader1 color={'#555566'}>End Weight</TYPE.subHeader1>
           <TokenWrapper>
             <>
-              <LogoIcon as="img" src={lbpData?.logo?.public} alt="Serenity Logo" />
+              <TokenLogo logo={lbpData?.logo} width="25px" height="25px" />
               <TYPE.label fontSize={'14px'}>{lbpData?.endWeight}% </TYPE.label>
             </>
             <VerticalLine />
             <>
-              <LogoIcon as="img" src={tokenOption?.logo} alt="Asset Logo" />
+              <TokenLogo logo={tokenOption?.logo} width="25px" height="25px" />
               <TYPE.label fontSize={'14px'}>{calculateSharedWeight(lbpData?.endWeight || 0)}% </TYPE.label>
             </>
           </TokenWrapper>
@@ -200,12 +201,6 @@ const SummaryFields: React.FC<SummaryFieldsProps> = ({ lbpData, noOfParticipants
     </Column>
   )
 }
-
-const LogoIcon = styled.img`
-  height: 25px;
-  width: 25px;
-  border-radius: 50%;
-`
 
 export default SummaryFields
 

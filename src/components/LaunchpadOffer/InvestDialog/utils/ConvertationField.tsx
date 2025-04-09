@@ -89,6 +89,8 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const theme = useTheme()
   const {
     tokenPrice,
+    status,
+    presaleTokenPrice,
     tokenAddress,
     tokenSymbol,
     investingTokenAddress,
@@ -96,6 +98,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
     investingTokenDecimals,
     network,
   } = props.offer
+  const decimalsLimit = Math.min(2, investingTokenDecimals)
   const { tokensOptions, secTokensOptions } = useTokensList()
   const mixedTokens = React.useMemo(() => [...tokensOptions, ...secTokensOptions], [tokensOptions, secTokensOptions])
   const getWarning = useGetWarning(props.offer, true)
@@ -148,7 +151,8 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const convertedValue = React.useMemo(() => {
     if (inputValue) {
       const realValue = +inputValue.replace(/,/g, '')
-      const multiplier = (1 / +tokenPrice).toFixed(6)
+      const currentTokenPrice = status === OfferStatus.preSale ? presaleTokenPrice : tokenPrice
+      const multiplier = (1 / +currentTokenPrice).toFixed(6)
 
       let result = `${realValue * +multiplier}`
 
@@ -221,11 +225,9 @@ export const ConvertationField: React.FC<Props> = (props) => {
           disabled={isBalanceLoading}
           trailing={<CurrencyDropdown disabled value={formatTokenOption(offerInvestmentToken)} />}
           caption={insufficientWarning === warning ? '' : warning === 'Loading' ? <Loader /> : warning}
-          // height="85px"
           fontSize="20px"
           lineHeight="20px"
-          decimalsLimit={investingTokenDecimals}
-          isNoDecimals={true}
+          decimalsLimit={decimalsLimit}
         />
         <InvestTextField
           type="number"
@@ -233,7 +235,6 @@ export const ConvertationField: React.FC<Props> = (props) => {
           onChange={() => null}
           trailing={<CurrencyDropdown disabled value={offerToken} />}
           disabled
-          // height="85px"
           fontSize="20px"
           lineHeight="20px"
         />

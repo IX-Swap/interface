@@ -341,7 +341,7 @@ export const OfferGeneralInfo: React.FC<GeneralInfoProps> = (props) => {
           value: props.investmentType?.replace(/\b\w/g, (match) => match.toUpperCase()) ?? 'N/A',
         },
         {
-          label: 'Token Price',
+          label: 'Public sale Price',
           value: `${getTokenSymbol(props?.network, props?.investingTokenSymbol)}  ${
             formatedValue(props.tokenPrice) ?? 'N/A'
           } / 1 ${props.tokenSymbol}`,

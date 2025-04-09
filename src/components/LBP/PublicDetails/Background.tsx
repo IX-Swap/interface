@@ -1,11 +1,9 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-import backgroundImg from '../../../assets/images/background.jpg'
-// import { ReactComponent as Serenity } from '../../../assets/images/serenity.svg'
-import { ReactComponent as ArrowUp } from '../../../assets/images/varyArrow.svg'
 import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { LbpFormValues } from '../types'
 import { useFormatNumberWithDecimal } from 'state/lbp/hooks'
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
 
 interface BackgroundProps {
   lbpData: LbpFormValues | null
@@ -37,8 +35,8 @@ const LogoIcon = styled.img`
   height: 50px;
   width: 50px;
   border-radius: 50%;
-    @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-  bottom: 12%;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    bottom: 12%;
     left: 7%;
   }
 `
@@ -100,8 +98,8 @@ const Background: React.FC<BackgroundProps> = ({ lbpData, currentSharePriceUSD }
 
   return (
     <FullWidthContainer>
-      <FullWidthImage src={lbpData?.banner.public} alt="Background" />
-      {lbpData && lbpData.logo && <LogoIcon as="img" src={lbpData.logo.public} alt="Serenity Logo" />}
+      <FullWidthImage src={getPublicAssetUrl(lbpData?.banner)} alt="Background" />
+      {lbpData && lbpData.logo && <LogoIcon as="img" src={getPublicAssetUrl(lbpData.logo)} alt="Serenity Logo" />}
       <Description fontSize={'48px'}>{lbpData?.title}</Description>
       <Amount fontSize={'40px'}>${useFormatNumberWithDecimal(currentSharePriceUSD || 0, 3)}</Amount>
       {/* <Vary positive={isPositive}>

@@ -381,13 +381,12 @@ export interface Asset {
   name: string
   otc: string | null
   path: string
-  public: string
   size: string | null
   state: string
   tenant: string
   updatedAt: string
   userId: number
-  uuid: string
+  uuid: number
 }
 
 export interface Document {

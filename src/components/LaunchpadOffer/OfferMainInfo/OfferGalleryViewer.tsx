@@ -9,6 +9,7 @@ import { OfferFile, OfferFileType } from 'state/launchpad/types'
 
 import { ReactComponent as PlayButton } from 'assets/launchpad/svg/play-button.svg'
 import { MEDIA_WIDTHS } from 'theme'
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
 
 interface Props {
   initial?: OfferFile
@@ -89,7 +90,7 @@ export const MediaEntry: React.FC<MediaEntryProps> = (props) => {
     <>
       {props.media.type === OfferFileType.image && (
         <ImageContainer>
-          <Image src={props.media.file.public} />
+          <Image src={getPublicAssetUrl(props.media.file)} />
         </ImageContainer>
       )}
       {props.media.type === OfferFileType.video && props.canPlayVideo && <VideoViewer src={props.media.videoUrl} />}
@@ -109,7 +110,7 @@ export const MediaEntryItem: React.FC<MediaEntryProps> = (props) => {
     <>
       {props.media.type === OfferFileType.image && (
         <ImageItemContainer>
-          <Image src={props.media.file.public} />
+          <Image src={getPublicAssetUrl(props.media.file)} />
         </ImageItemContainer>
       )}
       {props.media.type === OfferFileType.video && props.canPlayVideo && <VideoViewer src={props.media.videoUrl} />}
@@ -129,7 +130,7 @@ export const MediaEntryItemViewer: React.FC<MediaEntryProps> = (props) => {
     <>
       {props.media.type === OfferFileType.image && (
         <ImageItemViewerContainer>
-          <Image src={props.media.file.public} />
+          <Image src={getPublicAssetUrl(props.media.file)} />
         </ImageItemViewerContainer>
       )}
       {props.media.type === OfferFileType.video && props.canPlayVideo && <VideoViewer src={props.media.videoUrl} />}
@@ -169,53 +170,53 @@ const VideoViewer: React.FC<VideoViewerProps> = (props) => {
 
   const youtubeVideoId = React.useMemo(() => {
     switch (linkType) {
-    case VideoLinkType.youtube:
-      const [path, query] = props.src.split('?')
+      case VideoLinkType.youtube:
+        const [path, query] = props.src.split('?')
 
-      if (!query) {
+        if (!query) {
+          return path.split('/').pop()
+        }
+
+        const queryParams = query
+          .split('&')
+          .map((x) => x.split('='))
+          .map(([key, value]) => ({ key, value }))
+
+        const link = queryParams.find((x) => x.key === 'v')
+
+        if (link) {
+          return link.value
+        }
+
         return path.split('/').pop()
-      }
 
-      const queryParams = query
-        .split('&')
-        .map((x) => x.split('='))
-        .map(([key, value]) => ({ key, value }))
+      case VideoLinkType.youtubeShare:
+        const queryShare = props.src.split('?').shift()!.split('/').pop()
 
-      const link = queryParams.find((x) => x.key === 'v')
+        return queryShare
 
-      if (link) {
-        return link.value
-      }
-
-      return path.split('/').pop()
-
-    case VideoLinkType.youtubeShare:
-      const queryShare = props.src.split('?').shift()!.split('/').pop()
-
-      return queryShare
-
-    default:
-      return null
+      default:
+        return null
     }
   }, [props.src, linkType])
 
   switch (linkType) {
-  case VideoLinkType.youtube:
-  case VideoLinkType.youtubeShare:
-    return (
-      <YoutubeVideo
-        width="660"
-        height="415"
-        src={`https://www.youtube.com/embed/${youtubeVideoId}`}
-        title="YouTube video player"
-        frameBorder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-      ></YoutubeVideo>
-    )
+    case VideoLinkType.youtube:
+    case VideoLinkType.youtubeShare:
+      return (
+        <YoutubeVideo
+          width="660"
+          height="415"
+          src={`https://www.youtube.com/embed/${youtubeVideoId}`}
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></YoutubeVideo>
+      )
 
-  case VideoLinkType.other:
-    return <Video src={props.src} controls />
+    case VideoLinkType.other:
+      return <Video src={props.src} controls />
   }
 }
 

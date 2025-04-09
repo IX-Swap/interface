@@ -20,6 +20,7 @@ import { ethers } from 'ethers'
 import { getTokenOption } from 'pages/LBP/components/Tokenomics'
 import { useCurrency } from 'hooks/Tokens'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
 
 interface Trade {
   time: string
@@ -286,7 +287,7 @@ export default function TradeHistory({ contractAddress, assetTokenAddress, share
                         {row.type == 'BUY' ? (
                           <StyledImage src={tokenOption?.logo} />
                         ) : (
-                          <StyledImage src={shareToken.public} />
+                          <StyledImage src={getPublicAssetUrl(shareToken)} />
                         )}
                         <VerticalLine />
                         {parseFloat(
@@ -300,7 +301,7 @@ export default function TradeHistory({ contractAddress, assetTokenAddress, share
                         {row.type == 'SELL' ? (
                           <StyledImage src={tokenOption?.logo} />
                         ) : (
-                          <StyledImage src={shareToken.public} />
+                          <StyledImage src={getPublicAssetUrl(shareToken)} />
                         )}
                         <span style={{ color: index <= 4 ? '#FF6161' : '#1FBA66' }}>{row.changedAmt} </span>
                       </TableCell>

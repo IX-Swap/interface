@@ -12,6 +12,7 @@ import { Centered } from 'components/LaunchpadMisc/styled'
 import { InvestmentTypeInfo } from '../InvestmentCard/InvestmentTypeInfo'
 import { text1, text12, text54, text59 } from 'components/LaunchpadMisc/typography'
 import { MEDIA_WIDTHS } from 'theme'
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
 
 const getStageLabel = (stage: OfferStatus) => {
   return OFFER_STAGE_LABELS.find((x) => x.value === stage)?.label ?? ''
@@ -74,7 +75,7 @@ export const Pinned: React.FC = () => {
     <PinnedWrapper>
       <PinnedContainer>
         <PinnedImageContainer>
-          <PinnedImage src={offer.cardPicture.public} />
+          <PinnedImage src={getPublicAssetUrl(offer.cardPicture)} />
           <PinnedTags>
             {stage && <InvestmentStatusBadge label={stage.label} color={stage.color} />}
             {offer.status !== OfferStatus.claim && (

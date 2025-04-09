@@ -7,9 +7,11 @@ import React, { useMemo } from 'react'
 import styled from 'styled-components/macro'
 import EthereumLogo from '../../assets/images/ethereum-logo.png'
 import PoligonLogo from '../../assets/images/polygon.svg'
+import RedBellyLogo from '../../assets/images/chains/redbelly.png'
 import useHttpLocations from '../../hooks/useHttpLocations'
 import { WrappedTokenInfo } from '../../state/lists/wrappedTokenInfo'
 import Logo from '../Logo'
+import { getPublicAssetUrl } from 'components/TokenLogo/utils'
 
 type Network = 'ethereum' | 'polygon'
 
@@ -74,7 +76,7 @@ export default function CurrencyLogo({
     currency instanceof WrappedTokenInfo
       ? currency?.logoURI ||
         (tokens[currency?.address] as any)?.tokenInfo?.logoURI ||
-        (currency?.tokenInfo as any)?.logo?.public
+        getPublicAssetUrl((currency?.tokenInfo as any)?.logo)
       : undefined
   const uriLocations = useHttpLocations(uri)
   const { chainId } = useActiveWeb3React()
@@ -92,6 +94,9 @@ export default function CurrencyLogo({
   }, [currency, uriLocations, chainId])
 
   if (currency?.isNative) {
+    if (native.symbol === 'RBNT') {
+      return <StyledEthereumLogo src={RedBellyLogo} size={size} style={style} {...rest} />
+    }
     if (native.symbol === 'MATIC') {
       return <StyledEthereumLogo src={PoligonLogo} size={size} style={style} {...rest} />
     }
