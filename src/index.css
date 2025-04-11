@@ -1,4 +1,18 @@
+@import '~inter-ui';
 @import '~@reach/dialog/styles.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+* {
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+}
+
+@supports (font-variation-settings: normal) {
+  * {
+    font-family: 'Inter', sans-serif;
+  }
+}
 
 html,
 body {
@@ -16,16 +30,8 @@ button {
 }
 
 html {
-  font-size: 16px;
-  font-variant: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  font-feature-settings: 'ss01' on, 'ss02' on, 'cv01' on, 'cv03' on;
-}
-
-html {
   min-height: 100%;
+  font-size: 16px;
 }
 
 @media (prefers-color-scheme: dark) {
